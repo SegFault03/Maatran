@@ -1,0 +1,177 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent" android:layout_height="wrap_content" >
+<!--
+/*
+ *	This content is generated from the API File Info.
+ *	(Alt+Shift+Ctrl+I).
+ *
+ *	@desc
+ *	@file 		google_pixel_5___4
+ *	@date 		Sunday 19th of June 2022 01:49:38 PM
+ *	@title 		Google Pixel 5  4
+ *	@author
+ *	@keywords
+ *	@generator 	Export Kit v1.3.xd
+ *
+ */
+-->
+<ScrollView android:id="@+id/google_pixel_5___4"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout android:id="@+id/content_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <View   android:id="@+id/_bg__google_pixel_5___8"
+            android:background="@drawable/_bg__google_pixel_5___8_shape"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_width="393dp"
+            android:layout_height="851dp" />
+
+        <View   android:id="@+id/ellipse_1"
+            android:background="@drawable/ellipse_1_shape"
+            android:layout_marginStart="-153dp"
+            android:layout_marginTop="-149dp"
+            android:layout_width="1072dp"
+            android:layout_height="1002dp" />
+
+        <View
+            android:id="@+id/ellipse_2"
+            android:layout_width="1114dp"
+            android:layout_height="975dp"
+            android:layout_marginStart="-103dp"
+            android:layout_marginTop="-201dp"
+            android:background="@drawable/ellipse_2_shape" />
+
+        <ImageView android:id="@+id/logo"
+            android:src="@drawable/logo"
+            android:contentDescription="logo"
+            android:layout_marginStart="89dp"
+            android:layout_marginTop="181dp"
+            android:layout_width="203dp"
+            android:layout_height="194dp" />
+
+        <TextView
+            android:id="@+id/mum_tran"
+            android:layout_width="221dp"
+            android:layout_height="81dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginStart="82dp"
+            android:layout_marginLeft="82dp"
+            android:layout_marginTop="112dp"
+            android:backgroundTint="#009A6060"
+            android:fontFamily="@font/dm_serif_display"
+            android:gravity="center"
+            android:text="@string/mum_tran_string"
+            android:textColor="@color/mum_tran_color"
+            android:textSize="40sp"
+            tools:text="MUM-TRAN" />
+
+        <View
+            android:id="@+id/_rectangle_24"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="415dp"
+            android:background="@drawable/_rectangle_24_shape" />
+
+        <TextView
+            android:id="@+id/sign_in_as_patient"
+            android:layout_width="199dp"
+            android:layout_height="52.5dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="429dp"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/sign_in_as_patient_string"
+            android:textColor="@color/sign_in_as_patient_color"
+            android:textSize="25sp"
+            tools:text="@string/sign_in_as_patient_string" />
+
+        <View   android:id="@+id/_rectangle_25"
+            android:background="@drawable/_rectangle_25_shape"
+            android:layout_marginStart="51dp"
+            android:layout_marginTop="502dp"
+            android:layout_width="320dp"
+            android:layout_height="64dp" />
+
+        <TextView
+            android:id="@+id/sign_in_as_health_worker"
+            android:layout_width="283dp"
+            android:layout_height="52.5dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginLeft="68dp"
+            android:layout_marginTop="517dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/sign_in_as_health_worker_string"
+            android:textColor="@color/sign_in_as_patient_color"
+            android:textSize="25sp" />
+
+        <View   android:id="@+id/rectangle_26"
+            android:background="@drawable/rectangle_26_shape"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="590dp"
+            android:layout_width="320dp"
+            android:layout_height="64dp" />
+
+        <TextView
+            android:id="@+id/sign_in_with_google_"
+            android:layout_width="231dp"
+            android:layout_height="52.5dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="605dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/sign_in_with_google__string"
+            android:textColor="@color/sign_in_as_patient_color"
+            android:textSize="25sp" />
+
+        <ImageView android:id="@+id/google_logo"
+            android:src="@drawable/google_logo"
+            android:contentDescription="google_logo"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="590dp"
+            android:layout_width="62dp"
+            android:layout_height="62dp" />
+
+        <View   android:id="@+id/rectangle_28"
+            android:background="@drawable/rectangle_28_shape"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="678dp"
+            android:layout_width="320dp"
+            android:layout_height="64dp" />
+
+        <TextView
+            android:id="@+id/sign_in_with_facebook_"
+            android:layout_width="255dp"
+            android:layout_height="52.5dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginLeft="117dp"
+            android:layout_marginTop="693dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/sign_in_with_facebook__string"
+            android:textColor="@color/sign_in_as_patient_color"
+            android:textSize="25sp" />
+
+        <ImageView android:id="@+id/fb_logo"
+            android:src="@drawable/fb_logo"
+            android:contentDescription="fb_logo"
+            android:layout_marginStart="51dp"
+            android:layout_marginTop="677dp"
+            android:layout_width="61dp"
+            android:layout_height="61dp" />
+
+    </RelativeLayout>
+
+</ScrollView>
+</HorizontalScrollView>

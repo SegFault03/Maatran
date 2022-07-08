@@ -1,0 +1,29 @@
+<resources>
+    <!--  google_pixel_5___4 colors  -->
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="_bg__google_pixel_5___8_color">#ffffff</color>
+    <color name="ellipse_1_color">#548d5a</color>
+    <color name="mum_tran_color">#f8f8f8</color>
+    <color name="sign_in_as_patient_color">#1b4d20</color>
+    <color name="register__as_health_worker_color">#1b4d20</color>
+    <color name="name_color">#707070</color>
+    <color name="signup_as_health_worker_color">#000000</color>
+    <color name="_already_have_an_account__login_color">#070707</color>
+    <color name="rectangle_4_color">#24c7f0</color>
+    <color name="create_color">#fffcfc</color>
+    <color name="rectangle_14_color">#363636</color>
+    <color name="_rectangle_12_color">#4b4a4a</color>
+    <color name="health_worker_color">#ffffff</color>
+    <color name="rectangle_26_color">#5587fa</color>
+    <color name="rectangle_28_color">#3f62b1</color>
+    <color name="patient_color">#ffffff</color>
+</resources>

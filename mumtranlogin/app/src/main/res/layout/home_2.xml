@@ -1,0 +1,144 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#686666">
+    <!--
+    /*
+     *	This content is generated from the API File Info.
+     *	(Alt+Shift+Ctrl+I).
+     *
+     *	@desc
+     *	@file 		google_pixel_5___4
+     *	@date 		Monday 20th of June 2022 09:51:17 AM
+     *	@title 		Google Pixel 5  4
+     *	@author
+     *	@keywords
+     *	@generator 	Export Kit v1.3.xd
+     *
+     */
+    -->
+    <ScrollView
+        android:id="@+id/google_pixel_5___4"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/_bg__google_pixel_5___2"
+                android:layout_width="393dp"
+                android:layout_height="851dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/_bg__google_pixel_5___1_shape" />
+
+            <ImageView
+                android:id="@+id/_ashkan_forouzani_ignxm3e1rg4_unsplash"
+                android:layout_width="567dp"
+                android:layout_height="851dp"
+                android:layout_marginStart="-78dp"
+                android:layout_marginTop="0dp"
+                android:contentDescription="_ashkan_forouzani_ignxm3e1rg4_unsplash"
+                android:src="@drawable/_ashkan_forouzani_ignxm3e1rg4_unsplash" />
+
+            <View
+                android:id="@+id/rectangle_5"
+                android:layout_width="395dp"
+                android:layout_height="221dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="447dp"
+                android:alpha="0.47"
+                android:background="@drawable/rectangle_1_shape"
+                android:backgroundTint="#163D6E" />
+
+            <TextView
+                android:id="@+id/immediate_medical_support___regular_consultation_and__recommendation___"
+                android:layout_width="321dp"
+                android:layout_height="116.5dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="520dp"
+                android:fontFamily="@font/alegreya_sans"
+                android:gravity="center"
+                android:text="@string/immediate_medical_support___regular_consultation_and__recommendation____string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="25sp" />
+
+            <View
+                android:id="@+id/ellipse_6"
+                android:layout_width="10dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="206dp"
+                android:layout_marginTop="827dp"
+                android:background="@drawable/ellipse_4_shape"
+                android:backgroundTint="#393838"
+                android:foregroundTint="#474747" />
+
+            <View
+                android:id="@+id/ellipse_7"
+                android:layout_width="11dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="188dp"
+                android:layout_marginTop="827dp"
+                android:background="@drawable/ellipse_3_shape" />
+
+            <View
+                android:id="@+id/ellipse_8"
+                android:layout_width="11dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="224dp"
+                android:layout_marginTop="827dp"
+                android:background="@drawable/ellipse_4_shape" />
+
+            <View
+                android:id="@+id/_rectangle_14"
+                android:layout_width="344dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="688dp"
+                android:alpha="0.82"
+                android:background="@drawable/_rectangle_2_shape" />
+
+            <TextView
+                android:id="@+id/sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="46.5dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="149dp"
+                android:layout_marginTop="702dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/sign_in_string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="25sp" />
+
+            <View
+                android:id="@+id/_rectangle_15"
+                android:layout_width="344dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="756dp"
+                android:alpha="0.82"
+                android:background="@drawable/_rectangle_13_shape" />
+
+            <TextView
+                android:id="@+id/register"
+                android:layout_width="126dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="143dp"
+                android:layout_marginTop="768dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/register_string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="25sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+</HorizontalScrollView>

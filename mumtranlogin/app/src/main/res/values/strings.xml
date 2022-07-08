@@ -1,0 +1,40 @@
+<resources>
+    <!-- google_pixel_5___4 strings -->
+
+    <string name="app_name">mumtran-login</string>
+    <string name="ek_img_content">ExportKit Image</string>
+    <string name="mum_tran_string">MUM-TRAN</string>
+    <string name="sign_in_as_patient_string">Sign In As Patient</string>
+    <string name="sign_in_as_health_worker_string">Sign In As Health Worker</string>
+    <string name="sign_in_with_google__string">Sign In with Google </string>
+    <string name="sign_in_with_facebook__string">Sign In with Facebook </string>
+    <string name="register__as_health_worker_string">Register As Health Worker</string>
+    <string name="register_as_patient_string">Register As Patient</string>
+    <string name="sign_up__with_google__string">Sign up with Google </string>
+    <string name="sign_up_with_facebook__string">Sign up with Facebook </string>
+    <string name="name_string">Name</string>
+    <string name="choose_avatar_string">Choose Avatar</string>
+    <string name="mobile_number_string">Mobile Number</string>
+    <string name="organisation_id_string">Organisation ID</string>
+    <string name="email_string">Email</string>
+    <string name="password_string">Password</string>
+    <string name="signup_as_health_worker_string">Signup as health worker</string>
+    <string name="_already_have_an_account__login_string">Already have an account? Login</string>
+    <string name="create_string">CREATE</string>
+    <string name="forgot_password__string">Forgot password?</string>
+    <string name="_create_an_account_string">Create an account</string>
+    <string name="login_string">LogIn</string>
+    <string name="confirm_password_string">Confirm Password</string>
+    <string name="health_worker_string">HEALTH WORKER</string>
+    <string name="patient_string">PATIENT</string>
+    <string name="signup_as_patient_string">SignUp As Patient</string>
+    <string name="age_string">Age</string>
+    <string name="gender_string">Gender</string>
+    <string name="address_string">Address</string>
+    <string name="patient_id_string">Patient ID</string>
+    <string name="sign_in_string">SIGN IN</string>
+    <string name="healthcare_for_pregnancy__at_one_stop___string">Healthcare for pregnancy at one stop. </string>
+    <string name="register_string">REGISTER</string>
+    <string name="immediate_medical_support___regular_consultation_and__recommendation____string">Immediate medical support, regular consultation and recommendation. </string>
+    <string name="real_time_health_monitoring__and_much_more_">Real-time health monitoring and much more!</string>
+</resources>
