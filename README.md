@@ -8,3 +8,4 @@ Sections:
 Res:
 1. UI
 For now this folder will contain the template UI created for the app, using Adobe XD. 
+
