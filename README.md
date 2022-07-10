@@ -13,6 +13,10 @@ MUMTRAN is a web-app designed to help health providers and pregnant women, espec
 1.  Once the SDK Manager stops giving good suggestions, use it to install the Google Repository and the Android Support Repository
 1.  Your IDE should stop whining now.
 
+##Dependencies
+Android Gradle Plugin Version: 7.2.1
+Gradle Version: 7.3.3
+
 ## Using the emulator
 
 ### Setup
