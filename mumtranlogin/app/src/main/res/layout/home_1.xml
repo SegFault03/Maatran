@@ -1,0 +1,149 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content" >
+    <!--
+    /*
+     *	This content is generated from the API File Info.
+     *	(Alt+Shift+Ctrl+I).
+     *
+     *	@desc
+     *	@file 		google_pixel_5___4
+     *	@date 		Monday 20th of June 2022 08:14:33 AM
+     *	@title 		Google Pixel 5  4
+     *	@author
+     *	@keywords
+     *	@generator 	Export Kit v1.3.xd
+     *
+     */
+    -->
+    <ScrollView android:id="@+id/google_pixel_5___4"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout android:id="@+id/content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <View   android:id="@+id/_bg__google_pixel_5___1"
+                android:background="@drawable/_bg__google_pixel_5___1_shape"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_width="393dp"
+                android:layout_height="851dp" />
+
+            <ImageView
+                android:id="@+id/_motherhood"
+                android:layout_width="1393dp"
+                android:layout_height="851dp"
+                android:layout_marginStart="-1000dp"
+                android:layout_marginTop="0dp"
+                android:contentDescription="_motherhood"
+                android:src="@drawable/_motherhood" />
+
+            <View
+                android:id="@+id/rectangle_1"
+                android:layout_width="395dp"
+                android:layout_height="221dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="447dp"
+                android:alpha="0.47"
+                android:background="@drawable/rectangle_1_shape"
+                android:backgroundTint="#250707" />
+
+            <TextView
+                android:id="@+id/mumtran"
+                android:layout_width="275dp"
+                android:layout_height="86dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="72dp"
+                android:layout_marginTop="96dp"
+                android:fontFamily="@font/amarante"
+                android:gravity="center"
+                android:text="@string/mum_tran_string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="40sp" />
+
+            <View
+                android:id="@+id/_rectangle_2"
+                android:layout_width="344dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="688dp"
+                android:alpha="0.82"
+                android:background="@drawable/_rectangle_2_shape" />
+
+            <TextView
+                android:id="@+id/sign_in"
+                android:layout_width="93dp"
+                android:layout_height="46.5dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="166dp"
+                android:layout_marginTop="700dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/sign_in_string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/healthcare_for_pregnancy__at_one_stop__"
+                android:layout_width="283dp"
+                android:layout_height="83.5dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="54dp"
+                android:layout_marginTop="520dp"
+                android:fontFamily="@font/alegreya_sans"
+                android:gravity="center"
+                android:text="@string/healthcare_for_pregnancy__at_one_stop___string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="25sp" />
+
+            <View
+                android:id="@+id/ellipse_3"
+                android:layout_width="11dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="210dp"
+                android:layout_marginTop="827dp"
+                android:background="@drawable/ellipse_3_shape" />
+
+            <View
+                android:id="@+id/ellipse_4"
+                android:layout_width="11dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="191dp"
+                android:layout_marginTop="827dp"
+                android:background="@drawable/ellipse_4_shape"
+                android:backgroundTint="#2E2E2E" />
+
+            <View
+                android:id="@+id/_rectangle_13"
+                android:layout_width="344dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="754dp"
+                android:alpha="0.82"
+                android:background="@drawable/_rectangle_13_shape" />
+
+            <View   android:id="@+id/ellipse_5"
+                android:background="@drawable/ellipse_5_shape"
+                android:layout_marginStart="229dp"
+                android:layout_marginTop="827dp"
+                android:layout_width="11dp"
+                android:layout_height="13dp" />
+
+            <TextView
+                android:id="@+id/register"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="157dp"
+                android:layout_marginTop="768dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/register_string"
+                android:textColor="@color/mum_tran_color"
+                android:textSize="25sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+</HorizontalScrollView>
