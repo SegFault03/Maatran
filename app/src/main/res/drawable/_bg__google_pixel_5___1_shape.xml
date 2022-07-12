@@ -2,6 +2,6 @@
 <!-- _bg__google_pixel_5___1 from your XD file. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="rectangle" >
-	<solid android:color="@color/_bg__google_pixel_5___1_color" />
+	<solid android:color="@color/white" />
 </shape>
 

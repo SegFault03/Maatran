@@ -38,12 +38,13 @@
                 android:layout_width="1072dp"
                 android:layout_height="1002dp" />
 
-            <View   android:id="@+id/ellipse_2"
-                android:background="@drawable/ellipse_2_shape"
+            <View
+                android:id="@+id/ellipse_2"
+                android:layout_width="1114dp"
+                android:layout_height="975dp"
                 android:layout_marginStart="-103dp"
                 android:layout_marginTop="-201dp"
-                android:layout_width="1114dp"
-                android:layout_height="975dp" />
+                android:background="@drawable/ellipse_2_shape" />
 
             <ImageView android:id="@+id/logo"
                 android:src="@drawable/logo"
@@ -67,12 +68,14 @@
                 android:textColor="@color/mum_tran_color"
                 android:textSize="40sp" />
 
-            <View   android:id="@+id/_rectangle_21"
-                android:background="@drawable/_rectangle_24_shape"
+            <ImageButton
+                android:id="@+id/_rectangle_21"
+                android:layout_width="312dp"
+                android:layout_height="62dp"
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="502dp"
-                android:layout_width="320dp"
-                android:layout_height="64dp" />
+                android:background="@drawable/_rectangle_24_shape"
+                android:onClick="signUpAsHW"/>
 
             <TextView android:id="@+id/register__as_health_worker"
                 android:fontFamily="sans-serif-light"
@@ -87,12 +90,14 @@
                 android:text="@string/register__as_health_worker_string"
                 />
 
-            <View   android:id="@+id/_rectangle_23"
-                android:background="@drawable/_rectangle_25_shape"
+            <ImageButton
+                android:id="@+id/_rectangle_23"
+                android:layout_width="320dp"
+                android:layout_height="64dp"
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="415dp"
-                android:layout_width="320dp"
-                android:layout_height="64dp" />
+                android:background="@drawable/_rectangle_25_shape"
+                android:onClick="signUpAsPatient" />
 
             <TextView android:id="@+id/register_as_patient"
                 android:fontFamily="sans-serif-light"

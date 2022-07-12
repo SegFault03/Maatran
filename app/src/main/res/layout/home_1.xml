@@ -43,8 +43,9 @@
                 android:id="@+id/rectangle_1"
                 android:layout_width="395dp"
                 android:layout_height="221dp"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="447dp"
+                android:layout_marginTop="421dp"
                 android:alpha="0.47"
                 android:background="@drawable/rectangle_1_shape"
                 android:backgroundTint="#250707" />
@@ -53,6 +54,7 @@
                 android:id="@+id/mumtran"
                 android:layout_width="275dp"
                 android:layout_height="86dp"
+                android:layout_alignParentTop="true"
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="96dp"
@@ -62,22 +64,34 @@
                 android:textColor="@color/mum_tran_color"
                 android:textSize="40sp" />
 
-            <View
+            <ImageButton
                 android:id="@+id/_rectangle_2"
                 android:layout_width="344dp"
                 android:layout_height="54dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="26dp"
-                android:layout_marginTop="688dp"
+                android:layout_marginTop="669dp"
+                android:layout_marginEnd="25dp"
                 android:alpha="0.82"
-                android:background="@drawable/_rectangle_2_shape" />
+                android:background="@drawable/_rectangle_2_shape"
+                android:onClick="signInOptions" />
 
             <TextView
                 android:id="@+id/sign_in"
                 android:layout_width="93dp"
                 android:layout_height="46.5dp"
+                android:layout_alignTop="@+id/_rectangle_2"
+                android:layout_alignBottom="@+id/_rectangle_2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal|center"
+                android:layout_marginStart="148dp"
                 android:layout_marginLeft="166dp"
-                android:layout_marginTop="700dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="154dp"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="@string/sign_in_string"
@@ -88,9 +102,12 @@
                 android:id="@+id/healthcare_for_pregnancy__at_one_stop__"
                 android:layout_width="283dp"
                 android:layout_height="83.5dp"
+                android:layout_alignTop="@+id/rectangle_1"
+                android:layout_alignBottom="@+id/rectangle_1"
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="54dp"
-                android:layout_marginTop="520dp"
+                android:layout_marginTop="67dp"
+                android:layout_marginBottom="70dp"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="center"
                 android:text="@string/healthcare_for_pregnancy__at_one_stop___string"
@@ -114,14 +131,19 @@
                 android:background="@drawable/ellipse_4_shape"
                 android:backgroundTint="#2E2E2E" />
 
-            <View
+            <ImageButton
                 android:id="@+id/_rectangle_13"
                 android:layout_width="344dp"
                 android:layout_height="54dp"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="754dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="740dp"
+                android:layout_marginEnd="21dp"
                 android:alpha="0.82"
-                android:background="@drawable/_rectangle_13_shape" />
+                android:background="@drawable/_rectangle_13_shape"
+                android:onClick="registerOptions" />
 
             <View   android:id="@+id/ellipse_5"
                 android:background="@drawable/ellipse_5_shape"
@@ -134,9 +156,16 @@
                 android:id="@+id/register"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/_rectangle_13"
+                android:layout_alignBottom="@+id/_rectangle_13"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal|center"
+                android:layout_marginStart="134dp"
                 android:layout_marginLeft="157dp"
-                android:layout_marginTop="768dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="121dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="@string/register_string"

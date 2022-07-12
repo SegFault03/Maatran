@@ -37,12 +37,13 @@
                 android:layout_width="1072dp"
                 android:layout_height="1002dp" />
 
-            <View   android:id="@+id/ellipse_2"
-                android:background="@drawable/ellipse_2_shape"
+            <View
+                android:id="@+id/ellipse_2"
+                android:layout_width="1091dp"
+                android:layout_height="951dp"
                 android:layout_marginStart="-115dp"
                 android:layout_marginTop="-183dp"
-                android:layout_width="1091dp"
-                android:layout_height="951dp" />
+                android:background="@drawable/ellipse_2_shape" />
 
             <ImageView android:id="@+id/path_1"
                 android:src="@drawable/path_1"
@@ -128,22 +129,6 @@
                 android:text="@string/choose_avatar_string"
                 />
 
-            <ImageView android:id="@+id/polygon_1"
-                android:src="@drawable/polygon_1"
-                android:contentDescription="polygon_1"
-                android:layout_marginStart="366dp"
-                android:layout_marginTop="83dp"
-                android:layout_width="16dp"
-                android:layout_height="21dp" />
-
-            <ImageView android:id="@+id/line_1"
-                android:src="@drawable/line_1"
-                android:contentDescription="line_1"
-                android:layout_marginStart="365.5dp"
-                android:layout_marginTop="77dp"
-                android:layout_width="1dp"
-                android:layout_height="27dp" />
-
             <ImageView android:id="@+id/path_5"
                 android:src="@drawable/path_5"
                 android:contentDescription="path_5"
@@ -222,18 +207,20 @@
                 android:text="@string/signup_as_patient_string"
                 />
 
-            <TextView android:id="@+id/_already_have_an_account__login"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/_already_have_an_account__login_color"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="803dp"
+            <TextView
+                android:id="@+id/_already_have_an_account__login"
                 android:layout_width="355dp"
                 android:layout_height="50.5dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="803dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
                 android:text="@string/_already_have_an_account__login_string"
-                />
+                android:textColor="@color/_already_have_an_account__login_color"
+                android:textSize="25sp"
+                android:clickable="true"
+                android:onClick="signInOptions"/>
 
             <View   android:id="@+id/rectangle_4"
                 android:background="@drawable/rectangle_4_shape"
@@ -253,12 +240,14 @@
                 android:text="@string/create_string"
                 />
 
-            <View   android:id="@+id/_rectangle_12"
-                android:background="@drawable/_rectangle_12_shape"
+            <ImageButton
+                android:id="@+id/_rectangle_12"
+                android:layout_width="181dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="196dp"
                 android:layout_marginTop="169dp"
-                android:layout_width="181dp"
-                android:layout_height="47dp" />
+                android:background="@drawable/_rectangle_12_shape"
+                android:onClick="signUpAsHW"/>
 
             <TextView android:id="@+id/address"
                 android:fontFamily="sans-serif-light"
@@ -290,12 +279,13 @@
                 android:text="@string/confirm_password_string"
                 />
 
-            <View   android:id="@+id/rectangle_13"
-                android:background="@drawable/rectangle_14_shape"
+            <View
+                android:id="@+id/rectangle_13"
+                android:layout_width="181dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="169dp"
-                android:layout_width="181dp"
-                android:layout_height="47dp" />
+                android:background="@drawable/rectangle_14_shape" />
 
             <TextView android:id="@+id/patient"
                 android:fontFamily="sans-serif-light"

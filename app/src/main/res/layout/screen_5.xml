@@ -63,16 +63,16 @@
                 android:contentDescription="path_6"
                 android:src="@drawable/path_6" />
 
-            <TextView android:id="@+id/patient_id"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
-                android:layout_marginLeft="155dp"
-                android:layout_marginTop="343dp"
+            <TextView
+                android:id="@+id/patient_id"
                 android:layout_width="101dp"
                 android:layout_height="41dp"
+                android:layout_marginLeft="155dp"
+                android:layout_marginTop="343dp"
+                android:fontFamily="sans-serif-light"
                 android:text="@string/patient_id_string"
-                />
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/path_8"
@@ -82,17 +82,6 @@
                 android:layout_marginTop="402.86663818359dp"
                 android:contentDescription="path_8"
                 android:src="@drawable/path_8" />
-
-            <TextView android:id="@+id/signin_as_patient"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/patient_color"
-                android:layout_marginLeft="124dp"
-                android:layout_marginTop="281dp"
-                android:layout_width="163dp"
-                android:layout_height="41dp"
-                android:text="@string/sign_in_as_patient_string"
-                />
 
             <TextView
                 android:id="@+id/forgot_password_"
@@ -131,7 +120,9 @@
                 android:gravity="center"
                 android:text="@string/_create_an_account_string"
                 android:textColor="@color/_already_have_an_account__login_color"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:clickable="true"
+                android:onClick="registerOptions"/>
 
             <View
                 android:id="@+id/rectangle_5"
@@ -152,20 +143,23 @@
                 android:text="@string/login_string"
                 />
 
-            <View   android:id="@+id/_rectangle_15"
-                android:background="@drawable/_rectangle_12_shape"
+            <ImageButton
+                android:id="@+id/hw_btn"
+                android:layout_width="181dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="198dp"
                 android:layout_marginTop="219dp"
-                android:layout_width="181dp"
-                android:layout_height="47dp" />
+                android:background="@drawable/_rectangle_12_shape"
+                android:onClick="toggleButton" />
 
-            <View
-                android:id="@+id/rectangle_16"
+            <ImageButton
+                android:id="@+id/patient_btn"
                 android:layout_width="181dp"
                 android:layout_height="47dp"
                 android:layout_marginStart="19dp"
                 android:layout_marginTop="219dp"
-                android:background="@drawable/_rectangle_12_shape" />
+                android:background="@drawable/_rectangle_12_shape"
+                android:onClick="toggleButton" />
 
             <TextView android:id="@+id/health_worker"
                 android:fontFamily="sans-serif-light"

@@ -71,13 +71,14 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:textSize="40sp"
             tools:text="MUM-TRAN" />
 
-        <View
+        <ImageButton
             android:id="@+id/_rectangle_24"
             android:layout_width="320dp"
             android:layout_height="64dp"
             android:layout_marginStart="52dp"
             android:layout_marginTop="415dp"
-            android:background="@drawable/_rectangle_24_shape" />
+            android:background="@drawable/_rectangle_24_shape"
+            android:onClick="signIn"/>
 
         <TextView
             android:id="@+id/sign_in_as_patient"
@@ -95,12 +96,14 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:textSize="25sp"
             tools:text="@string/sign_in_as_patient_string" />
 
-        <View   android:id="@+id/_rectangle_25"
-            android:background="@drawable/_rectangle_25_shape"
+        <ImageButton
+            android:id="@+id/_rectangle_25"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
             android:layout_marginStart="51dp"
             android:layout_marginTop="502dp"
-            android:layout_width="320dp"
-            android:layout_height="64dp" />
+            android:background="@drawable/_rectangle_25_shape"
+            android:onClick="signIn"/>
 
         <TextView
             android:id="@+id/sign_in_as_health_worker"

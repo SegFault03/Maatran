@@ -4,7 +4,7 @@
     <string name="app_name">mumtran-login</string>
     <string name="ek_img_content">ExportKit Image</string>
     <string name="mum_tran_string">MUM-TRAN</string>
-    <string name="sign_in_as_patient_string">Sign In As Patient</string>
+    <string name="sign_in_as_patient_string">Sign In</string>
     <string name="sign_in_as_health_worker_string">Sign In As Health Worker</string>
     <string name="sign_in_with_google__string">Sign In with Google </string>
     <string name="sign_in_with_facebook__string">Sign In with Facebook </string>
@@ -31,10 +31,12 @@
     <string name="age_string">Age</string>
     <string name="gender_string">Gender</string>
     <string name="address_string">Address</string>
-    <string name="patient_id_string">Patient ID</string>
+    <string name="patient_id_string">User ID</string>
     <string name="sign_in_string">SIGN IN</string>
     <string name="healthcare_for_pregnancy__at_one_stop___string">Healthcare for pregnancy at one stop. </string>
     <string name="register_string">REGISTER</string>
     <string name="immediate_medical_support___regular_consultation_and__recommendation____string">Immediate medical support, regular consultation and recommendation. </string>
     <string name="real_time_health_monitoring__and_much_more_">Real-time health monitoring and much more!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
