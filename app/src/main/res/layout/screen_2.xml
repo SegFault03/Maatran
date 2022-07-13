@@ -119,18 +119,19 @@
                 android:layout_width="320dp"
                 android:layout_height="64dp" />
 
-            <TextView android:id="@+id/sign_up__with_google_"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/register__as_health_worker_color"
-                android:layout_marginLeft="116dp"
-                android:layout_marginTop="606dp"
-                android:layout_width="245dp"
+            <TextView
+                android:id="@+id/sign_in_with_google_"
+                android:layout_width="231dp"
                 android:layout_height="52.5dp"
-                android:text="@string/sign_up__with_google__string"
-                />
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="605dp"
+                android:backgroundTint="#00FFFFFF"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Sign In with Google"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
 
             <ImageView android:id="@+id/google_logo"
                 android:src="@drawable/google_logo"
@@ -147,18 +148,19 @@
                 android:layout_width="320dp"
                 android:layout_height="64dp" />
 
-            <TextView android:id="@+id/sign_up_with_facebook_"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/register__as_health_worker_color"
-                android:layout_marginLeft="109dp"
-                android:layout_marginTop="693dp"
-                android:layout_width="263dp"
+            <TextView
+                android:id="@+id/sign_in_with_facebook_"
+                android:layout_width="255dp"
                 android:layout_height="52.5dp"
-                android:text="@string/sign_up_with_facebook__string"
-                />
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="117dp"
+                android:layout_marginTop="693dp"
+                android:backgroundTint="#00FFFFFF"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Sign In with Facebook"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
 
             <ImageView android:id="@+id/fb_logo"
                 android:src="@drawable/fb_logo"

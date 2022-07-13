@@ -30,12 +30,13 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:layout_width="393dp"
             android:layout_height="851dp" />
 
-        <View   android:id="@+id/ellipse_1"
-            android:background="@drawable/ellipse_1_shape"
+        <View
+            android:id="@+id/ellipse_1"
+            android:layout_width="1072dp"
+            android:layout_height="1002dp"
             android:layout_marginStart="-153dp"
             android:layout_marginTop="-149dp"
-            android:layout_width="1072dp"
-            android:layout_height="1002dp" />
+            android:background="@drawable/ellipse_1_shape" />
 
         <View
             android:id="@+id/ellipse_2"
@@ -75,18 +76,23 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:id="@+id/_rectangle_24"
             android:layout_width="320dp"
             android:layout_height="64dp"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="415dp"
             android:background="@drawable/_rectangle_24_shape"
-            android:onClick="signIn"/>
+            android:onClick="signIn"
+            android:translationY="80dp" />
 
         <TextView
             android:id="@+id/sign_in_as_patient"
             android:layout_width="199dp"
             android:layout_height="52.5dp"
+            android:layout_alignStart="@+id/_rectangle_24"
+            android:layout_alignEnd="@+id/_rectangle_24"
             android:layout_gravity="center_horizontal|center"
+            android:layout_marginStart="56dp"
             android:layout_marginLeft="110dp"
             android:layout_marginTop="429dp"
+            android:layout_marginEnd="65dp"
             android:background="#00FFFFFF"
             android:backgroundTint="#00FFFFFF"
             android:fontFamily="sans-serif-light"
@@ -94,29 +100,8 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:text="@string/sign_in_as_patient_string"
             android:textColor="@color/sign_in_as_patient_color"
             android:textSize="25sp"
+            android:translationY="80dp"
             tools:text="@string/sign_in_as_patient_string" />
-
-        <ImageButton
-            android:id="@+id/_rectangle_25"
-            android:layout_width="320dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="51dp"
-            android:layout_marginTop="502dp"
-            android:background="@drawable/_rectangle_25_shape"
-            android:onClick="signIn"/>
-
-        <TextView
-            android:id="@+id/sign_in_as_health_worker"
-            android:layout_width="283dp"
-            android:layout_height="52.5dp"
-            android:layout_gravity="center_horizontal|center"
-            android:layout_marginLeft="68dp"
-            android:layout_marginTop="517dp"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/sign_in_as_health_worker_string"
-            android:textColor="@color/sign_in_as_patient_color"
-            android:textSize="25sp" />
 
         <View   android:id="@+id/rectangle_26"
             android:background="@drawable/rectangle_26_shape"
@@ -132,10 +117,11 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:layout_gravity="center_horizontal|center"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="605dp"
+            android:backgroundTint="#00FFFFFF"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="@string/sign_in_with_google__string"
-            android:textColor="@color/sign_in_as_patient_color"
+            android:text="Sign In with Google"
+            android:textColor="@color/white"
             android:textSize="25sp" />
 
         <ImageView android:id="@+id/google_logo"
@@ -160,10 +146,11 @@ android:layout_width="match_parent" android:layout_height="wrap_content" >
             android:layout_gravity="center_horizontal|center"
             android:layout_marginLeft="117dp"
             android:layout_marginTop="693dp"
+            android:backgroundTint="#00FFFFFF"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="@string/sign_in_with_facebook__string"
-            android:textColor="@color/sign_in_as_patient_color"
+            android:text="Sign In with Facebook"
+            android:textColor="@color/white"
             android:textSize="25sp" />
 
         <ImageView android:id="@+id/fb_logo"

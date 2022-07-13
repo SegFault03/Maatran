@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.os.Bundle;
 
@@ -29,7 +30,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signUpAsPatient(View view) {
-        setContentView(R.layout.screen_4);
+        setContentView(R.layout.screen_4);/*
+        EditText name = (EditText)findViewById(R.id.name);
+        EditText age = (EditText)findViewById(R.id.age);
+        EditText gender = (EditText)findViewById(R.id.gender);
+        EditText no = (EditText)findViewById(R.id.mobile_number);
+        EditText email = (EditText)findViewById(R.id.email);
+        EditText address = (EditText)findViewById(R.id.address);
+        ImageButton create = (ImageButton) findViewById(R.id.create_account);
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
     }
 
     public void signUpAsHW(View view) {
@@ -48,4 +62,5 @@ public class LoginActivity extends AppCompatActivity {
             btn1.setBackgroundDrawable(getResources().getDrawable(R.drawable._rectangle_12_shape));
         }
     }
+
 }
