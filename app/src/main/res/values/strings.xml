@@ -1,7 +1,7 @@
 <resources>
     <!-- google_pixel_5___4 strings -->
 
-    <string name="app_name">mumtran-login</string>
+    <string name="app_name">MAATRAN</string>
     <string name="ek_img_content">ExportKit Image</string>
     <string name="mum_tran_string">MUM-TRAN</string>
     <string name="sign_in_as_patient_string">Sign In</string>
