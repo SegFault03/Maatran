@@ -135,8 +135,7 @@
                 android:layout_height="46dp"
                 android:layout_marginStart="115dp"
                 android:layout_marginTop="541dp"
-                android:background="@drawable/rectangle_4_shape"
-                android:onClick="login" />
+                android:background="@drawable/rectangle_4_shape" />
 
             <TextView android:id="@+id/login"
                 android:fontFamily="sans-serif-light"

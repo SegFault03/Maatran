@@ -282,7 +282,7 @@
                 android:layout_marginStart="196dp"
                 android:layout_marginTop="169dp"
                 android:background="@drawable/_rectangle_12_shape"
-                android:onClick="signUpAsHW"/>
+                android:onClick="signUpAsHW" />
 
             <EditText
                 android:id="@+id/address"

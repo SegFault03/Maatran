@@ -31,7 +31,7 @@
     <string name="age_string">Age</string>
     <string name="gender_string">Gender</string>
     <string name="address_string">Address</string>
-    <string name="patient_id_string">User ID</string>
+    <string name="patient_id_string">Email ID</string>
     <string name="sign_in_string">SIGN IN</string>
     <string name="healthcare_for_pregnancy__at_one_stop___string">Healthcare for pregnancy at one stop. </string>
     <string name="register_string">REGISTER</string>

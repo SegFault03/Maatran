@@ -234,8 +234,8 @@
                 android:clickable="true"
                 android:onClick="signInOptions"/>
 
-            <View
-                android:id="@+id/rectangle_4"
+            <ImageButton
+                android:id="@+id/create_acc"
                 android:layout_width="168dp"
                 android:layout_height="46dp"
                 android:layout_marginStart="114dp"
@@ -279,12 +279,13 @@
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
 
-            <View   android:id="@+id/rectangle_14"
-                android:background="@drawable/rectangle_14_shape"
+            <View
+                android:id="@+id/rectangle_14"
+                android:layout_width="181dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="190dp"
                 android:layout_marginTop="172dp"
-                android:layout_width="181dp"
-                android:layout_height="47dp" />
+                android:background="@drawable/rectangle_14_shape" />
 
             <ImageButton
                 android:id="@+id/_rectangle_12"
@@ -293,18 +294,18 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="172dp"
                 android:background="@drawable/_rectangle_12_shape"
-                android:onClick="signUpAsPatient"/>
+                android:onClick="signUpAsPatient" />
 
-            <TextView android:id="@+id/health_worker"
-                android:fontFamily="sans-serif-light"
-                android:textSize="17sp"
-                android:textColor="@color/health_worker_color"
-                android:layout_marginLeft="216dp"
-                android:layout_marginTop="184dp"
+            <TextView
+                android:id="@+id/health_worker"
                 android:layout_width="146dp"
                 android:layout_height="33.5dp"
+                android:layout_marginLeft="216dp"
+                android:layout_marginTop="184dp"
+                android:fontFamily="sans-serif-light"
                 android:text="@string/health_worker_string"
-                />
+                android:textColor="@color/health_worker_color"
+                android:textSize="17sp" />
 
             <TextView android:id="@+id/patient"
                 android:fontFamily="sans-serif-light"

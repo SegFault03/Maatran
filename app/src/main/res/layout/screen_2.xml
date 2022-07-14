@@ -75,7 +75,7 @@
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="502dp"
                 android:background="@drawable/_rectangle_24_shape"
-                android:onClick="signUpAsHW"/>
+                android:onClick="signUpAsHW" />
 
             <TextView android:id="@+id/register__as_health_worker"
                 android:fontFamily="sans-serif-light"
@@ -129,7 +129,7 @@
                 android:backgroundTint="#00FFFFFF"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:text="Sign In with Google"
+                android:text="Sign Up with Google"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
@@ -158,7 +158,7 @@
                 android:backgroundTint="#00FFFFFF"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:text="Sign In with Facebook"
+                android:text="Sign Up with Facebook"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
@@ -169,6 +169,7 @@
                 android:layout_marginTop="679dp"
                 android:layout_width="61dp"
                 android:layout_height="61dp" />
+
 
         </RelativeLayout>
 
