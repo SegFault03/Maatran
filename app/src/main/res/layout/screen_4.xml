@@ -30,27 +30,30 @@
                 android:layout_width="393dp"
                 android:layout_height="851dp" />
 
-            <View   android:id="@+id/ellipse_1"
-                android:background="@drawable/ellipse_1_shape"
+            <View
+                android:id="@+id/ellipse_1"
+                android:layout_width="1072dp"
+                android:layout_height="1002dp"
                 android:layout_marginStart="-153dp"
                 android:layout_marginTop="-149dp"
-                android:layout_width="1072dp"
-                android:layout_height="1002dp" />
+                android:background="@drawable/ellipse_1_shape" />
 
-            <View   android:id="@+id/ellipse_2"
-                android:background="@drawable/ellipse_2_shape"
+            <View
+                android:id="@+id/ellipse_2"
+                android:layout_width="1091dp"
+                android:layout_height="951dp"
                 android:layout_marginStart="-115dp"
                 android:layout_marginTop="-183dp"
-                android:layout_width="1091dp"
-                android:layout_height="951dp" />
+                android:background="@drawable/ellipse_2_shape" />
 
-            <ImageView android:id="@+id/path_1"
-                android:src="@drawable/path_1"
-                android:contentDescription="path_1"
+            <ImageView
+                android:id="@+id/path_1"
+                android:layout_width="239dp"
+                android:layout_height="43.133346557617dp"
                 android:layout_marginStart="87dp"
                 android:layout_marginTop="272.13317871094dp"
-                android:layout_width="239dp"
-                android:layout_height="43.133346557617dp" />
+                android:contentDescription="path_1"
+                android:src="@drawable/path_1" />
 
             <ImageView android:id="@+id/avatar"
                 android:src="@drawable/avatar"
@@ -60,16 +63,21 @@
                 android:layout_width="127dp"
                 android:layout_height="126dp" />
 
-            <TextView android:id="@+id/name"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="188dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/path_1"
+                android:layout_alignEnd="@+id/path_1"
+                android:layout_marginStart="23dp"
                 android:layout_marginLeft="170dp"
                 android:layout_marginTop="278dp"
-                android:layout_width="68dp"
-                android:layout_height="41dp"
-                android:text="@string/name_string"
-                />
+                android:layout_marginEnd="28dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/name_string"
+                android:textAlignment="center"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <ImageView android:id="@+id/path_2"
                 android:src="@drawable/path_4"
@@ -79,16 +87,21 @@
                 android:layout_width="239dp"
                 android:layout_height="43.133346557617dp" />
 
-            <TextView android:id="@+id/age"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="183dp"
+                android:layout_height="43dp"
+                android:layout_alignStart="@+id/path_2"
+                android:layout_alignEnd="@+id/path_2"
+                android:layout_marginStart="25dp"
                 android:layout_marginLeft="179dp"
                 android:layout_marginTop="329dp"
-                android:layout_width="50dp"
-                android:layout_height="41dp"
-                android:text="@string/age_string"
-                />
+                android:layout_marginEnd="31dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/age_string"
+                android:textAlignment="center"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <ImageView android:id="@+id/path_3"
                 android:src="@drawable/path_5"
@@ -98,16 +111,21 @@
                 android:layout_width="239dp"
                 android:layout_height="43.133361816406dp" />
 
-            <TextView android:id="@+id/gender"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
+            <EditText
+                android:id="@+id/gender"
+                android:layout_width="191dp"
+                android:layout_height="43dp"
+                android:layout_alignStart="@+id/path_3"
+                android:layout_alignEnd="@+id/path_3"
+                android:layout_marginStart="25dp"
                 android:layout_marginLeft="173dp"
                 android:layout_marginTop="380dp"
-                android:layout_width="80dp"
-                android:layout_height="41dp"
-                android:text="@string/gender_string"
-                />
+                android:layout_marginEnd="23dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/gender_string"
+                android:textAlignment="center"
+                android:textColor="@color/name_color"
+                android:textSize="20sp"/>
 
             <ImageView android:id="@+id/path_4"
                 android:src="@drawable/path_4"
@@ -128,22 +146,6 @@
                 android:text="@string/choose_avatar_string"
                 />
 
-            <ImageView android:id="@+id/polygon_1"
-                android:src="@drawable/polygon_1"
-                android:contentDescription="polygon_1"
-                android:layout_marginStart="366dp"
-                android:layout_marginTop="83dp"
-                android:layout_width="16dp"
-                android:layout_height="21dp" />
-
-            <ImageView android:id="@+id/line_1"
-                android:src="@drawable/line_1"
-                android:contentDescription="line_1"
-                android:layout_marginStart="365.5dp"
-                android:layout_marginTop="77dp"
-                android:layout_width="1dp"
-                android:layout_height="27dp" />
-
             <ImageView android:id="@+id/path_5"
                 android:src="@drawable/path_5"
                 android:contentDescription="path_5"
@@ -152,16 +154,21 @@
                 android:layout_width="239dp"
                 android:layout_height="43.133361816406dp" />
 
-            <TextView android:id="@+id/mobile_number"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
-                android:layout_marginLeft="136dp"
-                android:layout_marginTop="432dp"
+            <EditText
+                android:id="@+id/mobile_number"
                 android:layout_width="155dp"
                 android:layout_height="41dp"
-                android:text="@string/mobile_number_string"
-                />
+                android:layout_alignStart="@+id/path_5"
+                android:layout_alignEnd="@+id/path_5"
+                android:layout_marginStart="49dp"
+                android:layout_marginLeft="136dp"
+                android:layout_marginTop="432dp"
+                android:layout_marginEnd="35dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/mobile_number_string"
+                android:inputType="phone"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <ImageView android:id="@+id/path_6"
                 android:src="@drawable/path_6"
@@ -179,16 +186,22 @@
                 android:layout_width="239dp"
                 android:layout_height="43.133361816406dp" />
 
-            <TextView android:id="@+id/email"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="205dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/path_6"
+                android:layout_alignEnd="@+id/path_6"
+                android:layout_marginStart="17dp"
                 android:layout_marginLeft="173dp"
                 android:layout_marginTop="483dp"
-                android:layout_width="62dp"
-                android:layout_height="41dp"
-                android:text="@string/email_string"
-                />
+                android:layout_marginEnd="18dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email_string"
+                android:textAlignment="center"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <ImageView android:id="@+id/path_8"
                 android:src="@drawable/path_8"
@@ -198,16 +211,22 @@
                 android:layout_width="239dp"
                 android:layout_height="43.133361816406dp" />
 
-            <TextView android:id="@+id/password"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/path_7"
+                android:layout_alignEnd="@+id/path_7"
+                android:layout_marginStart="27dp"
                 android:layout_marginLeft="165dp"
                 android:layout_marginTop="586dp"
-                android:layout_width="98dp"
-                android:layout_height="41dp"
-                android:text="@string/password_string"
-                />
+                android:layout_marginEnd="33dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textPassword"
+                android:hint="@string/password_string"
+                android:textAlignment="center"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <TextView android:id="@+id/signup_as_patient"
                 android:fontFamily="sans-serif-light"
@@ -222,25 +241,28 @@
                 android:text="@string/signup_as_patient_string"
                 />
 
-            <TextView android:id="@+id/_already_have_an_account__login"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/_already_have_an_account__login_color"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="803dp"
+            <TextView
+                android:id="@+id/_already_have_an_account__login"
                 android:layout_width="355dp"
                 android:layout_height="50.5dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="803dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
                 android:text="@string/_already_have_an_account__login_string"
-                />
+                android:textColor="@color/_already_have_an_account__login_color"
+                android:textSize="25sp"
+                android:clickable="true"
+                android:onClick="signInOptions"/>
 
-            <View   android:id="@+id/rectangle_4"
-                android:background="@drawable/rectangle_4_shape"
+            <ImageButton
+                android:id="@+id/create_account"
+                android:layout_width="168dp"
+                android:layout_height="46dp"
                 android:layout_marginStart="114dp"
                 android:layout_marginTop="682dp"
-                android:layout_width="168dp"
-                android:layout_height="46dp" />
+                android:background="@drawable/rectangle_4_shape" />
 
             <TextView android:id="@+id/create"
                 android:fontFamily="sans-serif-light"
@@ -253,23 +275,30 @@
                 android:text="@string/create_string"
                 />
 
-            <View   android:id="@+id/_rectangle_12"
-                android:background="@drawable/_rectangle_12_shape"
+            <ImageButton
+                android:id="@+id/_rectangle_12"
+                android:layout_width="181dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="196dp"
                 android:layout_marginTop="169dp"
-                android:layout_width="181dp"
-                android:layout_height="47dp" />
+                android:background="@drawable/_rectangle_12_shape"
+                android:onClick="signUpAsHW" />
 
-            <TextView android:id="@+id/address"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="228dp"
+                android:layout_height="42dp"
+                android:layout_alignStart="@+id/path_8"
+                android:layout_alignEnd="@+id/path_8"
+                android:layout_marginStart="3dp"
                 android:layout_marginLeft="161dp"
                 android:layout_marginTop="527dp"
-                android:layout_width="86dp"
-                android:layout_height="41dp"
-                android:text="@string/address_string"
-                />
+                android:layout_marginEnd="9dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="@string/address_string"
+                android:textAlignment="center"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
             <ImageView android:id="@+id/path_9"
                 android:src="@drawable/path_10"
@@ -279,23 +308,29 @@
                 android:layout_width="239dp"
                 android:layout_height="43.133361816406dp" />
 
-            <TextView android:id="@+id/confirm_password"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
-                android:layout_marginLeft="127dp"
-                android:layout_marginTop="638dp"
+            <EditText
+                android:id="@+id/confirm_password"
                 android:layout_width="174dp"
                 android:layout_height="41dp"
-                android:text="@string/confirm_password_string"
-                />
+                android:layout_alignStart="@+id/path_9"
+                android:layout_alignEnd="@+id/path_9"
+                android:layout_marginStart="34dp"
+                android:layout_marginLeft="127dp"
+                android:layout_marginTop="638dp"
+                android:layout_marginEnd="31dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textVisiblePassword"
+                android:hint="@string/confirm_password_string"
+                android:textColor="@color/name_color"
+                android:textSize="20sp" />
 
-            <View   android:id="@+id/rectangle_13"
-                android:background="@drawable/rectangle_14_shape"
+            <View
+                android:id="@+id/rectangle_13"
+                android:layout_width="181dp"
+                android:layout_height="47dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="169dp"
-                android:layout_width="181dp"
-                android:layout_height="47dp" />
+                android:background="@drawable/rectangle_14_shape" />
 
             <TextView android:id="@+id/patient"
                 android:fontFamily="sans-serif-light"

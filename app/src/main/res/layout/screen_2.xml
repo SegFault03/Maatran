@@ -38,12 +38,13 @@
                 android:layout_width="1072dp"
                 android:layout_height="1002dp" />
 
-            <View   android:id="@+id/ellipse_2"
-                android:background="@drawable/ellipse_2_shape"
+            <View
+                android:id="@+id/ellipse_2"
+                android:layout_width="1114dp"
+                android:layout_height="975dp"
                 android:layout_marginStart="-103dp"
                 android:layout_marginTop="-201dp"
-                android:layout_width="1114dp"
-                android:layout_height="975dp" />
+                android:background="@drawable/ellipse_2_shape" />
 
             <ImageView android:id="@+id/logo"
                 android:src="@drawable/logo"
@@ -67,12 +68,14 @@
                 android:textColor="@color/mum_tran_color"
                 android:textSize="40sp" />
 
-            <View   android:id="@+id/_rectangle_21"
-                android:background="@drawable/_rectangle_24_shape"
+            <ImageButton
+                android:id="@+id/_rectangle_21"
+                android:layout_width="312dp"
+                android:layout_height="62dp"
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="502dp"
-                android:layout_width="320dp"
-                android:layout_height="64dp" />
+                android:background="@drawable/_rectangle_24_shape"
+                android:onClick="signUpAsHW" />
 
             <TextView android:id="@+id/register__as_health_worker"
                 android:fontFamily="sans-serif-light"
@@ -87,12 +90,14 @@
                 android:text="@string/register__as_health_worker_string"
                 />
 
-            <View   android:id="@+id/_rectangle_23"
-                android:background="@drawable/_rectangle_25_shape"
+            <ImageButton
+                android:id="@+id/_rectangle_23"
+                android:layout_width="320dp"
+                android:layout_height="64dp"
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="415dp"
-                android:layout_width="320dp"
-                android:layout_height="64dp" />
+                android:background="@drawable/_rectangle_25_shape"
+                android:onClick="signUpAsPatient" />
 
             <TextView android:id="@+id/register_as_patient"
                 android:fontFamily="sans-serif-light"
@@ -114,18 +119,19 @@
                 android:layout_width="320dp"
                 android:layout_height="64dp" />
 
-            <TextView android:id="@+id/sign_up__with_google_"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/register__as_health_worker_color"
-                android:layout_marginLeft="116dp"
-                android:layout_marginTop="606dp"
-                android:layout_width="245dp"
+            <TextView
+                android:id="@+id/sign_in_with_google_"
+                android:layout_width="231dp"
                 android:layout_height="52.5dp"
-                android:text="@string/sign_up__with_google__string"
-                />
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="605dp"
+                android:backgroundTint="#00FFFFFF"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Sign Up with Google"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
 
             <ImageView android:id="@+id/google_logo"
                 android:src="@drawable/google_logo"
@@ -142,18 +148,19 @@
                 android:layout_width="320dp"
                 android:layout_height="64dp" />
 
-            <TextView android:id="@+id/sign_up_with_facebook_"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/register__as_health_worker_color"
-                android:layout_marginLeft="109dp"
-                android:layout_marginTop="693dp"
-                android:layout_width="263dp"
+            <TextView
+                android:id="@+id/sign_in_with_facebook_"
+                android:layout_width="255dp"
                 android:layout_height="52.5dp"
-                android:text="@string/sign_up_with_facebook__string"
-                />
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="117dp"
+                android:layout_marginTop="693dp"
+                android:backgroundTint="#00FFFFFF"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Sign Up with Facebook"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
 
             <ImageView android:id="@+id/fb_logo"
                 android:src="@drawable/fb_logo"
@@ -162,6 +169,7 @@
                 android:layout_marginTop="679dp"
                 android:layout_width="61dp"
                 android:layout_height="61dp" />
+
 
         </RelativeLayout>
 

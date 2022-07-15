@@ -12,6 +12,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="_bg__google_pixel_5___8_color">#ffffff</color>
     <color name="ellipse_1_color">#548d5a</color>
+    <color name="rectangle_1_color">#FF250707</color>
     <color name="mum_tran_color">#f8f8f8</color>
     <color name="sign_in_as_patient_color">#1b4d20</color>
     <color name="register__as_health_worker_color">#1b4d20</color>
