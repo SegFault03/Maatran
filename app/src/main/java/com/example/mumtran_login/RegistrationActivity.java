@@ -34,11 +34,30 @@ public class RegistrationActivity extends AppCompatActivity {
         address = (EditText)findViewById(R.id.address);
         password = (EditText) findViewById(R.id.password);
         confirm_password = (EditText) findViewById(R.id.confirm_password);
+
+        DBhelper DB = new DBhelper(this);
+
         ImageButton create = (ImageButton) findViewById(R.id.create_account);
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SetValidation();
+                if(SetValidation())
+                {
+                    String nameTXT = name.getText().toString();
+                    String emailTXT = email.getText().toString();
+                    String genderTXT = gender.getText().toString();
+                    String mobileTXT = mobile.getText().toString();
+                    String addressTXT = address.getText().toString();
+                    int ageTXT = Integer.parseInt(age.getText().toString());
+
+                    boolean checkEntry = DB.insertUserData(emailTXT, nameTXT, genderTXT, addressTXT, mobileTXT, ageTXT);
+                    if(checkEntry) {
+                        Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -60,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
-    public void SetValidation() {
+    public boolean SetValidation() {
         boolean isEmailValid, isPasswordValid, isNumberValid;
         // Check for a valid email address.
         if (email.getText().toString().isEmpty()) {
@@ -87,10 +106,11 @@ public class RegistrationActivity extends AppCompatActivity {
         else isNumberValid = true;
 
         if (isEmailValid && isPasswordValid && isNumberValid) {
-            Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
+            return true;
         }
         else {
             Toast.makeText(getApplicationContext(), "Information entered invalid", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }

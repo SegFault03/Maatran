@@ -125,7 +125,7 @@
                 android:hint="@string/gender_string"
                 android:textAlignment="center"
                 android:textColor="@color/name_color"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <ImageView android:id="@+id/path_4"
                 android:src="@drawable/path_4"
@@ -167,6 +167,7 @@
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/mobile_number_string"
                 android:inputType="phone"
+                android:textAlignment="center"
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
 
@@ -319,8 +320,9 @@
                 android:layout_marginTop="638dp"
                 android:layout_marginEnd="31dp"
                 android:fontFamily="sans-serif-light"
-                android:inputType="textVisiblePassword"
                 android:hint="@string/confirm_password_string"
+                android:inputType="textVisiblePassword"
+                android:textAlignment="center"
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
 
