@@ -1,17 +1,16 @@
-package com.example.mumtran_login;
+package com.example.maatran;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.mumtran_login.R;
 
 
 public class RegistrationActivity extends AppCompatActivity {
