@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "308622964146",
+    "project_id": "maatran-258d7",
+    "storage_bucket": "maatran-258d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308622964146:android:07bab16a9b4ceebbe9a0ab",
+        "android_client_info": {
+          "package_name": "com.example.maatran"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308622964146-s2nm568fr414vh8ugc53gvthe978uiri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu-ecrbnCH65NsQp_Mmv07CTCKmHNzC2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308622964146-s2nm568fr414vh8ugc53gvthe978uiri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

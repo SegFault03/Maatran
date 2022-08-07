@@ -47,121 +47,35 @@
                 android:background="@drawable/ellipse_2_shape" />
 
             <ImageView
-                android:id="@+id/path_1"
+                android:id="@+id/path_6"
                 android:layout_width="239dp"
                 android:layout_height="43.13330078125dp"
                 android:layout_marginStart="77dp"
-                android:layout_marginTop="295.36669921875dp"
-                android:contentDescription="path_1"
-                android:src="@drawable/path_1" />
-
-            <ImageView android:id="@+id/avatar"
-                android:src="@drawable/avatar"
-                android:contentDescription="avatar"
-                android:layout_marginStart="37dp"
-                android:layout_marginTop="27dp"
-                android:layout_width="127dp"
-                android:layout_height="126dp" />
-
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="214dp"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/path_1"
-                android:layout_alignEnd="@+id/path_1"
-                android:layout_marginStart="14dp"
-                android:layout_marginLeft="170dp"
-                android:layout_marginTop="303dp"
-                android:layout_marginEnd="11dp"
-                android:fontFamily="sans-serif-light"
-                android:hint="@string/name_string"
-                android:textAlignment="center"
-                android:textColor="@color/name_color"
-                android:textSize="20sp" />
-
-            <ImageView android:id="@+id/path_4"
-                android:src="@drawable/path_4"
-                android:contentDescription="path_4"
-                android:layout_marginStart="202.5dp"
-                android:layout_marginTop="77dp"
-                android:layout_width="179.5dp"
-                android:layout_height="27dp" />
-
-            <TextView android:id="@+id/choose_avatar"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/name_color"
-                android:layout_marginLeft="214dp"
-                android:layout_marginTop="77dp"
-                android:layout_width="143dp"
-                android:layout_height="41dp"
-                android:text="@string/choose_avatar_string"
-                />
-
-            <ImageView android:id="@+id/line_1"
-                android:src="@drawable/line_1"
-                android:contentDescription="line_1"
-                android:layout_marginStart="365.5dp"
-                android:layout_marginTop="77dp"
-                android:layout_width="1dp"
-                android:layout_height="27dp" />
-
-            <ImageView android:id="@+id/path_5"
-                android:src="@drawable/path_5"
-                android:contentDescription="path_5"
-                android:layout_marginStart="77dp"
-                android:layout_marginTop="406.43334960938dp"
-                android:layout_width="239dp"
-                android:layout_height="43.13330078125dp" />
-
-            <EditText
-                android:id="@+id/mobile_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/path_5"
-                android:layout_alignEnd="@+id/path_5"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="127dp"
-                android:layout_marginTop="416dp"
-                android:layout_marginEnd="14dp"
-                android:fontFamily="sans-serif-light"
-                android:inputType="phone"
-                android:hint="@string/mobile_number_string"
-                android:textAlignment="center"
-                android:textColor="@color/name_color"
-                android:textSize="20sp" />
-
-            <ImageView android:id="@+id/path_6"
-                android:src="@drawable/path_6"
+                android:layout_marginTop="360.43334960938dp"
                 android:contentDescription="path_6"
-                android:layout_marginStart="77dp"
-                android:layout_marginTop="350.43334960938dp"
-                android:layout_width="239dp"
-                android:layout_height="43.13330078125dp" />
+                android:src="@drawable/path_6" />
 
-            <ImageView android:id="@+id/path_7"
-                android:src="@drawable/path_7"
-                android:contentDescription="path_7"
-                android:layout_marginStart="77dp"
-                android:layout_marginTop="462.93334960938dp"
-                android:layout_width="239dp"
-                android:layout_height="43.13330078125dp" />
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="127dp"
+                android:layout_height="126dp"
+                android:layout_marginStart="133dp"
+                android:layout_marginTop="74dp"
+                android:contentDescription="logo"
+                android:src="@drawable/logo" />
 
-            <EditText
-                android:id="@+id/organisation_id"
-                android:layout_width="219dp"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/path_7"
-                android:layout_alignEnd="@+id/path_7"
-                android:layout_marginStart="9dp"
-                android:layout_marginLeft="128dp"
-                android:layout_marginTop="471dp"
-                android:layout_marginEnd="11dp"
+            <TextView
+                android:id="@+id/mum_tran"
+                android:layout_width="167dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="111dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-light"
-                android:hint="@string/organisation_id_string"
-                android:textAlignment="center"
-                android:textColor="@color/name_color"
-                android:textSize="20sp" />
+                android:gravity="center"
+                android:text="@string/mum_tran_string"
+                android:textColor="@color/patient_color"
+                android:textSize="30sp" />
 
             <EditText
                 android:id="@+id/email"
@@ -184,8 +98,11 @@
                 android:id="@+id/path_8"
                 android:layout_width="239dp"
                 android:layout_height="43.13330078125dp"
-                android:layout_marginStart="77dp"
-                android:layout_marginTop="518.43334960938dp"
+                android:layout_alignEnd="@+id/_bg__google_pixel_5___7"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="418.43334960938dp"
+                android:layout_marginEnd="80dp"
                 android:contentDescription="path_8"
                 android:src="@drawable/path_8" />
 
@@ -195,10 +112,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/path_8"
                 android:layout_alignEnd="@+id/path_8"
-                android:layout_marginStart="58dp"
+                android:layout_marginStart="68dp"
                 android:layout_marginLeft="155dp"
-                android:layout_marginTop="527dp"
-                android:layout_marginEnd="58dp"
+                android:layout_marginTop="418dp"
+                android:layout_marginEnd="48dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/password_string"
                 android:inputType="textPassword"
@@ -206,18 +123,19 @@
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
 
-            <TextView android:id="@+id/signup_as_health_worker"
-                android:fontFamily="sans-serif-light"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:textColor="@color/signup_as_health_worker_color"
-                android:layout_marginLeft="63dp"
-                android:layout_marginTop="227dp"
+            <TextView
+                android:id="@+id/signup_as_health_worker"
                 android:layout_width="283dp"
                 android:layout_height="41dp"
+                android:layout_marginLeft="63dp"
+                android:layout_marginTop="245dp"
+                android:fontFamily="sans-serif-light"
                 android:text="@string/signup_as_health_worker_string"
-                />
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/signup_as_health_worker_color"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/_already_have_an_account__login"
@@ -226,39 +144,43 @@
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="803dp"
+                android:clickable="true"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
+                android:onClick="signInOptions"
                 android:text="@string/_already_have_an_account__login_string"
                 android:textColor="@color/_already_have_an_account__login_color"
-                android:textSize="25sp"
-                android:clickable="true"
-                android:onClick="signInOptions"/>
+                android:textSize="25sp" />
 
             <ImageButton
                 android:id="@+id/create_acc"
                 android:layout_width="168dp"
                 android:layout_height="46dp"
                 android:layout_marginStart="114dp"
-                android:layout_marginTop="666dp"
+                android:layout_marginTop="566dp"
+                android:onClick="signUpClick"
                 android:background="@drawable/rectangle_4_shape" />
 
-            <TextView android:id="@+id/create"
-                android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
-                android:textColor="@color/create_color"
-                android:layout_marginLeft="163dp"
-                android:layout_marginTop="677dp"
+            <TextView
+                android:id="@+id/create"
                 android:layout_width="82dp"
                 android:layout_height="41dp"
+                android:layout_marginLeft="163dp"
+                android:layout_marginTop="577dp"
+                android:fontFamily="sans-serif-light"
                 android:text="@string/create_string"
-                />
+                android:textColor="@color/create_color"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/path_10"
                 android:layout_width="239dp"
                 android:layout_height="43.13330078125dp"
+                android:layout_alignEnd="@+id/_bg__google_pixel_5___7"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="77dp"
-                android:layout_marginTop="573.93334960938dp"
+                android:layout_marginTop="473.93334960938dp"
+                android:layout_marginEnd="77dp"
                 android:contentDescription="path_10"
                 android:src="@drawable/path_10" />
 
@@ -270,7 +192,7 @@
                 android:layout_alignEnd="@+id/path_10"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="117dp"
-                android:layout_marginTop="582dp"
+                android:layout_marginTop="482dp"
                 android:layout_marginEnd="25dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/confirm_password_string"
@@ -278,45 +200,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
-
-            <View
-                android:id="@+id/rectangle_14"
-                android:layout_width="181dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="190dp"
-                android:layout_marginTop="172dp"
-                android:background="@drawable/rectangle_14_shape" />
-
-            <ImageButton
-                android:id="@+id/_rectangle_12"
-                android:layout_width="181dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="172dp"
-                android:background="@drawable/_rectangle_12_shape"
-                android:onClick="signUpAsPatient" />
-
-            <TextView
-                android:id="@+id/health_worker"
-                android:layout_width="146dp"
-                android:layout_height="33.5dp"
-                android:layout_marginLeft="216dp"
-                android:layout_marginTop="184dp"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/health_worker_string"
-                android:textColor="@color/health_worker_color"
-                android:textSize="17sp" />
-
-            <TextView android:id="@+id/patient"
-                android:fontFamily="sans-serif-light"
-                android:textSize="17sp"
-                android:textColor="@color/health_worker_color"
-                android:layout_marginLeft="74dp"
-                android:layout_marginTop="184dp"
-                android:layout_width="76dp"
-                android:layout_height="33.5dp"
-                android:text="@string/patient_string"
-                />
 
         </RelativeLayout>
 

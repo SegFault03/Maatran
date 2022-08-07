@@ -13,7 +13,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
         <activity
-            android:name="com.example.maatran.LoginActivity"
+            android:name="com.example.maatran.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.maatran.RegistrationActivity">
+        </activity>
+        <activity android:name="com.example.maatran.LoginActivity">
+        </activity>
+        <activity android:name="com.example.maatran.EmailPasswordActivity">
+        </activity>
+        <activity android:name="com.example.maatran.EmailSignUp">
         </activity>
     </application>
 
