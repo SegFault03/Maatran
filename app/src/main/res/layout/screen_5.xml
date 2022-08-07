@@ -46,13 +46,14 @@
                 android:layout_marginTop="-201dp"
                 android:background="@drawable/ellipse_2_shape" />
 
-            <ImageView android:id="@+id/logo"
-                android:src="@drawable/logo"
-                android:contentDescription="logo"
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="127dp"
+                android:layout_height="126dp"
                 android:layout_marginStart="133dp"
                 android:layout_marginTop="74dp"
-                android:layout_width="127dp"
-                android:layout_height="126dp" />
+                android:contentDescription="logo"
+                android:src="@drawable/logo" />
 
             <ImageView
                 android:id="@+id/path_6"
@@ -107,18 +108,18 @@
                 android:textColor="@color/patient_color"
                 android:textSize="25sp" />
 
-            <TextView android:id="@+id/mum_tran"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="30sp"
-                android:textColor="@color/patient_color"
-                android:layout_marginLeft="111dp"
-                android:layout_marginTop="15dp"
+            <TextView
+                android:id="@+id/mum_tran"
                 android:layout_width="167dp"
                 android:layout_height="61dp"
+                android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="111dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
                 android:text="@string/mum_tran_string"
-                />
+                android:textColor="@color/patient_color"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/_create_an_account"
@@ -148,6 +149,7 @@
                 android:layout_marginStart="115dp"
                 android:layout_marginTop="541dp"
                 android:layout_marginEnd="112dp"
+
                 android:background="@drawable/rectangle_4_shape" />
 
             <TextView android:id="@+id/login"
@@ -161,45 +163,22 @@
                 android:text="@string/login_string"
                 />
 
-            <ImageButton
-                android:id="@+id/hw_btn"
-                android:layout_width="181dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="198dp"
-                android:layout_marginTop="219dp"
-                android:background="@drawable/_rectangle_12_shape"
-                android:onClick="toggleButton" />
-
-            <ImageButton
-                android:id="@+id/patient_btn"
-                android:layout_width="181dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="19dp"
-                android:layout_marginTop="219dp"
-                android:background="@drawable/_rectangle_12_shape"
-                android:onClick="toggleButton" />
-
-            <TextView android:id="@+id/health_worker"
-                android:fontFamily="sans-serif-light"
-                android:textSize="17sp"
-                android:textColor="@color/patient_color"
+            <TextView
+                android:id="@+id/health_worker"
+                android:layout_width="162dp"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/_bg__google_pixel_5___5"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="127dp"
                 android:layout_marginLeft="222dp"
                 android:layout_marginTop="232dp"
-                android:layout_width="146dp"
-                android:layout_height="33.5dp"
-                android:text="@string/health_worker_string"
-                />
-
-            <TextView
-                android:id="@+id/patient"
-                android:layout_width="76dp"
-                android:layout_height="33.5dp"
-                android:layout_marginLeft="81dp"
-                android:layout_marginTop="232dp"
+                android:layout_marginEnd="106dp"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/patient_string"
-                android:textColor="@color/patient_color"
-                android:textSize="17sp" />
+                android:text="@string/sign_in_string"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/password"
