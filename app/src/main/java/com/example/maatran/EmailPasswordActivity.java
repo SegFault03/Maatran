@@ -109,7 +109,7 @@ public class EmailPasswordActivity extends Activity {
         if(user != null) {
             //start dashboard activity
             //remove following code
-            setContentView(R.layout.home_3);
+            setContentView(R.layout.dashboard_1);
         }
     }
 }
