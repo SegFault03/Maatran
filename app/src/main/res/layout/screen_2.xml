@@ -75,42 +75,20 @@
                 android:layout_marginStart="51dp"
                 android:layout_marginTop="502dp"
                 android:background="@drawable/_rectangle_24_shape"
-                android:onClick="signUpAsHW" />
+                android:onClick="signUp" />
 
-            <TextView android:id="@+id/register__as_health_worker"
-                android:fontFamily="sans-serif-light"
-                android:layout_gravity="center_horizontal|center"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:textColor="@color/register__as_health_worker_color"
-                android:layout_marginLeft="58dp"
-                android:layout_marginTop="517dp"
+            <TextView
+                android:id="@+id/register__as_health_worker"
                 android:layout_width="303dp"
                 android:layout_height="52.5dp"
-                android:text="@string/register__as_health_worker_string"
-                />
-
-            <ImageButton
-                android:id="@+id/_rectangle_23"
-                android:layout_width="320dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="51dp"
-                android:layout_marginTop="415dp"
-                android:background="@drawable/_rectangle_25_shape"
-                android:onClick="signUpAsPatient" />
-
-            <TextView android:id="@+id/register_as_patient"
-                android:fontFamily="sans-serif-light"
                 android:layout_gravity="center_horizontal|center"
+                android:layout_marginLeft="58dp"
+                android:layout_marginTop="517dp"
+                android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:text="@string/register__as_health_worker_string"
                 android:textColor="@color/register__as_health_worker_color"
-                android:layout_marginLeft="103dp"
-                android:layout_marginTop="429dp"
-                android:layout_width="213dp"
-                android:layout_height="52.5dp"
-                android:text="@string/register_as_patient_string"
-                />
+                android:textSize="25sp" />
 
             <View   android:id="@+id/rectangle_27"
                 android:background="@drawable/rectangle_26_shape"

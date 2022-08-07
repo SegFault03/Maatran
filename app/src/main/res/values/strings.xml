@@ -3,12 +3,12 @@
 
     <string name="app_name">MAATRAN</string>
     <string name="ek_img_content">ExportKit Image</string>
-    <string name="mum_tran_string">MUM-TRAN</string>
-    <string name="sign_in_as_patient_string">Sign In</string>
+    <string name="mum_tran_string">MAATRAN</string>
+    <string name="sign_in_as_patient_string">Sign In with Email</string>
     <string name="sign_in_as_health_worker_string">Sign In As Health Worker</string>
     <string name="sign_in_with_google__string">Sign In with Google </string>
     <string name="sign_in_with_facebook__string">Sign In with Facebook </string>
-    <string name="register__as_health_worker_string">Register As Health Worker</string>
+    <string name="register__as_health_worker_string">Sign Up with Email</string>
     <string name="register_as_patient_string">Register As Patient</string>
     <string name="sign_up__with_google__string">Sign up with Google </string>
     <string name="sign_up_with_facebook__string">Sign up with Facebook </string>
@@ -18,7 +18,7 @@
     <string name="organisation_id_string">Organisation ID</string>
     <string name="email_string">Email</string>
     <string name="password_string">Password</string>
-    <string name="signup_as_health_worker_string">Signup as health worker</string>
+    <string name="signup_as_health_worker_string">SIGN UP</string>
     <string name="_already_have_an_account__login_string">Already have an account? Login</string>
     <string name="create_string">CREATE</string>
     <string name="forgot_password__string">Forgot password?</string>
