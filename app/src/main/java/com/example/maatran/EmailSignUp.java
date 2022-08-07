@@ -106,9 +106,18 @@ public class EmailSignUp extends Activity {
     }
 
 
-    private void reload() { }
+    private void reload() {
+        mAuth.getInstance().signOut();
+        Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
+        startActivity(intent);
+    }
 
     private void updateUI(FirebaseUser user) {
-        setContentView(R.layout.home_3);
+
+            //start dashboard activity
+            //remove following code
+
+        setContentView(R.layout.dashboard_1);
+
     }
 }
