@@ -113,11 +113,8 @@ public class EmailSignUp extends Activity {
     }
 
     private void updateUI(FirebaseUser user) {
-
-            //start dashboard activity
-            //remove following code
-
-        setContentView(R.layout.dashboard_1);
+        Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+        startActivity(intent);
 
     }
 }
