@@ -39,4 +39,7 @@
     <string name="real_time_health_monitoring__and_much_more_">Real-time health monitoring and much more!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="normal">normal</string>
+    <string name="moderate_risk">moderate</string>
+    <string name="high_risk">high</string>
 </resources>

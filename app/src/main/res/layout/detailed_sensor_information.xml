@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#84B192"
+    android:paddingHorizontal="40dp">
+<TextView
+    android:id="@+id/detailed_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    android:text="Report no xxx"
+    android:textAlignment="center"
+    android:textSize="30sp"
+    android:layout_marginTop="30dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/patient_details_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/detailed_header">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+        <TextView
+            android:id="@+id/patient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name: Rudraneel Dutta"
+            android:textSize="16sp"
+
+            app:layout_constraintTop_toTopOf="@+id/patient_details_card" />
+
+        <TextView
+            android:id="@+id/patient_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Age: 20"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/patient_name" />
+
+        <TextView
+            android:id="@+id/patient_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sex: Male"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/patient_age" />
+
+        <TextView
+            android:id="@+id/patient_spo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SpO2 level: xxx"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/patient_sex" />
+
+        <TextView
+            android:id="@+id/patient_temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Temp: 100C"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/patient_spo2" />
+
+        <TextView
+            android:id="@+id/patient_sys_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Systolic pressure: "
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/patient_temp" />
+
+        <TextView
+            android:id="@+id/patient_dia_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Diastolic pressure: xxx"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/patient_sys_pressure" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/patient_details_card">
+
+        <!-- Table Heading -->
+        <TableRow android:background="#96c896">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="5sp"
+                android:text="RISK ANALYSIS RESULTS"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </TableRow>
+
+        <TableRow android:background="#96c896">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="5sp"
+                android:text="@string/normal"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:padding="5sp"
+                android:text="@string/moderate_risk"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="@string/high_risk"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+
+        </TableRow>
+
+        <!-- Table Data -->
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="SPO2()"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row1Age"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row1Surname"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row2Name"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row2Age"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row2Surname"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row3Name"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row3Age"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="string/row3Surname"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="12sp" />
+
+        </TableRow>
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
