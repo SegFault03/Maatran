@@ -17,7 +17,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_4);
-
+        getSupportActionBar().hide();
         Toast.makeText(DetailsActivity.this, "Enter your information.",
                 Toast.LENGTH_SHORT).show();
 
