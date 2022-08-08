@@ -109,7 +109,8 @@ public class EmailPasswordActivity extends Activity {
         if(user != null) {
             //start dashboard activity
             //remove following code
-            setContentView(R.layout.dashboard_1);
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(intent);
         }
     }
 }

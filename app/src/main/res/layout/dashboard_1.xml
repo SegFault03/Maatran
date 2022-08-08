@@ -176,4 +176,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/group_1" />
+
+    <Button
+        android:id="@+id/report_button"
+        android:layout_width="144dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="76dp"
+        android:text="Reports"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

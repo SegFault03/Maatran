@@ -10,7 +10,7 @@
         android:id="@+id/sensors_home_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sensory_information"
+        android:text="REPORTS"
         android:textSize="30sp"
         android:textColor="@color/black"
         android:textAlignment="center"
@@ -21,15 +21,15 @@
         android:paddingBottom="20dp"/>
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/sensors_home_heading"
+        android:layout_width="393dp"
+        android:layout_height="848dp"
+        android:layout_marginTop="25dp"
+        android:smoothScrollbar="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/sensors_home_heading"
         tools:listitem="@layout/report_item"
-        android:smoothScrollbar="true"
 
         >
 

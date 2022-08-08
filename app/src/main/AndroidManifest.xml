@@ -29,6 +29,8 @@
         </activity>
         <activity android:name="com.example.maatran.EmailSignUp">
         </activity>
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".DetailsActivity" />
     </application>
 
 </manifest>
