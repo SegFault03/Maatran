@@ -1,5 +1,8 @@
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="wrap_content" >
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:overScrollMode="never">
     <!--
     /*
      *	This content is generated from the API File Info.
@@ -15,28 +18,34 @@
      *
      */
     -->
-    <ScrollView android:id="@+id/google_pixel_5___4"
+    <ScrollView
+        android:id="@+id/google_pixel_5___4"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <RelativeLayout android:id="@+id/content_container"
+        <RelativeLayout
+            android:id="@+id/content_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
-            <View   android:id="@+id/_bg__google_pixel_5___1"
-                android:background="@drawable/_bg__google_pixel_5___1_shape"
+            <View
+                android:id="@+id/_bg__google_pixel_5___1"
+                android:layout_width="393dp"
+                android:layout_height="851dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_width="393dp"
-                android:layout_height="851dp" />
+                android:background="@drawable/_bg__google_pixel_5___1_shape" />
 
             <ImageView
                 android:id="@+id/_motherhood"
-                android:layout_width="1395dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="-1000dp"
                 android:layout_marginTop="0dp"
                 android:contentDescription="_motherhood"
+                android:overScrollMode="never"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
                 android:src="@drawable/_motherhood" />
 
             <View
@@ -45,7 +54,7 @@
                 android:layout_height="221dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="421dp"
+                android:layout_marginTop="230dp"
                 android:alpha="0.47"
                 android:background="@drawable/rectangle_1_shape"
                 android:backgroundTint="#250707" />
@@ -57,7 +66,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="72dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="42dp"
                 android:fontFamily="@font/amarante"
                 android:gravity="center"
                 android:text="@string/mum_tran_string"
@@ -71,9 +80,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="581dp"
-                android:layout_marginEnd="21dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="492dp"
+                android:layout_marginEnd="31dp"
                 android:alpha="0.82"
                 android:background="@drawable/_rectangle_2_shape"
                 android:onClick="signInOptions" />
@@ -138,19 +147,20 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="657dp"
-                android:layout_marginEnd="17dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="566dp"
+                android:layout_marginEnd="26dp"
                 android:alpha="0.82"
                 android:background="@drawable/_rectangle_13_shape"
                 android:onClick="registerOptions" />
 
-            <View   android:id="@+id/ellipse_5"
-                android:background="@drawable/ellipse_5_shape"
+            <View
+                android:id="@+id/ellipse_5"
+                android:layout_width="11dp"
+                android:layout_height="13dp"
                 android:layout_marginStart="229dp"
                 android:layout_marginTop="827dp"
-                android:layout_width="11dp"
-                android:layout_height="13dp" />
+                android:background="@drawable/ellipse_5_shape" />
 
             <TextView
                 android:id="@+id/register"

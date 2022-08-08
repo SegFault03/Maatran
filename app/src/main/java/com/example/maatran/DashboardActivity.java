@@ -12,7 +12,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_1);
-
+        getSupportActionBar().hide();
         Button reports = (Button) findViewById(R.id.report_button);
 
         reports.setOnClickListener(new View.OnClickListener() {

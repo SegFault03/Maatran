@@ -17,6 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+//called from loginactivity, used for signing-up using e-mail, password
+//corresponding xml file: screen_5
 public class EmailPasswordActivity extends Activity {
 
     private static final String TAG = "EmailPassword";
