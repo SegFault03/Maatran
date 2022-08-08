@@ -6,14 +6,19 @@
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/maatran_icon_foreground"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mumtranlogin" >
+        android:theme="@style/Theme.Mumtranlogin">
+        <activity
+            android:name=".ProfileView"
+            android:exported="false" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <activity
-            android:name="com.example.maatran.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.maatran.RegistrationActivity">
-        </activity>
-        <activity android:name="com.example.maatran.LoginActivity">
-        </activity>
-        <activity android:name="com.example.maatran.EmailPasswordActivity">
-        </activity>
-        <activity android:name="com.example.maatran.EmailSignUp">
-        </activity>
+        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".EmailPasswordActivity"></activity>
+        <activity android:name=".EmailSignUp"></activity>
         <activity android:name=".DashboardActivity" />
         <activity android:name=".DetailsActivity" />
     </application>

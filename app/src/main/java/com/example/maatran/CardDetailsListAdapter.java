@@ -36,9 +36,6 @@ public class CardDetailsListAdapter extends ArrayAdapter<CardDetails> {
             pressure_level.setText(user.patient_pressure);
             spo2_level.setText(user.patient_SpO2);
 
-
-
-
         }
 
 
