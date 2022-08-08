@@ -115,6 +115,5 @@ public class EmailSignUp extends Activity {
     private void updateUI(FirebaseUser user) {
         Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
         startActivity(intent);
-
     }
 }
