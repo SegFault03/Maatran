@@ -32,8 +32,8 @@
 
             <ImageView
                 android:id="@+id/_motherhood"
-                android:layout_width="1393dp"
-                android:layout_height="851dp"
+                android:layout_width="1395dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="-1000dp"
                 android:layout_marginTop="0dp"
                 android:contentDescription="_motherhood"
@@ -71,9 +71,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="669dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="581dp"
+                android:layout_marginEnd="21dp"
                 android:alpha="0.82"
                 android:background="@drawable/_rectangle_2_shape"
                 android:onClick="signInOptions" />
@@ -138,9 +138,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="740dp"
-                android:layout_marginEnd="21dp"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="657dp"
+                android:layout_marginEnd="17dp"
                 android:alpha="0.82"
                 android:background="@drawable/_rectangle_13_shape"
                 android:onClick="registerOptions" />

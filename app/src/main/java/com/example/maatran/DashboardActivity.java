@@ -1,5 +1,6 @@
 package com.example.maatran;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,5 +22,11 @@ public class DashboardActivity extends AppCompatActivity {
                 setContentView(R.layout.sensors_home);
             }
         });
+    }
+
+    public void userProfileView(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(),ProfileView.class);
+        startActivity(intent);
     }
 }
