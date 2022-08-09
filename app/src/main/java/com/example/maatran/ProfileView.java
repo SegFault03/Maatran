@@ -1,6 +1,5 @@
 package com.example.maatran;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +7,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileView extends AppCompatActivity {
-
-    Activity act;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,5 +20,4 @@ public class ProfileView extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);
         startActivity(intent);
     }
-
 }
