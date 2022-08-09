@@ -1,3 +1,4 @@
+*.keystore
 *.iml
 .gradle
 /local.properties
@@ -10,3 +11,4 @@
 .cxx
 local.properties
 Assets/
+Local_assets/
