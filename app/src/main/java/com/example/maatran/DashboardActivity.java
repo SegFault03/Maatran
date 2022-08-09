@@ -7,6 +7,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +17,8 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.dashboard_1);
         getSupportActionBar().hide();
         Button reports = (Button) findViewById(R.id.report_button);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         reports.setOnClickListener(new View.OnClickListener() {
             @Override
