@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.maatran">
+    package="com.example.Maatran">
 
     <application
         android:allowBackup="true"
@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/maatran_icon_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
+        <activity
+            android:name=".sensors_home"
+            android:exported="false"/>
         <activity
             android:name=".ProfileView"
             android:exported="false" />
@@ -26,10 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".EmailPasswordActivity"></activity>
-        <activity android:name=".EmailSignUp"></activity>
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".EmailPasswordActivity" />
+        <activity android:name=".EmailSignUp" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".DetailsActivity" />
     </application>
