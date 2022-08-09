@@ -7,7 +7,7 @@
     android:background="#D1EFEB">
 
     <TextView
-        android:id="@+id/user_gender3"
+        android:id="@+id/user_mob"
         android:layout_width="217dp"
         android:layout_height="35dp"
         android:text="user_mobile"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.645" />
 
     <TextView
-        android:id="@+id/user_gender2"
+        android:id="@+id/user_adr"
         android:layout_width="207dp"
         android:layout_height="45dp"
         android:text="user_address"
@@ -181,7 +181,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_gender3"
+        app:layout_constraintTop_toBottomOf="@+id/user_mob"
         app:layout_constraintVertical_bias="0.138"
         android:onClick="backToHome"/>
 
