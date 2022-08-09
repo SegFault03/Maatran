@@ -46,13 +46,14 @@
                 android:layout_marginTop="-201dp"
                 android:background="@drawable/ellipse_2_shape" />
 
-            <ImageView android:id="@+id/logo"
-                android:src="@drawable/logo"
-                android:contentDescription="logo"
-                android:layout_marginStart="89dp"
-                android:layout_marginTop="181dp"
+            <ImageView
+                android:id="@+id/logo"
                 android:layout_width="203dp"
-                android:layout_height="194dp" />
+                android:layout_height="194dp"
+                android:layout_marginStart="89dp"
+                android:layout_marginTop="110dp"
+                android:contentDescription="logo"
+                android:src="@drawable/logo" />
 
             <TextView
                 android:id="@+id/mum_tran"
@@ -60,7 +61,7 @@
                 android:layout_height="81dp"
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="82dp"
-                android:layout_marginTop="112dp"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="#00FFFFFF"
                 android:fontFamily="@font/dm_serif_display"
                 android:gravity="center"
@@ -70,10 +71,10 @@
 
             <ImageButton
                 android:id="@+id/_rectangle_21"
-                android:layout_width="312dp"
+                android:layout_width="340dp"
                 android:layout_height="62dp"
-                android:layout_marginStart="51dp"
-                android:layout_marginTop="502dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="350dp"
                 android:background="@drawable/_rectangle_24_shape"
                 android:onClick="signUp" />
 
@@ -83,27 +84,28 @@
                 android:layout_height="52.5dp"
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="58dp"
-                android:layout_marginTop="517dp"
+                android:layout_marginTop="350dp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:text="@string/register__as_health_worker_string"
                 android:textColor="@color/register__as_health_worker_color"
                 android:textSize="25sp" />
 
-            <View   android:id="@+id/rectangle_27"
-                android:background="@drawable/rectangle_26_shape"
-                android:layout_marginStart="46dp"
-                android:layout_marginTop="591dp"
-                android:layout_width="320dp"
-                android:layout_height="64dp" />
+            <View
+                android:id="@+id/rectangle_27"
+                android:layout_width="340dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="440dp"
+                android:background="@drawable/rectangle_26_shape" />
 
             <TextView
                 android:id="@+id/sign_in_with_google_"
-                android:layout_width="231dp"
-                android:layout_height="52.5dp"
+                android:layout_width="250dp"
+                android:layout_height="61dp"
                 android:layout_gravity="center_horizontal|center"
                 android:layout_marginLeft="120dp"
-                android:layout_marginTop="605dp"
+                android:layout_marginTop="440dp"
                 android:backgroundTint="#00FFFFFF"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
@@ -111,28 +113,30 @@
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
-            <ImageView android:id="@+id/google_logo"
-                android:src="@drawable/google_logo"
-                android:contentDescription="google_logo"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="591dp"
+            <ImageView
+                android:id="@+id/google_logo"
                 android:layout_width="62dp"
-                android:layout_height="62dp" />
+                android:layout_height="62dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="440dp"
+                android:contentDescription="google_logo"
+                android:src="@drawable/google_logo" />
 
-            <View   android:id="@+id/rectangle_29"
-                android:background="@drawable/rectangle_28_shape"
-                android:layout_marginStart="58dp"
-                android:layout_marginTop="678dp"
-                android:layout_width="320dp"
-                android:layout_height="64dp" />
+            <View
+                android:id="@+id/rectangle_29"
+                android:layout_width="340dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="530dp"
+                android:background="@drawable/rectangle_28_shape" />
 
             <TextView
                 android:id="@+id/sign_in_with_facebook_"
-                android:layout_width="255dp"
-                android:layout_height="52.5dp"
+                android:layout_width="268dp"
+                android:layout_height="64dp"
                 android:layout_gravity="center_horizontal|center"
-                android:layout_marginLeft="117dp"
-                android:layout_marginTop="693dp"
+                android:layout_marginLeft="110dp"
+                android:layout_marginTop="530dp"
                 android:backgroundTint="#00FFFFFF"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
@@ -140,13 +144,14 @@
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
-            <ImageView android:id="@+id/fb_logo"
-                android:src="@drawable/fb_logo"
-                android:contentDescription="fb_logo"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="679dp"
+            <ImageView
+                android:id="@+id/fb_logo"
                 android:layout_width="61dp"
-                android:layout_height="61dp" />
+                android:layout_height="61dp"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="530dp"
+                android:contentDescription="fb_logo"
+                android:src="@drawable/fb_logo" />
 
 
         </RelativeLayout>
