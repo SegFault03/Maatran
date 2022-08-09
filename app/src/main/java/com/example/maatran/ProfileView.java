@@ -18,8 +18,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileView extends AppCompatActivity {
-    FirebaseFirestore db;
-    public static final String TAG="ProfileView";
+FirebaseFirestore db;
+public static final String TAG="ProfileView";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
