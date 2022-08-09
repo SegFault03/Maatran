@@ -31,6 +31,17 @@ public class FirebaseHandler {
         this.address = address;
     }
 
+    public FirebaseHandler()
+    {
+        db = FirebaseFirestore.getInstance();
+        this.name = "lalalala";
+        this.age = 0;
+        this.gender = "";
+        this.mobile = "";
+        this.emergency_no = "";
+        this.address = "";
+    }
+
     public void addDetails(FirebaseUser user)
     {
         Map<String, Object> details = new HashMap<>();
@@ -56,4 +67,6 @@ public class FirebaseHandler {
                     }
                 });
     }
+
+
 }
