@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
         <activity
-            android:name="com.example.Maatran.ProfileView"
+            android:name=".sensors_home"
+            android:exported="false"/>
+        <activity
+            android:name=".ProfileView"
             android:exported="false" />
 
         <meta-data
@@ -18,7 +21,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.example.Maatran.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.Maatran.RegistrationActivity"></activity>
-        <activity android:name="com.example.Maatran.LoginActivity"></activity>
-        <activity android:name="com.example.Maatran.EmailPasswordActivity"></activity>
-        <activity android:name="com.example.Maatran.EmailSignUp"></activity>
-        <activity android:name="com.example.Maatran.DashboardActivity" />
-        <activity android:name="com.example.Maatran.DetailsActivity" />
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".EmailPasswordActivity" />
+        <activity android:name=".EmailSignUp" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".DetailsActivity" />
     </application>
 
 </manifest>

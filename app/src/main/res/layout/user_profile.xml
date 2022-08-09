@@ -10,6 +10,7 @@
         android:id="@+id/user_mob"
         android:layout_width="217dp"
         android:layout_height="35dp"
+        android:layout_marginStart="125dp"
         android:text="user_mobile"
         android:textColor="#3F51B5"
         android:textSize="25sp"
@@ -17,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.229"
-        app:layout_constraintStart_toEndOf="@+id/mobile_number_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.645" />
 
@@ -25,6 +26,7 @@
         android:id="@+id/user_adr"
         android:layout_width="207dp"
         android:layout_height="45dp"
+        android:layout_marginTop="11dp"
         android:text="user_address"
         android:textColor="#3F51B5"
         android:textSize="25sp"
@@ -130,7 +132,6 @@
         android:id="@+id/user_name"
         android:layout_width="242dp"
         android:layout_height="42dp"
-        android:layout_marginStart="13dp"
         android:text="user_name"
         android:textColor="#3F51B5"
         android:textSize="25sp"
@@ -146,6 +147,7 @@
         android:id="@+id/user_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
         android:text="user_age"
         android:textColor="#3F51B5"
         android:textSize="25sp"
@@ -153,7 +155,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toEndOf="@+id/age_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.431" />
 
@@ -171,50 +173,35 @@
         app:layout_constraintStart_toEndOf="@+id/gender_label"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView15"
-        android:layout_width="88dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/home_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_mob"
-        app:layout_constraintVertical_bias="0.138"
-        android:onClick="backToHome"/>
-
-    <TextView
-        android:id="@+id/HOME_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:text="HOME"
-        android:textColor="#009688"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView15"
-        app:layout_constraintVertical_bias="0.0" />
-
     <Button
         android:id="@+id/sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#DD6969"
+        android:onClick="signOut"
         android:text="SIGN OUT"
         android:textSize="25sp"
-        android:onClick="signOut"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/user_profile_pic"
-        app:layout_constraintVertical_bias="0.962" />
+        app:layout_constraintVertical_bias="0.862" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="backToHome"
+        android:text="HOME"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.774" />
     />
 
 
