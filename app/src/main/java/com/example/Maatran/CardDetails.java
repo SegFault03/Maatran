@@ -1,4 +1,4 @@
-package com.example.maatran;
+package com.example.Maatran;
 
 public class CardDetails {
     String patient_name,patient_temperature,patient_SpO2,patient_pressure,patient_sugar;

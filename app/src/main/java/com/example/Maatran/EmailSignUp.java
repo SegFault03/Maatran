@@ -1,4 +1,4 @@
-package com.example.maatran;
+package com.example.Maatran;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,10 +16,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-//called from loginactivity, used for signing-up using e-mail, password
-//corresponding xml file: screen_5
-public class EmailPasswordActivity extends Activity {
+//Called from RegistrationActivity
+//email based sign-up
+//xml file: screen-3
+public class EmailSignUp extends Activity {
 
     private static final String TAG = "EmailPassword";
     // [START declare_auth]
@@ -32,14 +32,19 @@ public class EmailPasswordActivity extends Activity {
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.screen_5);
-        ImageButton login = (ImageButton) findViewById(R.id.login_btn);
-        login.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.screen_3);
+        ImageButton create = (ImageButton) findViewById(R.id.create_acc);
+        create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email =  ((EditText)findViewById(R.id.user_id)).getText().toString();
+                String email =  ((EditText)findViewById(R.id.email)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
-                signIn(email, password);
+                String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
+                if(password.equals(confirmPass))
+                createAccount(email, password);
+                else
+                    Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                            Toast.LENGTH_SHORT).show();
             }
         });
         // [END initialize_auth]
@@ -58,28 +63,30 @@ public class EmailPasswordActivity extends Activity {
     // [END on_start_check_user]
 
 
-    private void signIn(String email, String password) {
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
+
+    private void createAccount(String email, String password) {
+        // [START create_user_with_email]
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
+                            Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(EmailSignUp.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
                 });
-        // [END sign_in_with_email]
+        // [END create_user_with_email]
     }
+
 
     private void sendEmailVerification() {
         // Send verification email
@@ -95,24 +102,20 @@ public class EmailPasswordActivity extends Activity {
         // [END send_email_verification]
     }
 
-
-    public void registerOptions(View view) {
-        Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
-        startActivity(intent);
-    }
-
-    private void reload() {
-        mAuth.getInstance().signOut();
+    public void signInOptions(View view) {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
 
+
+    private void reload() {
+        mAuth.getInstance().signOut();
+        Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
+        startActivity(intent);
+    }
+
     private void updateUI(FirebaseUser user) {
-        if(user != null) {
-            //start dashboard activity
-            //remove following code
-            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+        startActivity(intent);
     }
 }

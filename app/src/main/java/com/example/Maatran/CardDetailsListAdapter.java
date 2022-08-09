@@ -1,4 +1,4 @@
-package com.example.maatran;
+package com.example.Maatran;
 
 import android.content.Context;
 import android.view.LayoutInflater;
