@@ -72,15 +72,15 @@
 
             <EditText
                 android:id="@+id/name"
-                android:layout_width="188dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/signup_as_patient"
                 android:layout_alignStart="@+id/path_1"
                 android:layout_alignEnd="@+id/path_1"
-                android:layout_marginStart="23dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginLeft="170dp"
                 android:layout_marginTop="61dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/name_string"
                 android:textAlignment="center"
@@ -108,7 +108,7 @@
                 android:layout_alignTop="@+id/path_2"
                 android:layout_alignEnd="@+id/path_2"
                 android:layout_marginStart="26dp"
-                android:layout_marginLeft="179dp"
+                android:layout_marginLeft="176dp"
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="30dp"
                 android:fontFamily="sans-serif-light"
@@ -187,15 +187,15 @@
 
             <TextView
                 android:id="@+id/signup_as_patient"
-                android:layout_width="319dp"
-                android:layout_height="50dp"
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/_bg__google_pixel_5___4"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="41dp"
                 android:layout_marginLeft="108dp"
-                android:layout_marginTop="62dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginTop="85dp"
+                android:layout_marginEnd="37dp"
                 android:background="#44815A"
                 android:fontFamily="sans-serif-light"
                 android:text="Please enter your details"
@@ -250,12 +250,12 @@
                 android:layout_width="82dp"
                 android:layout_height="41dp"
                 android:layout_marginLeft="163dp"
-                android:layout_marginTop="625dp"
+                android:layout_marginTop="629dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Skip"
+                android:textAlignment="center"
                 android:textColor="@color/create_color"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/address"
