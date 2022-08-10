@@ -11,55 +11,31 @@
         android:id="@+id/textView"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="682dp"
-        android:fontFamily="serif"
+        android:fontFamily="monospace"
+        android:letterSpacing="0"
         android:text="DASHBOARD"
         android:textColor="#097025"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="62dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="352dp"
-        android:layout_marginBottom="672dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/threelines" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="207dp"
         android:layout_height="230dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/screenshot_2022_06_13_214427"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.679"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="175dp"
-        android:layout_height="133dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="116dp"
-        android:layout_marginBottom="482dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/hellorajeev_" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -165,10 +141,10 @@
         android:id="@+id/report_button"
         android:layout_width="144dp"
         android:layout_height="46dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="188dp"
         android:text="Reports"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.248"
+        app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,6 +152,7 @@
         android:id="@+id/imageButton"
         android:layout_width="71dp"
         android:layout_height="65dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/profile_icon"
         android:onClick="userProfileView"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -184,4 +161,32 @@
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="Hello!"
+        android:textColor="#042AFB"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dashboard_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="user_name"
+        android:textColor="#147743"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
