@@ -61,6 +61,11 @@ public class ProfileView extends AppCompatActivity {
         });
     }
 
+    public void editProfile(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+        startActivity(intent);
+    }
     public void signOut(View view)
     {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
