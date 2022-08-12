@@ -24,7 +24,8 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //replace following code with reports activity
-                setContentView(R.layout.sensors_home);
+                Intent intent = new Intent(getApplicationContext(), ReportsActivity.class);
+                startActivity(intent);
             }
         });
     }
