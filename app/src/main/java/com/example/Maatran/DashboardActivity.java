@@ -16,16 +16,10 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_1);
         getSupportActionBar().hide();
-        Button reports = (Button) findViewById(R.id.report_button);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        reports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //replace following code with reports activity
-                setContentView(R.layout.sensors_home);
-            }
+        Button reports =  findViewById(R.id.report_button);
+        reports.setOnClickListener(view -> {
+            //replace following code with reports activity
+            setContentView(R.layout.sensors_home);
         });
     }
 

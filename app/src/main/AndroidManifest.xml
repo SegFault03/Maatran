@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
         <activity
-            android:name=".sensors_home"
+            android:name=".SensorsHome"
             android:exported="false"/>
         <activity
             android:name=".ProfileView"

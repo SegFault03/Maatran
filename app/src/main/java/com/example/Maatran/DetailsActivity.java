@@ -23,34 +23,28 @@ public class DetailsActivity extends AppCompatActivity {
         Toast.makeText(DetailsActivity.this, "Enter your information.",
                 Toast.LENGTH_SHORT).show();
 
-        ImageButton skip = (ImageButton) findViewById(R.id.skip_button);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                startActivity(intent);
-            }
+        ImageButton skip =  findViewById(R.id.skip_button);
+        skip.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(intent);
         });
 
-        ImageButton save = (ImageButton) findViewById(R.id.save_button);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = ((EditText) findViewById(R.id.name)).getText().toString();
-                String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
-                String mobile = ((EditText) findViewById(R.id.mobile_number)).getText().toString();
-                String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
-                String address = ((EditText) findViewById(R.id.address)).getText().toString();
-                int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
+        ImageButton save = findViewById(R.id.save_button);
+        save.setOnClickListener(view -> {
+            String name = ((EditText) findViewById(R.id.name)).getText().toString();
+            String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
+            String mobile = ((EditText) findViewById(R.id.mobile_number)).getText().toString();
+            String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
+            String address = ((EditText) findViewById(R.id.address)).getText().toString();
+            int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age);
-                fdb.addDetails(user);
+            FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age);
+            fdb.addDetails(user);
 
-                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(intent);
         });
     }
 }
