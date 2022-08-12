@@ -37,14 +37,32 @@ public class DetailsActivity extends AppCompatActivity {
             String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
             String address = ((EditText) findViewById(R.id.address)).getText().toString();
             int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
+            boolean flag=true;
+            if(mobile.length()!=10)
+            {
+                Toast.makeText(getApplicationContext(),"Enter the correct mobile number",Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
+            if(emergency_mobile.length()!=10)
+            {
+                Toast.makeText(getApplicationContext(), "Enter the correct emergency mobile number", Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
+            if(age<18||age>90)
+            {
+                Toast.makeText(getApplicationContext(), "Only users above or 18 and below 90 are allowed to register", Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
+            if(flag==true)
+            {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age);
+                fdb.addDetails(user);
 
-            FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age);
-            fdb.addDetails(user);
-
-            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-            startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }
