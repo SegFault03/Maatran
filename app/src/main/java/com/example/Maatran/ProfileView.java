@@ -29,8 +29,10 @@ public class ProfileView extends AppCompatActivity {
         setContentView(R.layout.user_profile);
     }
 
+
     public void getUserDetails(FirebaseUser user)
     {
+
         db=FirebaseFirestore.getInstance();
         DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
