@@ -24,26 +24,38 @@ public class DetailsActivity extends AppCompatActivity {
         Toast.makeText(DetailsActivity.this, "Enter your information.",
                 Toast.LENGTH_SHORT).show();
 
-        ImageButton skip = (ImageButton) findViewById(R.id.skip_button);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                startActivity(intent);
-            }
+        ImageButton skip =  findViewById(R.id.skip_button);
+        skip.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(intent);
         });
 
-        ImageButton save = (ImageButton) findViewById(R.id.save_button);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = ((EditText) findViewById(R.id.name)).getText().toString();
-                String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
-                String mobile = ((EditText) findViewById(R.id.mobile_number)).getText().toString();
-                String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
-                String address = ((EditText) findViewById(R.id.address)).getText().toString();
-                int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
-
+        ImageButton save = findViewById(R.id.save_button);
+        save.setOnClickListener(view -> {
+            String name = ((EditText) findViewById(R.id.name)).getText().toString();
+            String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
+            String mobile = ((EditText) findViewById(R.id.mobile_number)).getText().toString();
+            String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
+            String address = ((EditText) findViewById(R.id.address)).getText().toString();
+            int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
+            boolean flag=true;
+            if(mobile.length()!=10)
+            {
+                Toast.makeText(getApplicationContext(),"Enter the correct mobile number",Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
+            if(emergency_mobile.length()!=10)
+            {
+                Toast.makeText(getApplicationContext(), "Enter the correct emergency mobile number", Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
+            if(age<18||age>90)
+            {
+                Toast.makeText(getApplicationContext(), "Only users above or 18 and below 90 are allowed to register", Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
+            if(flag==true)
+            {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age);

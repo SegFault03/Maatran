@@ -25,11 +25,9 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_1);
         getSupportActionBar().hide();
-        Button reports = (Button) findViewById(R.id.report_button);
-
+        Button reports =  findViewById(R.id.report_button);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         showPatients(user);
-
         reports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

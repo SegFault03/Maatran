@@ -79,10 +79,11 @@
                 android:layout_alignEnd="@+id/path_1"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="170dp"
-                android:layout_marginTop="61dp"
+                android:layout_marginTop="62dp"
                 android:layout_marginEnd="10dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/name_string"
+                android:inputType="textPersonName"
                 android:textAlignment="center"
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
@@ -102,17 +103,18 @@
 
             <EditText
                 android:id="@+id/age"
-                android:layout_width="183dp"
-                android:layout_height="43dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/path_2"
                 android:layout_alignTop="@+id/path_2"
                 android:layout_alignEnd="@+id/path_2"
                 android:layout_marginStart="26dp"
                 android:layout_marginLeft="176dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="30dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/age_string"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
@@ -132,17 +134,18 @@
 
             <EditText
                 android:id="@+id/gender"
-                android:layout_width="191dp"
-                android:layout_height="43dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/path_3"
                 android:layout_alignTop="@+id/path_3"
                 android:layout_alignEnd="@+id/path_3"
                 android:layout_marginStart="23dp"
                 android:layout_marginLeft="173dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="25dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/gender_string"
+                android:inputType="text"
                 android:textAlignment="center"
                 android:textColor="@color/name_color"
                 android:textSize="20sp" />
@@ -159,14 +162,14 @@
 
             <EditText
                 android:id="@+id/mobile_number"
-                android:layout_width="155dp"
-                android:layout_height="41dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/path_5"
                 android:layout_alignTop="@+id/path_5"
                 android:layout_alignEnd="@+id/path_5"
                 android:layout_marginStart="40dp"
                 android:layout_marginLeft="136dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="0.5dp"
                 android:layout_marginEnd="44dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/mobile_number_string"
@@ -259,7 +262,7 @@
 
             <EditText
                 android:id="@+id/address"
-                android:layout_width="228dp"
+                android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_alignStart="@+id/path_8"
                 android:layout_alignTop="@+id/path_8"

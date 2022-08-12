@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     android:background="#D1EFEB">
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="36dp"
+        android:onClick="backToHome"
+        android:text="HOME"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.936" />
+
     <TextView
         android:id="@+id/user_mob"
         android:layout_width="217dp"
@@ -177,6 +193,7 @@
         android:id="@+id/sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="#DD6969"
         android:onClick="signOut"
         android:text="SIGN OUT"
@@ -190,11 +207,14 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:onClick="backToHome"
-        android:text="HOME"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#009688"
+        android:onClick="editProfile"
+
+        android:text="EDIT PROFILE"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

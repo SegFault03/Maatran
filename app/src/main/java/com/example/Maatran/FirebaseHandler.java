@@ -31,17 +31,6 @@ public class FirebaseHandler {
         this.address = address;
     }
 
-    public FirebaseHandler()
-    {
-        db = FirebaseFirestore.getInstance();
-        this.name = "lalalala";
-        this.age = 0;
-        this.gender = "";
-        this.mobile = "";
-        this.emergency_no = "";
-        this.address = "";
-    }
-
     public void addDetails(FirebaseUser user)
     {
         Map<String, Object> details = new HashMap<>();
@@ -54,18 +43,8 @@ public class FirebaseHandler {
 
         db.collection("UserDetails").document(user.getEmail())
                 .set(details, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
     }
 
 
