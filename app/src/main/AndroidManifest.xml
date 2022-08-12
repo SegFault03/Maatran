@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
         <activity
-            android:name=".sensors_home"
-            android:exported="false"/>
-        <activity
             android:name=".ProfileView"
             android:exported="false" />
 
@@ -35,6 +32,7 @@
         <activity android:name=".EmailSignUp" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".DetailsActivity" />
+        <activity android:name=".ReportsActivity" />
     </application>
 
 </manifest>
