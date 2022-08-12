@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 //called after EmailSignUp is complete
 //xml file: screen_4
 public class DetailsActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
