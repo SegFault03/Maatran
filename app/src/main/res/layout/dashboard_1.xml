@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#D9EFCC">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="200dp"
@@ -179,7 +178,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
+        android:layout_width="394dp"
+        android:layout_height="339dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView9"
+        app:layout_constraintVertical_bias="0.947">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/patient_list"
+                android:layout_width="match_parent"
+                android:layout_height="339dp"
+                android:layout_marginLeft="48dp"
+                android:dividerHeight="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/patient_item" />
+
+        </LinearLayout>-->
+    </ScrollView>
+
+    <!--<androidx.cardview.widget.CardView
         android:id="@+id/patient_1"
         android:layout_width="300dp"
         android:layout_height="100dp"
@@ -267,5 +294,21 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
+
+    <!--<view class="androidx.appcompat.app.AlertController$RecycleListView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView12">
+    <ListView
+        android:id="@+id/patient_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.73"
+        tools:listitem="@layout/patient_item" />
+    </>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

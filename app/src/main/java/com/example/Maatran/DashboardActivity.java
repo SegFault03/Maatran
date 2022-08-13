@@ -66,6 +66,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public void showReports(View view)
