@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/maatran_icon_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
+
         <activity
             android:name=".ProfileView"
             android:exported="false" />

@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //Called from RegistrationActivity
@@ -33,19 +32,16 @@ public class EmailSignUp extends Activity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.screen_3);
-        ImageButton create = (ImageButton) findViewById(R.id.create_acc);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email =  ((EditText)findViewById(R.id.email)).getText().toString();
-                String password = ((EditText)findViewById(R.id.password)).getText().toString();
-                String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
-                if(password.equals(confirmPass))
-                createAccount(email, password);
-                else
-                    Toast.makeText(EmailSignUp.this, "Passwords don't match.",
-                            Toast.LENGTH_SHORT).show();
-            }
+        ImageButton create = findViewById(R.id.create_acc);
+        create.setOnClickListener(view -> {
+            String email =  ((EditText)findViewById(R.id.email)).getText().toString();
+            String password = ((EditText)findViewById(R.id.password)).getText().toString();
+            String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
+            if(password.equals(confirmPass))
+            createAccount(email, password);
+            else
+                Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                        Toast.LENGTH_SHORT).show();
         });
         // [END initialize_auth]
     }
@@ -67,22 +63,18 @@ public class EmailSignUp extends Activity {
     private void createAccount(String email, String password) {
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailSignUp.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(EmailSignUp.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
+                    updateUI();
                 });
         // [END create_user_with_email]
     }
@@ -109,12 +101,12 @@ public class EmailSignUp extends Activity {
 
 
     private void reload() {
-        mAuth.getInstance().signOut();
+        FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
         startActivity(intent);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI() {
         Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
         startActivity(intent);
     }
