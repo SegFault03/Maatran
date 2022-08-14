@@ -2,7 +2,6 @@ package com.example.Maatran;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -54,7 +53,7 @@ public class DetailsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Only users above or 18 and below 90 are allowed to register", Toast.LENGTH_SHORT).show();
                 flag=false;
             }
-            if(flag==true)
+            if(flag)
             {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

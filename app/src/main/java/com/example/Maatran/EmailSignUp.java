@@ -85,11 +85,8 @@ public class EmailSignUp extends Activity {
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
         user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // Email sent
-                    }
+                .addOnCompleteListener(this, task -> {
+                    // Email sent
                 });
         // [END send_email_verification]
     }
