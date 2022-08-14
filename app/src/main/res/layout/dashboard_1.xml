@@ -87,10 +87,10 @@
         android:src="@drawable/rectangle_4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView6"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.052" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -130,7 +130,8 @@
         android:layout_width="144dp"
         android:layout_height="46dp"
         android:layout_marginTop="188dp"
-        android:text="Reports"
+        android:text="Add Patient"
+        android:onClick="addPatient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
@@ -178,33 +179,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <ScrollView
-        android:layout_width="394dp"
-        android:layout_height="339dp"
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="284dp"
+        android:layout_height="63dp"
+        android:backgroundTint="#14AFDD"
+        android:onClick="viewPatients"
+        android:text="View Patients"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView9"
-        app:layout_constraintVertical_bias="0.947">
+        app:layout_constraintVertical_bias="0.14" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/patient_list"
-                android:layout_width="match_parent"
-                android:layout_height="339dp"
-                android:layout_marginLeft="48dp"
-                android:dividerHeight="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/patient_item" />
 
-        </LinearLayout>-->
-    </ScrollView>
+
 
     <!--<androidx.cardview.widget.CardView
         android:id="@+id/patient_1"

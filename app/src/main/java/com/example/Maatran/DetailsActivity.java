@@ -2,7 +2,6 @@ package com.example.Maatran;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -37,7 +36,7 @@ public class DetailsActivity extends AppCompatActivity {
             String mobile = ((EditText) findViewById(R.id.mobile_number)).getText().toString();
             String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
             String address = ((EditText) findViewById(R.id.address)).getText().toString();
-            int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
+            long age = Long.parseLong(((EditText) findViewById(R.id.age)).getText().toString());
             boolean flag=true;
             if(mobile.length()!=10)
             {
