@@ -3,15 +3,22 @@ package com.example.Maatran;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+//Class used for storing user details in the form of a parcel
+//Complex objects cannot be passed as Bundles between different intents ('Activity' classes)
+//Thus they must be converted to 'Parcelable' objects
+//More documentation can be found here: https://developer.android.com/reference/android/os/Parcelable
+//https://developer.android.com/guide/components/activities/parcelables-and-bundles#java
+
 public class User implements Parcelable {
-    String name, gender, mobile, address, emergency;
-    long age;
+    private String name, gender, mobile, address, emergency;
+    private long age;
 
     public User()
     {
 
     }
 
+    //parameterized constructor for constructing a user object
     public User(String name, long age, String gender, String mobile, String address, String emergency) {
         this.name = name;
         this.age = age;
@@ -21,6 +28,7 @@ public class User implements Parcelable {
         this.emergency = emergency;
     }
 
+    //constructor for creating a User.class object from type Parcel
     protected User(Parcel in) {
         name = in.readString();
         gender = in.readString();
@@ -30,18 +38,24 @@ public class User implements Parcelable {
         age = in.readLong();
     }
 
+    //non-null static field used for implementing the Parcelable interface
     public static final Creator<User> CREATOR = new Creator<User>() {
+
+        //Takes a parcel object as input and creates a User.class object from it
         @Override
         public User createFromParcel(Parcel in) {
             return new User(in);
         }
 
+        //Creates an array of User.class objects
         @Override
         public User[] newArray(int size) {
             return new User[size];
         }
     };
 
+
+    //getter methods for accessing the fields of the User.class object
     public String getName() {
         return name;
     }
@@ -62,6 +76,11 @@ public class User implements Parcelable {
         return emergency;
     }
 
+    public long getAge() {
+        return age;
+    }
+
+    //setter methods for setting the fields of the User.class object
     public void setName(String name) {
         this.name = name;
     }
@@ -86,15 +105,14 @@ public class User implements Parcelable {
         this.age = age;
     }
 
-    public long getAge() {
-        return age;
-    }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
 
+    //writeToParcel method for writing the fields of the User.class object to a parcel
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
