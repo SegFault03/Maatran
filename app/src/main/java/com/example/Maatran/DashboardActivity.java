@@ -15,13 +15,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-
 public class DashboardActivity extends AppCompatActivity {
     public static final String TAG = "DashboardActivity";
-    ArrayList<User> userArrayList;
-    UserAdapter userAdapter;
-    FirebaseFirestore db;
     ProgressDialog progressDialog;
 
     @Override
@@ -58,31 +53,6 @@ public class DashboardActivity extends AppCompatActivity {
                 progressDialog.dismiss();
         });
     }
-
-    /*public void showPatients(FirebaseUser user)
-    {
-        FirebaseFirestore db= FirebaseFirestore.getInstance();
-        DocumentReference docRef=db.collection("UserDetails").document(user.getEmail()).collection("Patients").document("abc");
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-
-                if (document.exists()) {
-                    TextView tv_name =  findViewById(R.id.patient_name_1);
-                    tv_name.setText("NAME: "+document.toObject(User.class).getName());
-                    TextView tv_age =  findViewById(R.id.patient_age_1);
-                    tv_age.setText("AGE: "+document.toObject(User.class).getAge());
-                    TextView user_name =  findViewById(R.id.dashboard_user_name);
-                    user_name.setText(document.toObject(User.class).getName());
-                    Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("address"));
-                } else {
-                    Log.d(TAG, "No such document");
-                }
-            } else {
-                Log.d(TAG, "get failed with ", task.getException());
-            }
-        });
-    }*/
 
 
     public void viewPatients(View view)
