@@ -1,5 +1,6 @@
 package com.example.Maatran;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +18,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
     public static final String TAG="ProfileView";
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_profile);
         getSupportActionBar().hide();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching data..");
+        progressDialog.show();
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         getUserDetails(user);
-        setContentView(R.layout.user_profile);
+
     }
 
 
@@ -47,26 +55,39 @@ public class ProfileView extends AppCompatActivity {
                     tv_adr.setText(document.getData().get("address").toString());
                     TextView tv_mob= findViewById(R.id.user_mob);
                     tv_mob.setText(document.getData().get("mobile").toString());
-                    Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("address"));
-                } else {
+
+                }
+                else
+                {
                     Log.d(TAG, "No such document");
                 }
-            } else {
+            }
+            else
+            {
                 Log.d(TAG, "get failed with ", task.getException());
             }
+            if(progressDialog.isShowing())
+                progressDialog.dismiss();
         });
     }
 
     public void editProfile(View view)
     {
         Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+        intent.putExtra("isPatient",false);
         startActivity(intent);
     }
+
     public void signOut(View view)
     {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
+    }
+
+    public void backToDashboard(View view)
+    {
+        super.finish();
     }
 }

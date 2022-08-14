@@ -9,10 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //Called from RegistrationActivity
@@ -85,11 +81,8 @@ public class EmailSignUp extends Activity {
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
         user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // Email sent
-                    }
+                .addOnCompleteListener(this, task -> {
+                    // Email sent
                 });
         // [END send_email_verification]
     }
@@ -108,6 +101,7 @@ public class EmailSignUp extends Activity {
 
     private void updateUI() {
         Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+        intent.putExtra("isPatient", false);
         startActivity(intent);
     }
 }
