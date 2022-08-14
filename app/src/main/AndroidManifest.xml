@@ -34,6 +34,7 @@
         <activity android:name=".DashboardActivity" />
         <activity android:name=".DetailsActivity" />
         <activity android:name=".ReportsActivity" />
+        <activity android:name=".PatientsView" />
     </application>
 
 </manifest>

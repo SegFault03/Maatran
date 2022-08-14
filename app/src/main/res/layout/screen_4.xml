@@ -201,7 +201,7 @@
                 android:layout_marginEnd="37dp"
                 android:background="#44815A"
                 android:fontFamily="sans-serif-light"
-                android:text="Please enter your details"
+                android:text="Enter Patient Details"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/signup_as_health_worker_color"

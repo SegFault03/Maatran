@@ -36,7 +36,7 @@ public class DetailsActivity extends AppCompatActivity {
             String mobile = ((EditText) findViewById(R.id.mobile_number)).getText().toString();
             String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
             String address = ((EditText) findViewById(R.id.address)).getText().toString();
-            int age = Integer.parseInt(((EditText) findViewById(R.id.age)).getText().toString());
+            long age = Long.parseLong(((EditText) findViewById(R.id.age)).getText().toString());
             boolean flag=true;
             if(mobile.length()!=10)
             {

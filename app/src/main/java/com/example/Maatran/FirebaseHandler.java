@@ -6,17 +6,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class FirebaseHandler {
 
     private static final String TAG = "FirebaseHandler";
     private final FirebaseFirestore db;
     private String name, gender, address, mobile, emergency_no;
-    private int age;
+    private long age;
 
-    public FirebaseHandler(String name, String gender, String address, String mobile, String emergency_no, int age)
+    public FirebaseHandler(String name, String gender, String address, String mobile, String emergency_no, long age)
     {
         db = FirebaseFirestore.getInstance();
         this.name = name;
@@ -29,15 +26,9 @@ public class FirebaseHandler {
 
     public void addDetails(FirebaseUser user)
     {
-        Map<String, Object> details = new HashMap<>();
-        details.put("name", name);
-        details.put("age", age);
-        details.put("gender", gender);
-        details.put("address", address);
-        details.put("mobile", mobile);
-        details.put("emergency", emergency_no);
+        User details = new User(name, age, gender, mobile, address, emergency_no);
 
-        db.collection("UserDetails").document(user.getEmail())
+        db.collection("UserDetails").document(user.getEmail()).collection("Patients").document(name)
                 .set(details, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
                 .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
