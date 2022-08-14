@@ -37,6 +37,8 @@ public class DetailsActivity extends AppCompatActivity {
             String emergency_mobile = ((EditText) findViewById(R.id.emergency_no)).getText().toString();
             String address = ((EditText) findViewById(R.id.address)).getText().toString();
             long age = Long.parseLong(((EditText) findViewById(R.id.age)).getText().toString());
+            boolean isPatient = getIntent().getExtras().getBoolean("isPatient");
+
             boolean flag=true;
             if(mobile.length()!=10)
             {
@@ -57,7 +59,7 @@ public class DetailsActivity extends AppCompatActivity {
             {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age);
+                FirebaseHandler fdb = new FirebaseHandler(name, gender, address, mobile, emergency_mobile, age, isPatient);
                 fdb.addDetails(user);
 
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
