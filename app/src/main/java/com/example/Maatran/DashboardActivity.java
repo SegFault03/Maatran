@@ -38,7 +38,7 @@ public class DashboardActivity extends AppCompatActivity {
                 DocumentSnapshot ds = task.getResult();
                 if(ds.exists())
                 {
-                    user_name.setText(ds.get("name").toString());
+                    user_name.setText(ds.get("user_name").toString());
                 }
                 else
                 {

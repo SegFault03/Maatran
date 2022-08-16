@@ -11,6 +11,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
+
 //Called from RegistrationActivity
 //email based sign-up
 //xml file: screen-3
@@ -33,8 +39,9 @@ public class EmailSignUp extends Activity {
             String email =  ((EditText)findViewById(R.id.email)).getText().toString();
             String password = ((EditText)findViewById(R.id.password)).getText().toString();
             String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
+            String user_name = ((EditText)findViewById(R.id.user_name)).getText().toString();
             if(password.equals(confirmPass))
-            createAccount(email, password);
+            createAccount(email, password, user_name);
             else
                 Toast.makeText(EmailSignUp.this, "Passwords don't match.",
                         Toast.LENGTH_SHORT).show();
@@ -56,14 +63,21 @@ public class EmailSignUp extends Activity {
 
 
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password, String user_name) {
         // [START create_user_with_email]
+        Map<String, String> userName = new HashMap<>();
+        userName.put("user_name", user_name);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("UserDetails").document(user.getEmail())
+                                .set(userName, SetOptions.merge())
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -100,8 +114,8 @@ public class EmailSignUp extends Activity {
     }
 
     private void updateUI() {
-        Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-        intent.putExtra("isPatient", false);
+        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+        intent.putExtra("isPatient", true);
         startActivity(intent);
     }
 }

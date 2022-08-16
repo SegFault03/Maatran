@@ -31,7 +31,6 @@ public class ProfileView extends AppCompatActivity {
         progressDialog.show();
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         getUserDetails(user);
-
     }
 
 
@@ -45,17 +44,8 @@ public class ProfileView extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
 
                 if (document.exists()) {
-                    TextView tv_name= findViewById(R.id.user_name);
-                    tv_name.setText(document.getData().get("name").toString());
-                    TextView tv_age= findViewById(R.id.user_age);
-                    tv_age.setText(document.getData().get("age").toString());
-                    TextView tv_gender= findViewById(R.id.user_gender);
-                    tv_gender.setText(document.getData().get("gender").toString());
-                    TextView tv_adr= findViewById(R.id.user_adr);
-                    tv_adr.setText(document.getData().get("address").toString());
-                    TextView tv_mob= findViewById(R.id.user_mob);
-                    tv_mob.setText(document.getData().get("mobile").toString());
-
+                    TextView tv_name = findViewById(R.id.user_name);
+                    tv_name.setText(document.getData().get("user_name").toString());
                 }
                 else
                 {
@@ -69,6 +59,22 @@ public class ProfileView extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
         });
+
+        TextView tv_email = findViewById(R.id.user_email);
+        tv_email.setText(user.getEmail());
+
+        /*CollectionReference ref = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
+        ref.get().addOnSuccessListener(value -> {
+            int users=0;
+            for(DocumentSnapshot dc : value.getDocuments())
+            {
+                ++users;
+            }
+            TextView tv_no = findViewById(R.id.user_no);
+            tv_no.setText(users);
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
+        });*/
     }
 
     public void editProfile(View view)

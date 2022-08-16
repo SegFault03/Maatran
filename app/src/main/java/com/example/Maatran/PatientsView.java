@@ -89,4 +89,9 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         intent.putExtra("user", userArrayList.get(position));
         startActivity(intent);
     }
+
+    public void backToDashboard(View view)
+    {
+        super.finish();
+    }
 }
