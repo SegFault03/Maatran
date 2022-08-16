@@ -101,4 +101,10 @@ public class EmailPasswordActivity extends Activity {
             startActivity(intent);
         }
     }
+
+    public void resetPassword(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+        startActivity(intent);
+    }
 }

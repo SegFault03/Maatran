@@ -90,4 +90,11 @@ public class ProfileView extends AppCompatActivity {
     {
         super.finish();
     }
+
+    public void changePassword(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(),ChangePasswordActivity.class);
+        intent.putExtra("UserName",((TextView) findViewById(R.id.user_name)).getText().toString());
+        startActivity(intent);
+    }
 }
