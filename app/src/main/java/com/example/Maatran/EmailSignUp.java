@@ -28,6 +28,7 @@ public class EmailSignUp extends Activity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.screen_3);
+        getActionBar().hide();
         ImageButton create = findViewById(R.id.create_acc);
         create.setOnClickListener(view -> {
             String email =  ((EditText)findViewById(R.id.email)).getText().toString();
