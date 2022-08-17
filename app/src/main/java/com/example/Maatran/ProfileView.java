@@ -95,7 +95,7 @@ public class ProfileView extends AppCompatActivity {
     public void deleteProfile(View view)
     {
         LayoutInflater inflater = getLayoutInflater();
-        View popupDeleteProfile = inflater.inflate(R.layout.test,null);
+        View popupDeleteProfile = inflater.inflate(R.layout.popupview_confirmation,null);
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         // lets taps outside the popupWindow dismiss it
