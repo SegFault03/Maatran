@@ -12,8 +12,9 @@ public class FirebaseHandler {
     private final FirebaseFirestore db;
     private String name, gender, address, mobile, emergency_no;
     private long age;
+    private boolean isPatient;
 
-    public FirebaseHandler(String name, String gender, String address, String mobile, String emergency_no, long age)
+    public FirebaseHandler(String name, String gender, String address, String mobile, String emergency_no, long age, boolean isPatient)
     {
         db = FirebaseFirestore.getInstance();
         this.name = name;
@@ -22,16 +23,25 @@ public class FirebaseHandler {
         this.mobile = mobile;
         this.emergency_no = emergency_no;
         this.address = address;
+        this.isPatient = isPatient;
     }
 
     public void addDetails(FirebaseUser user)
     {
         User details = new User(name, age, gender, mobile, address, emergency_no);
-
-        db.collection("UserDetails").document(user.getEmail()).collection("Patients").document(name)
-                .set(details, SetOptions.merge())
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+        if(isPatient)
+        {
+            db.collection("UserDetails").document(user.getEmail()).collection("Patients").document(name)
+                    .set(details, SetOptions.merge())
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+        }
+        else {
+            db.collection("UserDetails").document(user.getEmail())
+                    .set(details, SetOptions.merge())
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+        }
     }
 
 
