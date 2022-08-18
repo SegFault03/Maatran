@@ -1,6 +1,5 @@
 package com.example.Maatran;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,19 +17,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
     public static final String TAG="ProfileView";
-    ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
         getSupportActionBar().hide();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Fetching data..");
-        progressDialog.show();
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         getUserDetails(user);
+        setContentView(R.layout.user_profile);
     }
 
 
@@ -44,56 +37,36 @@ public class ProfileView extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
 
                 if (document.exists()) {
-                    TextView tv_name = findViewById(R.id.user_name);
-                    tv_name.setText(document.getData().get("user_name").toString());
-                }
-                else
-                {
+                    TextView tv_name= findViewById(R.id.user_name);
+                    tv_name.setText(document.getData().get("name").toString());
+                    TextView tv_age= findViewById(R.id.user_age);
+                    tv_age.setText(document.getData().get("age").toString());
+                    TextView tv_gender= findViewById(R.id.user_gender);
+                    tv_gender.setText(document.getData().get("gender").toString());
+                    TextView tv_adr= findViewById(R.id.user_adr);
+                    tv_adr.setText(document.getData().get("address").toString());
+                    TextView tv_mob= findViewById(R.id.user_mob);
+                    tv_mob.setText(document.getData().get("mobile").toString());
+                    Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("address"));
+                } else {
                     Log.d(TAG, "No such document");
                 }
-            }
-            else
-            {
+            } else {
                 Log.d(TAG, "get failed with ", task.getException());
             }
-            if(progressDialog.isShowing())
-                progressDialog.dismiss();
         });
-
-        TextView tv_email = findViewById(R.id.user_email);
-        tv_email.setText(user.getEmail());
-
-        /*CollectionReference ref = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
-        ref.get().addOnSuccessListener(value -> {
-            int users=0;
-            for(DocumentSnapshot dc : value.getDocuments())
-            {
-                ++users;
-            }
-            TextView tv_no = findViewById(R.id.user_no);
-            tv_no.setText(users);
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-        });*/
     }
 
     public void editProfile(View view)
     {
         Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
-        intent.putExtra("isPatient",false);
         startActivity(intent);
     }
-
     public void signOut(View view)
     {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
-    }
-
-    public void backToDashboard(View view)
-    {
-        super.finish();
     }
 }

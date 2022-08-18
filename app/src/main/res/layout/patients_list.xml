@@ -8,19 +8,9 @@
     android:orientation="vertical"
     tools:context=".PatientsView">
 
-    <Button
-        android:id="@+id/home"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#EF6C6C"
-        android:gravity="center"
-        android:onClick="backToDashboard"
-        android:text="HOME" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#E4D2BB" />
-
 </androidx.appcompat.widget.LinearLayoutCompat>

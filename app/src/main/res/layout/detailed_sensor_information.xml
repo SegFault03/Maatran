@@ -89,14 +89,6 @@
             android:text="Diastolic pressure: xxx"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/patient_sys_pressure" />
-
-            <TextView
-                android:id="@+id/patient_sugar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Sugar: xxx"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/patient_sys_pressure" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -83,11 +83,11 @@
                 android:layout_width="238dp"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/path_6"
-                android:layout_alignEnd="@+id/_bg__google_pixel_5___7"
+                android:layout_alignEnd="@+id/path_6"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="173dp"
                 android:layout_marginTop="361dp"
-                android:layout_marginEnd="73dp"
+                android:layout_marginEnd="2dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/email_string"
                 android:inputType="textEmailAddress"
@@ -106,35 +106,6 @@
                 android:layout_marginEnd="80dp"
                 android:contentDescription="path_8"
                 android:src="@drawable/path_8" />
-
-            <ImageView
-                android:id="@+id/path_12"
-                android:layout_width="245dp"
-                android:layout_height="43.13330078125dp"
-                android:layout_alignEnd="@+id/_bg__google_pixel_5___7"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="83dp"
-                android:layout_marginTop="299.43334960938dp"
-                android:layout_marginEnd="80dp"
-                android:contentDescription="path_8"
-                android:src="@drawable/path_8" />
-
-            <EditText
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/path_12"
-                android:layout_alignEnd="@+id/path_12"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="117dp"
-                android:layout_marginTop="299.43334960938dp"
-                android:layout_marginEnd="7dp"
-                android:fontFamily="sans-serif-light"
-                android:hint="User Name"
-                android:inputType="textVisiblePassword"
-                android:textAlignment="center"
-                android:textColor="@color/name_color"
-                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/password"
