@@ -105,6 +105,7 @@
                 android:layout_marginTop="477dp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
+                android:onClick="resetPassword"
                 android:text="@string/forgot_password__string"
                 android:textColor="@color/patient_color"
                 android:textSize="25sp" />
