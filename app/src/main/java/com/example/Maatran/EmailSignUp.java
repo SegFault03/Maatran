@@ -35,10 +35,16 @@ public class EmailSignUp extends AppCompatActivity {
             String email =  ((EditText)findViewById(R.id.email)).getText().toString();
             String password = ((EditText)findViewById(R.id.password)).getText().toString();
             String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
-            if(password.equals(confirmPass))
-            createAccount(email, password);
+            if(password.length()>=6)
+            {
+                if(password.equals(confirmPass))
+                createAccount(email, password);
+                else
+                    Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                            Toast.LENGTH_SHORT).show();
+            }
             else
-                Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                Toast.makeText(EmailSignUp.this, "Password must be at least 6 characters long",
                         Toast.LENGTH_SHORT).show();
         });
         // [END initialize_auth]
