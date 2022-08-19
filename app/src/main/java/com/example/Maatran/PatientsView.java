@@ -88,6 +88,11 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         startActivity(intent);
     }
 
+    public void backToDashboard(View view)
+    {
+        super.finish();
+    }
+
     @Override
     public void onPatientClick(int position) {
         Intent intent = new Intent(getApplicationContext(), ReportsActivity.class);

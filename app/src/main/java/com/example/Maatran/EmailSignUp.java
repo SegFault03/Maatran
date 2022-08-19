@@ -1,6 +1,5 @@
 package com.example.Maatran;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 //Called from RegistrationActivity
 //email based sign-up
 //xml file: screen-3
-public class EmailSignUp extends Activity {
+public class EmailSignUp extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
     // [START declare_auth]
@@ -32,7 +32,7 @@ public class EmailSignUp extends Activity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.screen_3);
-        getActionBar().hide();
+        getSupportActionBar().hide();
         ImageButton create = findViewById(R.id.create_acc);
         create.setOnClickListener(view -> {
             String email =  ((EditText)findViewById(R.id.email)).getText().toString();
