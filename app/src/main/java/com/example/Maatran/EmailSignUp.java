@@ -38,7 +38,7 @@ public class EmailSignUp extends AppCompatActivity {
             if(password.length()>=6)
             {
                 if(password.equals(confirmPass))
-                    createAccount(email, password);
+                createAccount(email, password);
                 else
                     Toast.makeText(EmailSignUp.this, "Passwords don't match.",
                             Toast.LENGTH_SHORT).show();
