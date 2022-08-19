@@ -8,11 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //Called from RegistrationActivity
@@ -38,10 +35,16 @@ public class EmailSignUp extends AppCompatActivity {
             String email =  ((EditText)findViewById(R.id.email)).getText().toString();
             String password = ((EditText)findViewById(R.id.password)).getText().toString();
             String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
-            if(password.equals(confirmPass))
-            createAccount(email, password);
+            if(password.length()>=6)
+            {
+                if(password.equals(confirmPass))
+                    createAccount(email, password);
+                else
+                    Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                            Toast.LENGTH_SHORT).show();
+            }
             else
-                Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                Toast.makeText(EmailSignUp.this, "Password must be at least 6 characters long",
                         Toast.LENGTH_SHORT).show();
         });
         // [END initialize_auth]
@@ -86,11 +89,8 @@ public class EmailSignUp extends AppCompatActivity {
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
         user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // Email sent
-                    }
+                .addOnCompleteListener(this, task -> {
+                    // Email sent
                 });
         // [END send_email_verification]
     }
@@ -109,6 +109,7 @@ public class EmailSignUp extends AppCompatActivity {
 
     private void updateUI() {
         Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+        intent.putExtra("isPatient", false);
         startActivity(intent);
     }
 }
