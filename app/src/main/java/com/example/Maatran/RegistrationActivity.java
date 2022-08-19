@@ -13,6 +13,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_2);
+        getSupportActionBar().hide();
     }
 
     public void signUp(View view) {
