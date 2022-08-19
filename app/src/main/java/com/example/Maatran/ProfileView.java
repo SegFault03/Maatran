@@ -15,11 +15,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
@@ -160,6 +163,23 @@ public class ProfileView extends AppCompatActivity {
     {
         db=FirebaseFirestore.getInstance();
         DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
+        CollectionReference colRef=db.collection("UserDetails").document(user.getEmail()).collection("Patients");
+        colRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot value) {
+                for(DocumentSnapshot dc : value.getDocuments())
+                {
+                    dc.getReference().delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        } else {
+                            Log.d(TAG, "Error deleting document", task.getException());
+                        }
+                    });
+                }
+            }
+        });
+
         docRef.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "DocumentSnapshot successfully deleted!");

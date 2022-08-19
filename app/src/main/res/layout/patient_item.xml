@@ -8,7 +8,6 @@
     android:layout_height="100dp"
     android:layout_margin="20dp"
     android:clickable="true"
-    android:onClick="showReports"
     app:cardBackgroundColor="#EDC7C7"
     app:cardCornerRadius="15dp">
 

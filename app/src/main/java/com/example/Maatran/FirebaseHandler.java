@@ -18,11 +18,11 @@ public class FirebaseHandler {
     {
         db = FirebaseFirestore.getInstance();
         this.name = name;
-        this.age = age;
         this.gender = gender;
+        this.address = address;
         this.mobile = mobile;
         this.emergency_no = emergency_no;
-        this.address = address;
+        this.age = age;
         this.isPatient = isPatient;
     }
 
@@ -31,8 +31,8 @@ public class FirebaseHandler {
         User details = new User(name, age, gender, mobile, address, emergency_no);
         if(isPatient)
         {
-            db.collection("UserDetails").document(user.getEmail()).collection("Patients").document(name)
-                    .set(details, SetOptions.merge())
+            db.collection("UserDetails").document(user.getEmail()).collection("Patients")
+                    .add(details)
                     .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
                     .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
         }
