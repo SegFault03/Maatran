@@ -24,8 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
+    FirebaseUser user;
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
+    User details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,15 @@ public class ProfileView extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        getUserDetails(user);
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        getUserDetails(user);
+    }
 
     public void getUserDetails(FirebaseUser user)
     {
@@ -80,9 +86,14 @@ public class ProfileView extends AppCompatActivity {
 
     public void editProfile(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
-        intent.putExtra("isPatient",false);
-        startActivity(intent);
+        db.collection("UserDetails")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnSuccessListener(documentSnapshot -> details = documentSnapshot.toObject(User.class));
+        if(details != null) {
+            Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+            intent.putExtra("isPatient", false);
+            intent.putExtra("user", details);
+            startActivity(intent);
+        }
     }
 
     public void signOut(View view)

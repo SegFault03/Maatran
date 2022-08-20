@@ -26,7 +26,7 @@ public class EditPatient extends AppCompatActivity {
         getSupportActionBar().hide();
 
         user = getIntent().getParcelableExtra("user");
-        id = getIntent().getStringExtra("id");
+        boolean isPatient = getIntent().getBooleanExtra("isPatient", true);
 
         name = findViewById(R.id.patient_name);
         name.setText(user.getName());
@@ -41,11 +41,19 @@ public class EditPatient extends AppCompatActivity {
         address = findViewById(R.id.patient_address);
         address.setText(user.getAddress());
 
-        docRef = FirebaseFirestore.getInstance()
-                .collection("UserDetails")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
-                .collection("Patients")
-                .document(id);
+        if(isPatient) {
+            id = getIntent().getStringExtra("id");
+            docRef = FirebaseFirestore.getInstance()
+                    .collection("UserDetails")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                    .collection("Patients")
+                    .document(id);
+        }
+        else {
+            docRef = FirebaseFirestore.getInstance()
+                    .collection("UserDetails")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        }
     }
 
     public void saveDetails(View view)
