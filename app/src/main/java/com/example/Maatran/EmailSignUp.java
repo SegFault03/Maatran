@@ -115,8 +115,9 @@ public class EmailSignUp extends AppCompatActivity {
             reload();
         }
         else {
-            Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), EditPatient.class);
             intent.putExtra("isPatient", false);
+            intent.putExtra("newDetails", true);
             startActivity(intent);
         }
     }

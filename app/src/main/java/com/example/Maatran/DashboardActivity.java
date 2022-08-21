@@ -53,8 +53,9 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void addPatient(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
+        Intent intent = new Intent(getApplicationContext(),EditPatient.class);
         intent.putExtra("isPatient", true);
+        intent.putExtra("newDetails", true);
         startActivity(intent);
     }
 
