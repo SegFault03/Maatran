@@ -231,7 +231,6 @@
         android:layout_marginBottom="30dp"
         android:backgroundTint="#009688"
         android:onClick="editProfile"
-
         android:text="EDIT PROFILE"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"

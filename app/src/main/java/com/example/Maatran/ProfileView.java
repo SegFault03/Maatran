@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
+    FirebaseUser user;
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
 
@@ -36,11 +37,15 @@ public class ProfileView extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        getUserDetails(user);
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        getUserDetails(user);
+    }
 
     public void getUserDetails(FirebaseUser user)
     {
@@ -80,9 +85,13 @@ public class ProfileView extends AppCompatActivity {
 
     public void editProfile(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
-        intent.putExtra("isPatient",false);
-        startActivity(intent);
+        db.collection("UserDetails")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnSuccessListener(documentSnapshot -> {
+                    Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+                    intent.putExtra("isPatient", false);
+                    intent.putExtra("user", documentSnapshot.toObject(User.class));
+                    startActivity(intent);
+                });
     }
 
     public void signOut(View view)
@@ -91,14 +100,14 @@ public class ProfileView extends AppCompatActivity {
         ((TextView) popupConfirmSignOut.findViewById(R.id.text_dialog)).setText("Do you really want to sign out?");
         PopupWindow popupWindow = new PopupWindow(popupConfirmSignOut,LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
         popupWindow.showAtLocation(view,Gravity.CENTER,0,0);
-        ((Button) popupConfirmSignOut.findViewById(R.id.btn_yes)).setOnClickListener(v->{
+        popupConfirmSignOut.findViewById(R.id.btn_yes).setOnClickListener(v->{
             FirebaseAuth.getInstance().signOut();
             Toast toast = Toast.makeText(getApplicationContext(),"You have successfully signed out, redirecting you to the log-in page",Toast.LENGTH_SHORT);
             toast.show();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
         });
-        ((Button)popupConfirmSignOut.findViewById(R.id.btn_no)).setOnClickListener(v->popupWindow.dismiss());
+        popupConfirmSignOut.findViewById(R.id.btn_no).setOnClickListener(v->popupWindow.dismiss());
     }
 
     public void deleteProfile(View view)
