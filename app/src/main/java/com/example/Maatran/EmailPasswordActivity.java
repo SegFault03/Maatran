@@ -1,6 +1,5 @@
 package com.example.Maatran;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 //called from loginactivity, used for signing-up using e-mail, password
 //corresponding xml file: screen_5
-public class EmailPasswordActivity extends Activity {
+public class EmailPasswordActivity extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
     // [START declare_auth]
@@ -28,6 +29,7 @@ public class EmailPasswordActivity extends Activity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.screen_5);
+        getSupportActionBar().hide();
         ImageButton login = findViewById(R.id.login_btn);
         login.setOnClickListener(view -> {
             String email =  ((EditText)findViewById(R.id.user_id)).getText().toString();
@@ -44,7 +46,7 @@ public class EmailPasswordActivity extends Activity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            reload();
+            updateUI(currentUser);
         }
     }
     // [END on_start_check_user]

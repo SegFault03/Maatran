@@ -226,6 +226,7 @@
                 android:layout_height="46dp"
                 android:layout_marginStart="114dp"
                 android:layout_marginTop="620dp"
+                android:onClick="skip"
                 android:background="@drawable/rectangle_4_shape" />
 
             <ImageButton
@@ -234,6 +235,7 @@
                 android:layout_height="46dp"
                 android:layout_marginStart="114dp"
                 android:layout_marginTop="682dp"
+                android:onClick="saveBtn"
                 android:background="@drawable/rectangle_4_shape" />
 
             <TextView

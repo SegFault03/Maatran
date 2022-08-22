@@ -37,9 +37,9 @@
         <activity android:name=".EmailPasswordActivity" />
         <activity android:name=".EmailSignUp" />
         <activity android:name=".DashboardActivity" />
-        <activity android:name=".DetailsActivity" />
         <activity android:name=".ReportsActivity" />
         <activity android:name=".PatientsView" />
+        <activity android:name=".EditPatient" />
     </application>
 
 </manifest>

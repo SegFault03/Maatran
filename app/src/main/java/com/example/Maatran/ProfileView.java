@@ -17,12 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
+    FirebaseUser user;
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
 
@@ -35,11 +37,15 @@ public class ProfileView extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        getUserDetails(user);
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        getUserDetails(user);
+    }
 
     public void getUserDetails(FirebaseUser user)
     {
@@ -79,23 +85,36 @@ public class ProfileView extends AppCompatActivity {
 
     public void editProfile(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),DetailsActivity.class);
-        intent.putExtra("isPatient",false);
-        startActivity(intent);
+        db.collection("UserDetails")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnSuccessListener(documentSnapshot -> {
+                    Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+                    intent.putExtra("isPatient", false);
+                    intent.putExtra("user", documentSnapshot.toObject(User.class));
+                    startActivity(intent);
+                });
     }
 
     public void signOut(View view)
     {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signOut();
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
+        View popupConfirmSignOut = getLayoutInflater().inflate(R.layout.popupview_confirmation,null);
+        ((TextView) popupConfirmSignOut.findViewById(R.id.text_dialog)).setText("Do you really want to sign out?");
+        PopupWindow popupWindow = new PopupWindow(popupConfirmSignOut,LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
+        popupWindow.showAtLocation(view,Gravity.CENTER,0,0);
+        popupConfirmSignOut.findViewById(R.id.btn_yes).setOnClickListener(v->{
+            FirebaseAuth.getInstance().signOut();
+            Toast toast = Toast.makeText(getApplicationContext(),"You have successfully signed out, redirecting you to the log-in page",Toast.LENGTH_SHORT);
+            toast.show();
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        });
+        popupConfirmSignOut.findViewById(R.id.btn_no).setOnClickListener(v->popupWindow.dismiss());
     }
 
     public void deleteProfile(View view)
     {
         LayoutInflater inflater = getLayoutInflater();
         View popupDeleteProfile = inflater.inflate(R.layout.popupview_confirmation,null);
+        ((TextView)popupDeleteProfile.findViewById(R.id.text_dialog)).setText("Do you really want to delete your profile?");
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         // lets taps outside the popupWindow dismiss it
@@ -151,6 +170,20 @@ public class ProfileView extends AppCompatActivity {
     {
         db=FirebaseFirestore.getInstance();
         DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
+        CollectionReference colRef=db.collection("UserDetails").document(user.getEmail()).collection("Patients");
+        colRef.get().addOnSuccessListener(value -> {
+            for(DocumentSnapshot dc : value.getDocuments())
+            {
+                dc.getReference().delete().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    } else {
+                        Log.d(TAG, "Error deleting document", task.getException());
+                    }
+                });
+            }
+        }).addOnFailureListener(aVoid->Log.d(TAG,"No such collection exists"));
+
         docRef.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "DocumentSnapshot successfully deleted!");

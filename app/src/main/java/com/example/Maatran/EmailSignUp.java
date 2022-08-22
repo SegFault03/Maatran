@@ -1,6 +1,5 @@
 package com.example.Maatran;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //Called from RegistrationActivity
 //email based sign-up
 //xml file: screen-3
-public class EmailSignUp extends Activity {
+public class EmailSignUp extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
     // [START declare_auth]
@@ -28,16 +29,22 @@ public class EmailSignUp extends Activity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.screen_3);
-        getActionBar().hide();
+        getSupportActionBar().hide();
         ImageButton create = findViewById(R.id.create_acc);
         create.setOnClickListener(view -> {
             String email =  ((EditText)findViewById(R.id.email)).getText().toString();
             String password = ((EditText)findViewById(R.id.password)).getText().toString();
             String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
-            if(password.equals(confirmPass))
-            createAccount(email, password);
+            if(password.length()>=6)
+            {
+                if(password.equals(confirmPass))
+                createAccount(email, password);
+                else
+                    Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                            Toast.LENGTH_SHORT).show();
+            }
             else
-                Toast.makeText(EmailSignUp.this, "Passwords don't match.",
+                Toast.makeText(EmailSignUp.this, "Password must be at least 6 characters long",
                         Toast.LENGTH_SHORT).show();
         });
         // [END initialize_auth]
@@ -65,13 +72,15 @@ public class EmailSignUp extends Activity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(EmailSignUp.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
-                    updateUI();
+
                 });
         // [END create_user_with_email]
     }
@@ -100,9 +109,16 @@ public class EmailSignUp extends Activity {
         startActivity(intent);
     }
 
-    private void updateUI() {
-        Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-        intent.putExtra("isPatient", false);
-        startActivity(intent);
+    private void updateUI(FirebaseUser user) {
+        if(user == null)
+        {
+            reload();
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+            intent.putExtra("isPatient", false);
+            intent.putExtra("newDetails", true);
+            startActivity(intent);
+        }
     }
 }
