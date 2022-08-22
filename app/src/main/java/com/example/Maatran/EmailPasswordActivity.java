@@ -29,7 +29,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.screen_5);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         ImageButton login = findViewById(R.id.login_btn);
         login.setOnClickListener(view -> {
             String email =  ((EditText)findViewById(R.id.user_id)).getText().toString();

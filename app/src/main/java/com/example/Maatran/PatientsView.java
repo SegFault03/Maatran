@@ -31,7 +31,7 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patients_list);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);

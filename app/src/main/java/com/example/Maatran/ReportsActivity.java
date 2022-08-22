@@ -23,7 +23,7 @@ public class ReportsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_sensor_information);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         user = getIntent().getParcelableExtra("user");
         userId = getIntent().getStringExtra("id");

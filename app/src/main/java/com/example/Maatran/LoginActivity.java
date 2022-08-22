@@ -15,7 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_1);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
     }
 
     //called when SignIn button is clicked, calls EmailPasswordActivity

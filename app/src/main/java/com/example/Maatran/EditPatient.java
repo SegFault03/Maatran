@@ -27,7 +27,7 @@ public class EditPatient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_details);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         newDetails = getIntent().getBooleanExtra("newDetails", false);
         isPatient = getIntent().getBooleanExtra("isPatient", true);
