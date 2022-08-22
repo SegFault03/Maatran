@@ -106,16 +106,15 @@ public class EditPatient extends AppCompatActivity {
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             }
-        }
-
-        if(newDetails)
-        {
-            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-            startActivity(intent);
-        }
-        else
-        {
-            super.finish();
+            if(newDetails)
+            {
+                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                startActivity(intent);
+            }
+            else
+            {
+                super.finish();
+            }
         }
     }
 
