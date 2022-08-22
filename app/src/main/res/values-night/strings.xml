@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="employee_id_string">Employee ID</string>
+    <string name="welcome">Welcome !!</string>
+    <string name="dashboard_string">DASHBOARD</string>
+    <string name="family_members">Family Members</string>
+</resources>
