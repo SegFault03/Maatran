@@ -27,4 +27,9 @@
     <color name="rectangle_26_color">#5587fa</color>
     <color name="rectangle_28_color">#3f62b1</color>
     <color name="patient_color">#ffffff</color>
+    <color name="background_color">@android:color/white</color>
+    <color name="background_color_dark">#363668</color>
+    <color name="dashboard_primary">#667AFF</color>
+    <color name="dashboard_background">#252C4B</color>
+    <color name="card_background">#27325F</color>
 </resources>

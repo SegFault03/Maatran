@@ -18,12 +18,12 @@
     <string name="organisation_id_string">Organisation ID</string>
     <string name="email_string">Email</string>
     <string name="password_string">Password</string>
-    <string name="signup_as_health_worker_string">SIGN UP</string>
+    <string name="signup_as_health_worker_string">SIGN UP AS HEALTH WORKER</string>
     <string name="_already_have_an_account__login_string">Already have an account? Login</string>
     <string name="create_string">CREATE</string>
     <string name="forgot_password__string">Forgot password?</string>
     <string name="_create_an_account_string">Create an account</string>
-    <string name="login_string">LogIn</string>
+    <string name="login_string">Login</string>
     <string name="confirm_password_string">Confirm Password</string>
     <string name="health_worker_string">HEALTH WORKER</string>
     <string name="patient_string">PATIENT</string>
@@ -43,4 +43,9 @@
     <string name="moderate_risk">moderate</string>
     <string name="high_risk">high</string>
     <string name="detailed_information">Detailed Information</string>
+    <string name="employee_id_string">Employee ID</string>
+    <string name="hospital_name">Hospital Name</string>
+    <string name="welcome">Welcome !!</string>
+    <string name="dashboard_string">DASHBOARD</string>
+    <string name="family_members">Family Members</string>
 </resources>
