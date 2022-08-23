@@ -28,7 +28,6 @@ public class EditPatient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_details);
 
-
         newDetails = getIntent().getBooleanExtra("newDetails", false);
         isPatient = getIntent().getBooleanExtra("isPatient", true);
 
@@ -39,44 +38,51 @@ public class EditPatient extends AppCompatActivity {
         emergency = findViewById(R.id.emergency_no);
         address = findViewById(R.id.patient_address);
 
-        if(newDetails == false) {
-            user = getIntent().getParcelableExtra("user");
-            name.setText(user.getName());
-            age.setText(Long.toString(user.getAge()));
-            gender.setText(user.getGender());
-            mobile.setText(user.getMobile());
-            emergency.setText(user.getEmergency());
-            address.setText(user.getAddress());
+        if(isPatient == false)
+        {
+            age.setVisibility(View.INVISIBLE);
+            emergency.setVisibility(View.INVISIBLE);
+            findViewById(R.id.age).setVisibility(View.INVISIBLE);
+            findViewById(R.id.emergency).setVisibility(View.INVISIBLE);
+        }
 
-            if(isPatient) {
-                id = getIntent().getStringExtra("id");
-                docRef = FirebaseFirestore.getInstance()
-                        .collection("UserDetails")
-                        .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
-                        .collection("Patients")
-                        .document(id);
-            }
-            else {
+
+            if (newDetails == false) {
+                user = getIntent().getParcelableExtra("user");
+                name.setText(user.getName());
+                gender.setText(user.getGender());
+                mobile.setText(user.getMobile());
+                address.setText(user.getAddress());
+
+                if (isPatient) {
+                    age.setText(Long.toString(user.getAge()));
+                    emergency.setText(user.getEmergency());
+                    id = getIntent().getStringExtra("id");
+                    docRef = FirebaseFirestore.getInstance()
+                            .collection("UserDetails")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                            .collection("Patients")
+                            .document(id);
+                } else {
+                    docRef = FirebaseFirestore.getInstance()
+                            .collection("UserDetails")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                }
+            } else {
+                TextView head_text = findViewById(R.id.edit_details);
+                head_text.setText("ADD DETAILS");
+                if (isPatient) {
+                    Toast.makeText(EditPatient.this, "Enter new patient details.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(EditPatient.this, "Enter user details.",
+                            Toast.LENGTH_SHORT).show();
+                }
                 docRef = FirebaseFirestore.getInstance()
                         .collection("UserDetails")
                         .document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
             }
-        }
-        else {
-            TextView head_text = findViewById(R.id.edit_details);
-            head_text.setText("ADD DETAILS");
-            if(isPatient) {
-                Toast.makeText(EditPatient.this, "Enter new patient details.",
-                        Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(EditPatient.this, "Enter user details.",
-                        Toast.LENGTH_SHORT).show();
-            }
-            docRef = FirebaseFirestore.getInstance()
-                    .collection("UserDetails")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        }
+
     }
 
     public void saveDetails(View view)
@@ -87,10 +93,12 @@ public class EditPatient extends AppCompatActivity {
         }
         user.setName(name.getText().toString());
         user.setGender(gender.getText().toString());
-        user.setAge(Long.parseLong(age.getText().toString()));
         user.setAddress(address.getText().toString());
         user.setMobile(mobile.getText().toString());
-        user.setEmergency(emergency.getText().toString());
+        if(isPatient) {
+            user.setEmergency(emergency.getText().toString());
+            user.setAge(Long.parseLong(age.getText().toString()));
+        }
 
         if(checkDetails())
         {
@@ -127,12 +135,12 @@ public class EditPatient extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter the correct mobile number",Toast.LENGTH_SHORT).show();
             flag=false;
         }
-        if(user.getEmergency().length()!=10)
+        if(isPatient && user.getEmergency().length()!=10)
         {
             Toast.makeText(getApplicationContext(), "Enter the correct emergency mobile number", Toast.LENGTH_SHORT).show();
             flag=false;
         }
-        if(user.getAge()<18||user.getAge()>90)
+        if(isPatient && user.getAge()<18||user.getAge()>90)
         {
             Toast.makeText(getApplicationContext(), "Only users above or 18 and below 90 are allowed to register", Toast.LENGTH_SHORT).show();
             flag=false;

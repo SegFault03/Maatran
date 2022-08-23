@@ -36,15 +36,15 @@
         android:layout_width="190dp"
         android:layout_height="34dp"
         android:background="#99B1B5"
+        android:inputType="phone"
         android:paddingLeft="10dp"
         android:textSize="25sp"
-        android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/emergency"
-        app:layout_constraintTop_toBottomOf="@id/patient_address"
-        app:layout_constraintVertical_bias="0.109" />
+        app:layout_constraintTop_toBottomOf="@id/patient_age"
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
         android:id="@+id/emergency"
@@ -59,8 +59,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/address"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintTop_toBottomOf="@id/age"
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
         android:id="@+id/address"
@@ -76,7 +76,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gender"
-        app:layout_constraintVertical_bias="0.088" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
         android:id="@+id/gender"
@@ -92,7 +92,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mobile"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <EditText
         android:id="@+id/patient_address"
@@ -106,7 +106,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/address"
         app:layout_constraintTop_toBottomOf="@id/patient_gender"
-        app:layout_constraintVertical_bias="0.086" />
+        app:layout_constraintVertical_bias="0.065" />
 
     <EditText
         android:id="@+id/patient_gender"
@@ -122,35 +122,37 @@
         app:layout_constraintTop_toBottomOf="@id/patient_mobile"
         app:layout_constraintVertical_bias="0.059" />
 
+
     <EditText
         android:id="@+id/patient_mobile"
         android:layout_width="190dp"
         android:layout_height="34dp"
         android:background="#99B1B5"
+        android:inputType="phone"
         android:paddingLeft="10dp"
         android:textSize="25sp"
-        android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/mobile"
-        app:layout_constraintTop_toBottomOf="@id/patient_age"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintTop_toBottomOf="@id/patient_name"
+        app:layout_constraintVertical_bias="0.066" />
 
     <EditText
         android:id="@+id/patient_age"
         android:layout_width="190dp"
         android:layout_height="34dp"
         android:background="#99B1B5"
+        android:inputType="number"
         android:paddingLeft="10dp"
         android:textSize="25sp"
-        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/age"
-        app:layout_constraintTop_toBottomOf="@id/patient_name"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintTop_toBottomOf="@id/patient_address"
+        app:layout_constraintVertical_bias="0.07
+" />
 
     <TextView
         android:id="@+id/age"
@@ -165,9 +167,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintVertical_bias="0.047" />
-
+        app:layout_constraintTop_toBottomOf="@id/address"
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
         android:id="@+id/mobile"
@@ -180,10 +181,10 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/age"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintVertical_bias="0.068" />
 
     <TextView
         android:id="@+id/edit_details"

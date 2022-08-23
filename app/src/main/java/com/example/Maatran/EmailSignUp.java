@@ -4,41 +4,62 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
+
 //Called from RegistrationActivity
 //email based sign-up
 //xml file: screen-3
 public class EmailSignUp extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
+    private boolean isPatient;
+    String email, password, confirmPass, hospitalName="", employeeId="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // [START initialize_auth]
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.screen_3);
+        isPatient = getIntent().getBooleanExtra("isPatient", true);
 
-        ImageButton create = findViewById(R.id.create_acc);
-        create.setOnClickListener(view -> {
-            String email =  ((EditText)findViewById(R.id.email)).getText().toString();
-            String password = ((EditText)findViewById(R.id.password)).getText().toString();
-            String confirmPass =  ((EditText)findViewById(R.id.confirm_password)).getText().toString();
+        if(isPatient)
+            setContentView(R.layout.signup_as_patient);
+        else
+            setContentView(R.layout.signup_as_worker);
+
+        Button continue_btn = findViewById(R.id.continue_button);
+        continue_btn.setOnClickListener(view -> {
+            if(isPatient) {
+                email = ((TextInputEditText) findViewById(R.id.sign_in_as_patient_edit)).getText().toString();
+                password = ((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText().toString();
+                confirmPass = ((TextInputEditText) findViewById(R.id.sign_in_confirm_password_edit)).getText().toString();
+            }
+            else
+            {
+                email = ((EditText) findViewById(R.id.sign_in_as_patient)).getText().toString();
+                password = ((EditText) findViewById(R.id.password)).getText().toString();
+                confirmPass = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
+                hospitalName = ((EditText) findViewById(R.id.hospital_name)).getText().toString();
+                employeeId = ((EditText) findViewById(R.id.employee_id)).getText().toString();
+            }
             if(password.length()>=6)
             {
-                if(password.equals(confirmPass))
-                createAccount(email, password);
+                if(password.equals(confirmPass)) {
+                    createAccount(email, password, hospitalName, employeeId);
+                }
                 else
                     Toast.makeText(EmailSignUp.this, "Passwords don't match.",
                             Toast.LENGTH_SHORT).show();
@@ -47,10 +68,8 @@ public class EmailSignUp extends AppCompatActivity {
                 Toast.makeText(EmailSignUp.this, "Password must be at least 6 characters long",
                         Toast.LENGTH_SHORT).show();
         });
-        // [END initialize_auth]
     }
 
-    // [START on_start_check_user]
     @Override
     public void onStart() {
         super.onStart();
@@ -60,12 +79,9 @@ public class EmailSignUp extends AppCompatActivity {
             reload();
         }
     }
-    // [END on_start_check_user]
 
 
-
-    private void createAccount(String email, String password) {
-        // [START create_user_with_email]
+    private void createAccount(String email, String password, String hospitalName, String employeeId) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -82,7 +98,6 @@ public class EmailSignUp extends AppCompatActivity {
                     }
 
                 });
-        // [END create_user_with_email]
     }
 
 
@@ -115,6 +130,28 @@ public class EmailSignUp extends AppCompatActivity {
             reload();
         }
         else {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Map<String, String> details = new HashMap<>();
+            if(isPatient == false)
+            {
+                details.put("hospitalName", hospitalName);
+                details.put("employeeId", employeeId);
+                details.put("isWorker", "true");
+                db.collection("UserDetails")
+                        .document(mAuth.getCurrentUser().getEmail())
+                        .set(details, SetOptions.merge())
+                        .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                        .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+            }
+            else
+            {
+                details.put("isWorker", "false");
+                db.collection("UserDetails")
+                        .document(mAuth.getCurrentUser().getEmail())
+                        .set(details, SetOptions.merge())
+                        .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                        .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+            }
             Intent intent = new Intent(getApplicationContext(), EditPatient.class);
             intent.putExtra("isPatient", false);
             intent.putExtra("newDetails", true);

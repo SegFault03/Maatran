@@ -108,7 +108,7 @@
 
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/continue_button"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:layout_marginHorizontal="36dp"
@@ -126,7 +126,7 @@
         app:layout_constraintEnd_toStartOf="@+id/fb_logo"
         app:layout_constraintHorizontal_bias="0.911"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
 
     <ImageView
         android:id="@+id/fb_logo"
@@ -137,7 +137,7 @@
         android:contentDescription="fb_logo"
         android:src="@drawable/fb_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
     <TextView
         android:id="@+id/_already_have_an_account__login"
         android:layout_width="match_parent"

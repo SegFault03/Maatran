@@ -31,13 +31,15 @@ public class ProfileView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
+        setContentView(R.layout.user_profile2);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        TextView email = findViewById(R.id.emailId);
+        email.setText(user.getEmail());
     }
 
     @Override
@@ -57,17 +59,29 @@ public class ProfileView extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
 
                 if (document.exists()) {
-                    TextView tv_name= findViewById(R.id.user_name);
+                    if(document.getData().get("isWorker").toString().equals("false")) {
+                        findViewById(R.id.hospital_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l7).setVisibility(View.GONE);
+                        findViewById(R.id.employee_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l8).setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        findViewById(R.id.age_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l5).setVisibility(View.GONE);
+                        TextView tv_hosp = findViewById(R.id.hospital_name);
+                        tv_hosp.setText(document.getData().get("hospitalName").toString());
+                        TextView tv_eid = findViewById(R.id.employee_id);
+                        tv_eid.setText(document.getData().get("employeeId").toString());
+                    }
+                    TextView tv_name = findViewById(R.id.user_name);
                     tv_name.setText(document.getData().get("name").toString());
-                    TextView tv_age= findViewById(R.id.user_age);
-                    tv_age.setText(document.getData().get("age").toString());
-                    TextView tv_gender= findViewById(R.id.user_gender);
+                    TextView tv_gender = findViewById(R.id.user_gender);
                     tv_gender.setText(document.getData().get("gender").toString());
-                    TextView tv_adr= findViewById(R.id.user_adr);
+                    TextView tv_adr = findViewById(R.id.user_adr);
                     tv_adr.setText(document.getData().get("address").toString());
-                    TextView tv_mob= findViewById(R.id.user_mob);
+                    TextView tv_mob = findViewById(R.id.user_mob);
                     tv_mob.setText(document.getData().get("mobile").toString());
-
                 }
                 else
                 {

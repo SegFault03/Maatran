@@ -40,6 +40,7 @@
                             android:layout_height="48dp"
                             android:layout_marginTop="10dp"
                             android:drawablePadding="5dp"
+                            android:clickable="true"
                             android:onClick="signOut"
                             android:text="Sign Out"
                             android:textColor="#ffffff"
@@ -76,7 +77,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/user_profile_pic" />
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/emailId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView@gmail.com"
@@ -98,8 +99,8 @@
                         app:srcCompat="@drawable/circles" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="400dp"
+                        android:layout_width="360dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="60dp"
                         android:layout_marginEnd="24dp"
@@ -110,7 +111,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView11">
+                        app:layout_constraintTop_toBottomOf="@+id/emailId">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -133,7 +134,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:clickable="true"
+                                android:onClick="changePassword"
                                 android:text="Change"
+                                android:textStyle="bold"
                                 android:textAlignment="viewEnd"
                                 android:textColor="#5B5B5B"
                                 android:textSize="16sp" />
@@ -144,8 +148,9 @@
                             android:id="@+id/view_l1"
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
-                            android:background="#D9D9D9"
-                            android:layout_margin="10dp"/>
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -178,8 +183,9 @@
                             android:id="@+id/view_l4"
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
-                            android:background="#D9D9D9"
-                            android:layout_margin="10dp"/>
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -212,14 +218,16 @@
                             android:id="@+id/view_l3"
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
-                            android:background="#D9D9D9"
-                            android:layout_margin="10dp"/>
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:id="@+id/age_details">
 
                             <TextView
                                 android:id="@+id/age_label"
@@ -246,8 +254,9 @@
                             android:id="@+id/view_l5"
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
-                            android:background="#D9D9D9"
-                            android:layout_margin="10dp"/>
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -277,19 +286,91 @@
                         </LinearLayout>
 
                         <View
+                            android:id="@+id/view_l7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            android:id="@+id/hospital_details">
+
+                            <TextView
+                                android:id="@+id/hospital"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Hospital Name:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/hospital_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="hospital_name"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view_l8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            android:id="@+id/employee_details">
+
+                            <TextView
+                                android:id="@+id/employee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Employee ID:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/employee_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="hospital_name"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <View
                             android:id="@+id/view_l6"
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
-                            android:background="#D9D9D9"
-                            android:layout_margin="10dp"/>
+                            android:layout_margin="10dp"
+                            android:background="#D9D9D9" />
 
                         <Button
                             android:id="@+id/button7"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
+                            android:layout_marginHorizontal="40dp"
                             android:onClick="editProfile"
-                            android:text="EDIT PROFILE"
-                            android:layout_marginHorizontal="40dp"/>
+                            android:text="EDIT PROFILE" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

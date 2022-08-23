@@ -68,8 +68,11 @@ public class DashboardActivity extends AppCompatActivity {
             if(task.isSuccessful())
             {
                 DocumentSnapshot ds = task.getResult();
-                if(ds.exists())
+                if(ds.exists()) {
                     user_name.setText(ds.get("name").toString());
+                    if(ds.get("isWorker").toString().equals("true"))
+                        findViewById(R.id.report_button).setVisibility(View.GONE);
+                }
                 else
                     Log.d(TAG, "No such document");
             }
