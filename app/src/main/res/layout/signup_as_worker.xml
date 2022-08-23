@@ -10,10 +10,8 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dashboard_background"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"/>
+        android:scaleType="fitStart"
+        android:src="@drawable/dashboard_background"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -24,8 +22,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintVertical_bias="0.03"
         android:paddingBottom="80dp"
         android:id="@+id/top_header"/>
     <TextView
@@ -35,31 +33,31 @@
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/top_header"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/login"/>
-
     <EditText
         android:id="@+id/sign_in_as_patient"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_gravity="center_horizontal|center"
         android:layout_marginTop="16dp"
+        android:textColorHint="@color/background_color_dark"
         android:layout_marginHorizontal="30dp"
         android:fontFamily="sans-serif-light"
         android:gravity="start"
         android:hint="@string/sign_in_as_patient_string"
         android:textColor="@color/register__as_health_worker_color"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/login" />
+        app:layout_constraintStart_toStartOf="@+id/login"
+        app:layout_constraintEnd_toEndOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/login"/>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:autofillHints="password"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/background_color_dark"
         android:layout_alignStart="@+id/sign_in_as_patient"
         android:layout_alignEnd="@+id/sign_in_as_patient"
         android:layout_marginHorizontal="30dp"
@@ -81,6 +79,7 @@
         android:layout_alignEnd="@+id/sign_in_as_patient"
         android:layout_marginHorizontal="30dp"
         android:fontFamily="sans-serif-light"
+        android:textColorHint="@color/background_color_dark"
         android:hint="@string/confirm_password_string"
         android:inputType="textPassword"
         android:textAlignment="viewStart"
@@ -93,6 +92,7 @@
         android:id="@+id/hospital_name"
         android:layout_width="match_parent"
         android:autofillHints="password"
+        android:textColorHint="@color/background_color_dark"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/sign_in_as_patient"
         android:layout_alignEnd="@+id/sign_in_as_patient"
@@ -107,6 +107,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
     <EditText
+        android:textColorHint="@color/background_color_dark"
         android:id="@+id/employee_id"
         android:layout_width="match_parent"
         android:autofillHints="password"
@@ -159,18 +160,19 @@
     <TextView
         android:id="@+id/_already_have_an_account__login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fb_logo"
         android:layout_gravity="center_horizontal|center"
         android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:clickable="true"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:onClick="signInOptions"
         android:text="@string/_already_have_an_account__login_string"
         android:textColor="@color/background_color_dark"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

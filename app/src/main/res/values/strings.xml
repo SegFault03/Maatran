@@ -14,10 +14,11 @@
     <string name="sign_up_with_facebook__string">Sign up with Facebook </string>
     <string name="name_string">Name</string>
     <string name="choose_avatar_string">Choose Avatar</string>
-    <string name="mobile_number_string">Mobile Number</string>
+    <string name="mobile_number_string">Mobile Number:</string>
     <string name="organisation_id_string">Organisation ID</string>
     <string name="email_string">Email</string>
     <string name="password_string">Password</string>
+    <string name="password_isto_string">Password:</string>
     <string name="signup_as_health_worker_string">SIGN UP AS HEALTH WORKER</string>
     <string name="_already_have_an_account__login_string">Already have an account? Login</string>
     <string name="create_string">CREATE</string>
@@ -48,4 +49,5 @@
     <string name="welcome">Welcome !!</string>
     <string name="dashboard_string">DASHBOARD</string>
     <string name="family_members">Family Members</string>
+    <string name="username_email">Email/Username</string>
 </resources>

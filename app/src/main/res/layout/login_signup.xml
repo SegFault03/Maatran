@@ -10,10 +10,8 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dashboard_background"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"/>
+        android:scaleType="fitStart"
+        android:src="@drawable/dashboard_background"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -24,8 +22,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintVertical_bias="0.03"
         android:paddingBottom="80dp"
         android:id="@+id/top_header"/>
     <TextView
@@ -33,55 +31,69 @@
         android:layout_height="wrap_content"
         android:text="@string/login_string"
         android:textSize="32sp"
+        android:textColor="@color/background_color_dark"
         app:layout_constraintTop_toBottomOf="@id/top_header"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/login"/>
 
-    <EditText
-        android:id="@+id/sign_in_as_patient"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal|center"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="30dp"
-        android:fontFamily="sans-serif-light"
-        android:gravity="start"
-        android:hint="@string/sign_in_as_patient_string"
-        android:textColor="@color/register__as_health_worker_color"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/sign_in"
 
-        app:layout_constraintTop_toBottomOf="@id/login" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:autofillHints="password"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/sign_in_as_patient"
-        android:layout_alignEnd="@+id/sign_in_as_patient"
-        android:layout_marginHorizontal="30dp"
-        android:fontFamily="sans-serif-light"
-        android:hint="@string/password_string"
-        android:inputType="textPassword"
-        android:textAlignment="viewStart"
-        android:textColor="@color/name_color"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_as_patient" />
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        android:hint="@string/username_email"
+        android:fontFamily="sans-serif-light"
+        app:helperText="Required *"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="@color/red"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/login">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="30"
+            android:id="@+id/sign_in_edit" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="match_parent"
+        android:id="@+id/password"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:helperText="Required *"
+        app:endIconMode="password_toggle"
+        app:helperTextTextColor="@color/red"
+        android:hint="@string/password_string"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/sign_in_password_edit" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/continue_button"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="62dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="112dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:text="Continue"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
@@ -113,7 +125,7 @@
         android:id="@+id/google_logo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="18dp"
         android:contentDescription="google_logo"
         android:src="@drawable/google_logo"
         app:layout_constraintEnd_toStartOf="@+id/fb_logo"
@@ -125,12 +137,14 @@
         android:id="@+id/fb_logo"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="128dp"
         android:contentDescription="fb_logo"
         android:src="@drawable/fb_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button6" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
