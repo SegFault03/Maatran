@@ -92,7 +92,7 @@
         app:helperText="Required *"
         app:endIconMode="password_toggle"
         app:helperTextTextColor="@color/red"
-        android:hint="@string/password_string"
+        android:hint="Confirm Password"
         android:fontFamily="sans-serif-light"
         android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"

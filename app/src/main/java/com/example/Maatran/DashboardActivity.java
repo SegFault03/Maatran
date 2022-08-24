@@ -19,6 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
     public static final String TAG = "DashboardActivity";
     ProgressDialog progressDialog;
     FirebaseUser user;
+    boolean isPatient = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
     public void viewPatients(View view)
     {
         Intent intent = new Intent(getApplicationContext(), PatientsView.class);
+        intent.putExtra("isPatient", isPatient);
         startActivity(intent);
     }
 
@@ -70,8 +72,10 @@ public class DashboardActivity extends AppCompatActivity {
                 DocumentSnapshot ds = task.getResult();
                 if(ds.exists()) {
                     user_name.setText(ds.get("name").toString());
-                    if(ds.get("isWorker").toString().equals("true"))
+                    if(ds.get("isWorker").toString().equals("true")) {
                         findViewById(R.id.report_button).setVisibility(View.GONE);
+                        isPatient = false;
+                    }
                 }
                 else
                     Log.d(TAG, "No such document");

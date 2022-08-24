@@ -91,7 +91,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="user_name"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
                 android:textSize="16sp" />
@@ -126,9 +125,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="user_mobile"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
+                android:inputType="phone"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -161,8 +160,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="user_mobile"
                         android:textAlignment="viewEnd"
+                        android:inputType="phone"
                         android:textColor="#5B5B5B"
                         android:textSize="16sp" />
 
@@ -196,7 +195,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="user_gender"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
                 android:textSize="16sp" />
@@ -232,7 +230,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="user_age"
+                android:inputType="number"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
                 android:textSize="16sp" />
@@ -267,7 +265,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="user_address"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
                 android:textSize="16sp" />
@@ -303,7 +300,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="hospital_name"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
                 android:textSize="16sp" />
@@ -339,7 +335,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="employee_id"
                 android:textAlignment="viewEnd"
                 android:textColor="#5B5B5B"
                 android:textSize="16sp" />

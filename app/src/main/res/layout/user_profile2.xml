@@ -34,6 +34,29 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/back_to_dashboard_btn"
+                            android:layout_width="56dp"
+                            android:layout_height="62dp"
+                            android:layout_marginTop="12dp"
+                            android:clickable="true"
+                            android:onClick="backToDashboard"
+                            android:rotation="180"
+                            android:rotationY="4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.045"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/arrow_right" /><![CDATA[
+
+
+
+    />
+
+
+
+]]>
+
                         <TextView
                             android:id="@+id/textView15"
                             android:layout_width="wrap_content"
