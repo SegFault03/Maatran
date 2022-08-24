@@ -11,7 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -27,6 +29,24 @@ public class EditPatient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_details);
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseFirestore.getInstance()
+                .collection("UserDetails")
+                .document(mUser.getEmail()).get().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+
+                                if (document.exists()) {
+                                    if (document.getData().get("isWorker").toString().equals("false")) {
+                                        findViewById(R.id.hospital_details).setVisibility(View.GONE);
+                                        findViewById(R.id.view_l7).setVisibility(View.GONE);
+                                        findViewById(R.id.employee_details).setVisibility(View.GONE);
+                                        findViewById(R.id.view_l8).setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        });
 
         newDetails = getIntent().getBooleanExtra("newDetails", false);
         isPatient = getIntent().getBooleanExtra("isPatient", true);
@@ -40,12 +60,11 @@ public class EditPatient extends AppCompatActivity {
 
         if(isPatient == false)
         {
-            age.setVisibility(View.INVISIBLE);
-            emergency.setVisibility(View.INVISIBLE);
-            findViewById(R.id.age).setVisibility(View.INVISIBLE);
-            findViewById(R.id.emergency).setVisibility(View.INVISIBLE);
+            findViewById(R.id.age_details).setVisibility(View.GONE);
+            findViewById(R.id.view_l5).setVisibility(View.GONE);
+            findViewById(R.id.emergency).setVisibility(View.GONE);
+            findViewById(R.id.view_20).setVisibility(View.GONE);
         }
-
 
             if (newDetails == false) {
                 user = getIntent().getParcelableExtra("user");
@@ -60,13 +79,13 @@ public class EditPatient extends AppCompatActivity {
                     id = getIntent().getStringExtra("id");
                     docRef = FirebaseFirestore.getInstance()
                             .collection("UserDetails")
-                            .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                            .document(mUser.getEmail())
                             .collection("Patients")
                             .document(id);
                 } else {
                     docRef = FirebaseFirestore.getInstance()
                             .collection("UserDetails")
-                            .document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                            .document(mUser.getEmail());
                 }
             } else {
                 TextView head_text = findViewById(R.id.edit_details);
@@ -80,7 +99,7 @@ public class EditPatient extends AppCompatActivity {
                 }
                 docRef = FirebaseFirestore.getInstance()
                         .collection("UserDetails")
-                        .document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        .document(mUser.getEmail());
             }
 
     }

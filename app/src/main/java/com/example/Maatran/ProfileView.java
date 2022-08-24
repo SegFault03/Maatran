@@ -64,6 +64,8 @@ public class ProfileView extends AppCompatActivity {
                         findViewById(R.id.view_l7).setVisibility(View.GONE);
                         findViewById(R.id.employee_details).setVisibility(View.GONE);
                         findViewById(R.id.view_l8).setVisibility(View.GONE);
+                        findViewById(R.id.age_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l5).setVisibility(View.GONE);
                     }
                     else
                     {
