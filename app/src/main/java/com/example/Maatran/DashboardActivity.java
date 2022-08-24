@@ -79,4 +79,10 @@ public class DashboardActivity extends AppCompatActivity {
                 progressDialog.dismiss();
         });
     }
+
+    public void bluetoothService(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(),BluetoothActivity.class);
+        startActivity(intent);
+    }
 }
