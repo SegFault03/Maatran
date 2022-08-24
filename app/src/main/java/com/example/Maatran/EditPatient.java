@@ -44,6 +44,13 @@ public class EditPatient extends AppCompatActivity {
                                         findViewById(R.id.employee_details).setVisibility(View.GONE);
                                         findViewById(R.id.view_l8).setVisibility(View.GONE);
                                     }
+                                    else
+                                    {
+                                        EditText hospital_name = findViewById(R.id.hospital_name);
+                                        hospital_name.setText(document.getData().get("hospitalName").toString());
+                                        EditText employee_id = findViewById(R.id.employee_id);
+                                        hospital_name.setText(document.getData().get("employeeId").toString());
+                                    }
                                 }
                             }
                         });
