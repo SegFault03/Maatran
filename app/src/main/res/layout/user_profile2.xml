@@ -404,6 +404,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:text="Delete Account"
+                android:onClick="deleteProfile"
                 android:layout_marginHorizontal="30dp"
                 android:backgroundTint="@color/red"
                 />
