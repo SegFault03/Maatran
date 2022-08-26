@@ -17,12 +17,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EditPatient extends AppCompatActivity {
 
     User user;
     String id;
-    boolean newDetails, isPatient;
-    private EditText name, age, gender, mobile, emergency, address;
+    boolean newDetails, isPatient, isWorker;
+    private EditText name, age, gender, mobile, emergency, address, hospital_name, employee_id;
     DocumentReference docRef;
 
     @Override
@@ -30,6 +33,10 @@ public class EditPatient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_details);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        hospital_name = findViewById(R.id.hospital_name);
+        employee_id = findViewById(R.id.employee_id);
+        isWorker = false;
 
         FirebaseFirestore.getInstance()
                 .collection("UserDetails")
@@ -46,10 +53,11 @@ public class EditPatient extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        EditText hospital_name = findViewById(R.id.hospital_name);
+                                        //EditText hospital_name = findViewById(R.id.hospital_name);
                                         hospital_name.setText(document.getData().get("hospitalName").toString());
-                                        EditText employee_id = findViewById(R.id.employee_id);
+                                        //EditText employee_id = findViewById(R.id.employee_id);
                                         employee_id.setText(document.getData().get("employeeId").toString());
+                                        isWorker = true;
                                     }
                                 }
                             }
@@ -113,6 +121,7 @@ public class EditPatient extends AppCompatActivity {
 
     public void saveDetails(View view)
     {
+        Map<String, String> mp = new HashMap<>();
         if(newDetails)
         {
             user = new User();
@@ -125,6 +134,11 @@ public class EditPatient extends AppCompatActivity {
             user.setEmergency(emergency.getText().toString());
             user.setAge(Long.parseLong(age.getText().toString()));
         }
+        if(isWorker)
+        {
+            mp.put("hospitalName", hospital_name.getText().toString());
+            mp.put("employeeId", employee_id.getText().toString());
+        }
 
         if(checkDetails())
         {
@@ -133,6 +147,10 @@ public class EditPatient extends AppCompatActivity {
                 docRef.set(user, SetOptions.merge())
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+                if(isWorker)
+                    docRef.set(mp, SetOptions.merge())
+                            .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                            .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             }
             else
             {
