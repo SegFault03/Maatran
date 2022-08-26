@@ -22,6 +22,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseUser user;
@@ -55,13 +57,13 @@ public class ProfileView extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         isWorker = false;
-        DocumentReference docRef = db.collection("UserDetails").document(user.getEmail());
+        DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
 
                 if (document.exists()) {
-                    if(document.getData().get("isWorker").toString().equals("false")) {
+                    if(Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")) {
                         findViewById(R.id.hospital_details).setVisibility(View.GONE);
                         findViewById(R.id.view_l7).setVisibility(View.GONE);
                         findViewById(R.id.employee_details).setVisibility(View.GONE);
@@ -75,18 +77,18 @@ public class ProfileView extends AppCompatActivity {
                         findViewById(R.id.age_details).setVisibility(View.GONE);
                         findViewById(R.id.view_l5).setVisibility(View.GONE);
                         TextView tv_hosp = findViewById(R.id.hospital_name);
-                        tv_hosp.setText(document.getData().get("hospitalName").toString());
+                        tv_hosp.setText(Objects.requireNonNull(document.getData().get("hospitalName")).toString());
                         TextView tv_eid = findViewById(R.id.employee_id);
-                        tv_eid.setText(document.getData().get("employeeId").toString());
+                        tv_eid.setText(Objects.requireNonNull(document.getData().get("employeeId")).toString());
                     }
                     TextView tv_name = findViewById(R.id.user_name);
-                    tv_name.setText(document.getData().get("name").toString());
+                    tv_name.setText(Objects.requireNonNull(document.getData().get("name")).toString());
                     TextView tv_gender = findViewById(R.id.user_gender);
-                    tv_gender.setText(document.getData().get("gender").toString());
+                    tv_gender.setText(Objects.requireNonNull(document.getData().get("gender")).toString());
                     TextView tv_adr = findViewById(R.id.user_adr);
-                    tv_adr.setText(document.getData().get("address").toString());
+                    tv_adr.setText(Objects.requireNonNull(document.getData().get("address")).toString());
                     TextView tv_mob = findViewById(R.id.user_mob);
-                    tv_mob.setText(document.getData().get("mobile").toString());
+                    tv_mob.setText(Objects.requireNonNull(document.getData().get("mobile")).toString());
                 }
                 else
                 {
@@ -105,7 +107,7 @@ public class ProfileView extends AppCompatActivity {
     public void editProfile(View view)
     {
         db.collection("UserDetails")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnSuccessListener(documentSnapshot -> {
+                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).get().addOnSuccessListener(documentSnapshot -> {
                     Intent intent = new Intent(getApplicationContext(), EditPatient.class);
                     intent.putExtra("isPatient", false);
                     intent.putExtra("user", documentSnapshot.toObject(User.class));
@@ -170,6 +172,7 @@ public class ProfileView extends AppCompatActivity {
     public void deleteUserProfile(ProgressDialog progressDialog,PopupWindow popupWindow)
     {
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
         user.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 deleteUserData(user);
@@ -192,8 +195,8 @@ public class ProfileView extends AppCompatActivity {
     public void deleteUserData(FirebaseUser user)
     {
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("UserDetails").document(user.getEmail());
-        if(isWorker == false) {
+        DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
+        if(!isWorker) {
             CollectionReference colRef = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
             colRef.get().addOnSuccessListener(value -> {
                 for (DocumentSnapshot dc : value.getDocuments()) {

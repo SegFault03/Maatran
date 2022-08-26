@@ -42,14 +42,15 @@ public class EditPatient extends AppCompatActivity {
         employee_id = findViewById(R.id.employee_id);
         isWorker = false;
 
+        assert mUser != null;
         FirebaseFirestore.getInstance()
                 .collection("UserDetails")
-                .document(mUser.getEmail()).get().addOnCompleteListener(task -> {
+                .document(Objects.requireNonNull(mUser.getEmail())).get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
 
                                 if (document.exists()) {
-                                    if (document.getData().get("isWorker").toString().equals("false")) {
+                                    if (Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")) {
                                         findViewById(R.id.hospital_details).setVisibility(View.GONE);
                                         findViewById(R.id.view_l7).setVisibility(View.GONE);
                                         findViewById(R.id.employee_details).setVisibility(View.GONE);
@@ -82,7 +83,7 @@ public class EditPatient extends AppCompatActivity {
         emergency = findViewById(R.id.emergency_no);
         address = findViewById(R.id.patient_address);
 
-        if(isPatient == false)
+        if(!isPatient)
         {
             findViewById(R.id.age_details).setVisibility(View.GONE);
             findViewById(R.id.view_l5).setVisibility(View.GONE);
@@ -90,7 +91,7 @@ public class EditPatient extends AppCompatActivity {
             findViewById(R.id.view_20).setVisibility(View.GONE);
         }
 
-        if (newDetails == false) {
+        if (!newDetails) {
             user = getIntent().getParcelableExtra("user");
             name.setText(user.getName());
             gender.setText(user.getGender());
@@ -156,7 +157,7 @@ public class EditPatient extends AppCompatActivity {
 
         if(checkDetails())
         {
-            if(newDetails == false || (newDetails && isPatient == false))
+            if(!newDetails || !isPatient)
             {
                 docRef.set(user, SetOptions.merge())
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))

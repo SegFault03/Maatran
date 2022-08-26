@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 //login activity, called from main activity
 //corresponding xml file: screen_1
 public class LoginActivity extends AppCompatActivity {
@@ -33,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_signup);
         Button login = findViewById(R.id.continue_button);
         login.setOnClickListener(view -> {
-            String email =  ((TextInputEditText)findViewById(R.id.sign_in_edit)).getText().toString();
-            String password = ((TextInputEditText)findViewById(R.id.sign_in_password_edit)).getText().toString();
+            String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString();
+            String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString();
             signIn(email, password);
         });
         // [END initialize_auth]
@@ -61,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        assert user != null;
                         checkForDetails(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -77,23 +80,12 @@ public class LoginActivity extends AppCompatActivity {
         // Send verification email
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
         user.sendEmailVerification()
                 .addOnCompleteListener(this, task -> {
                     // Email sent
                 });
         // [END send_email_verification]
-    }
-
-
-    public void registerOptions(View view) {
-        Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
-        startActivity(intent);
-    }
-
-    private void reload() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
     }
 
     private void updateUI(FirebaseUser user)
@@ -111,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     private void checkForDetails(FirebaseUser user)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-         db.collection("UserDetails").document(user.getEmail()).get().addOnCompleteListener(task -> {
+         db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail())).get().addOnCompleteListener(task -> {
             if(task.isSuccessful())
             {
                 DocumentSnapshot document = task.getResult();
