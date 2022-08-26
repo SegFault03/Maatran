@@ -121,7 +121,11 @@ public class ProfileView extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(),"You have successfully signed out, redirecting you to the log-in page",Toast.LENGTH_SHORT);
             toast.show();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            super.finish();
         });
         popupConfirmSignOut.findViewById(R.id.btn_no).setOnClickListener(v->popupWindow.dismiss());
     }
