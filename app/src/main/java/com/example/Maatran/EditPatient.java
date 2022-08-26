@@ -73,12 +73,12 @@ public class EditPatient extends AppCompatActivity {
             findViewById(R.id.view_20).setVisibility(View.GONE);
         }
 
-            if (newDetails == false) {
-                user = getIntent().getParcelableExtra("user");
-                name.setText(user.getName());
-                gender.setText(user.getGender());
-                mobile.setText(user.getMobile());
-                address.setText(user.getAddress());
+        if (newDetails == false) {
+            user = getIntent().getParcelableExtra("user");
+            name.setText(user.getName());
+            gender.setText(user.getGender());
+            mobile.setText(user.getMobile());
+            address.setText(user.getAddress());
 
                 if (isPatient) {
                     age.setText(Long.toString(user.getAge()));
@@ -94,20 +94,25 @@ public class EditPatient extends AppCompatActivity {
                             .collection("UserDetails")
                             .document(mUser.getEmail());
                 }
-            } else {
-                TextView head_text = findViewById(R.id.edit_details);
-                head_text.setText("ADD DETAILS");
-                if (isPatient) {
-                    Toast.makeText(EditPatient.this, "Enter new patient details.",
+        }
+        else
+        {
+            TextView head_text = findViewById(R.id.edit_details);
+            head_text.setText("ADD DETAILS");
+            if (isPatient)
+            {
+                Toast.makeText(EditPatient.this, "Enter new patient details.",
                             Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(EditPatient.this, "Enter user details.",
-                            Toast.LENGTH_SHORT).show();
-                }
-                docRef = FirebaseFirestore.getInstance()
+            }
+            else
+            {
+                Toast.makeText(EditPatient.this, "Enter user details.", Toast.LENGTH_SHORT).show();
+                findViewById(R.id.cancel).setVisibility(View.INVISIBLE);
+            }
+            docRef = FirebaseFirestore.getInstance()
                         .collection("UserDetails")
                         .document(mUser.getEmail());
-            }
+        }
 
     }
 
