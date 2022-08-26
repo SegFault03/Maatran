@@ -17,8 +17,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.Objects;
+
 public class EditPatient extends AppCompatActivity {
 
+    public static final String TAG="EditPatient";
     User user;
     String id;
     boolean newDetails, isPatient;
@@ -47,9 +50,11 @@ public class EditPatient extends AppCompatActivity {
                                     else
                                     {
                                         EditText hospital_name = findViewById(R.id.hospital_name);
-                                        hospital_name.setText(document.getData().get("hospitalName").toString());
+                                        if(document.get("hospitalName")!=null)
+                                        hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
                                         EditText employee_id = findViewById(R.id.employee_id);
-                                        employee_id.setText(document.getData().get("employeeId").toString());
+                                        if(document.get("employeeId")!=null)
+                                        employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
                                     }
                                 }
                             }
@@ -107,7 +112,7 @@ public class EditPatient extends AppCompatActivity {
             else
             {
                 Toast.makeText(EditPatient.this, "Enter user details.", Toast.LENGTH_SHORT).show();
-                findViewById(R.id.cancel).setVisibility(View.INVISIBLE);
+                findViewById(R.id.cancel).setVisibility(View.GONE);
             }
             docRef = FirebaseFirestore.getInstance()
                         .collection("UserDetails")
