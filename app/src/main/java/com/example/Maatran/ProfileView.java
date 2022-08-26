@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseUser user;
+    boolean isWorker;
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
 
@@ -52,8 +53,9 @@ public class ProfileView extends AppCompatActivity {
     public void getUserDetails(FirebaseUser user)
     {
 
-        db=FirebaseFirestore.getInstance();
-        DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
+        db = FirebaseFirestore.getInstance();
+        isWorker = false;
+        DocumentReference docRef = db.collection("UserDetails").document(user.getEmail());
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -69,6 +71,7 @@ public class ProfileView extends AppCompatActivity {
                     }
                     else
                     {
+                        isWorker=true;
                         findViewById(R.id.age_details).setVisibility(View.GONE);
                         findViewById(R.id.view_l5).setVisibility(View.GONE);
                         TextView tv_hosp = findViewById(R.id.hospital_name);
@@ -188,21 +191,22 @@ public class ProfileView extends AppCompatActivity {
 
     public void deleteUserData(FirebaseUser user)
     {
-        db=FirebaseFirestore.getInstance();
-        DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
-        CollectionReference colRef=db.collection("UserDetails").document(user.getEmail()).collection("Patients");
-        colRef.get().addOnSuccessListener(value -> {
-            for(DocumentSnapshot dc : value.getDocuments())
-            {
-                dc.getReference().delete().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    } else {
-                        Log.d(TAG, "Error deleting document", task.getException());
-                    }
-                });
-            }
-        }).addOnFailureListener(aVoid->Log.d(TAG,"No such collection exists"));
+        db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("UserDetails").document(user.getEmail());
+        if(isWorker == false) {
+            CollectionReference colRef = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
+            colRef.get().addOnSuccessListener(value -> {
+                for (DocumentSnapshot dc : value.getDocuments()) {
+                    dc.getReference().delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        } else {
+                            Log.d(TAG, "Error deleting document", task.getException());
+                        }
+                    });
+                }
+            }).addOnFailureListener(aVoid -> Log.d(TAG, "No such collection exists"));
+        }
 
         docRef.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
