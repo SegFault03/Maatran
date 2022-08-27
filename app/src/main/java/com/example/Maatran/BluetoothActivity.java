@@ -3,6 +3,8 @@ package com.example.Maatran;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,11 +47,10 @@ public class BluetoothActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter = null;
 
     //Global BluetoothService object
-    //private BluetoothService mChatService = null;                   //TODO  service for handling data transmissions
+    //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
 
     //Runnable for the handler
-    private final Runnable runnable = new Runnable()
-    {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             //Update UI
@@ -71,10 +72,10 @@ public class BluetoothActivity extends AppCompatActivity {
         mBluetoothDeviceList = findViewById(R.id.device_list_lv);
         mSelectDeviceText = findViewById(R.id.select_device_text);
         mSelectDeviceText.setVisibility(View.INVISIBLE);
-        mBluetoothStateText=findViewById(R.id.bluetooth_service_state_text);
+        mBluetoothStateText = findViewById(R.id.bluetooth_service_state_text);
 
         //Creating a new handler and binding it with a callback fn: runnable
-        handler=new Handler();
+        handler = new Handler();
         handler.postDelayed(runnable, 100);
 
         //Setting up bluetooth
@@ -85,11 +86,41 @@ public class BluetoothActivity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             super.finish();
         }
-
-        //Chek if app has been granted permission to use Bluetooth
-        checkForPermissions();
-
     }
+
+
+    /**
+     * Overrides onActivityResult() in AppCompatActivity class. Is called automatically after startActivityForResult() is called
+     * @param requestCode: request code for turning on Bluetooth
+     * @param resultCode: returned by startActivityForResult; indicates whether request was granted or rejected
+     * @param data: TODO Intent object to be passed (to be implemented in future)
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+//            case REQUEST_CONNECT_DEVICE_SECURE:
+//                // When DeviceListActivity returns with a device to connect
+//                if (resultCode == AppCompatActivity.RESULT_OK) {
+//                    connectDevice(data, true);
+//                }
+//                break;
+//            case REQUEST_CONNECT_DEVICE_INSECURE:
+//                // When DeviceListActivity returns with a device to connect
+//                if (resultCode == AppCompatActivity.RESULT_OK) {
+//                    connectDevice(data, false);
+//                }
+//                break;
+            case REQUEST_ENABLE_BT:
+                // When the request to enable Bluetooth returns
+                if (resultCode != AppCompatActivity.RESULT_OK) {
+                    // User did not enable Bluetooth or an error occurred
+                    Toast.makeText(this,"Bluetooth is essential for this functionality to work!",Toast.LENGTH_LONG).show();
+                    super.finish();
+                }
+        }
+    }
+
 
     @Override
     public void onStart() {
@@ -98,81 +129,20 @@ public class BluetoothActivity extends AppCompatActivity {
         updateUI();
     }
 
-    //Checks if the required permissions have been granted
-    public void checkForPermissions()
-    {
-        int permissionCheck = ContextCompat.checkSelfPermission(
-                this, Manifest.permission.BLUETOOTH);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            //if permission has not been granted, check if it is necessary to explain why this permission is required..
-            //shouldShowRequestPermissionRationale() returns true ONLY if user has refused to grant access to permission
-            //Returns false otherwise
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.BLUETOOTH)) {
-                showExplanation("Permission Needed", "Rationale", Manifest.permission.BLUETOOTH, REQUEST_ENABLE_BT);
-            } else {
-                //request for the permission to be granted
-                requestPermission(Manifest.permission.BLUETOOTH, REQUEST_ENABLE_BT);
-            }
-        } else {
-            Toast.makeText(this, "Permission to use Bluetooth (already) Granted!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**Overrides onRequestPermissionsResult defined in ActivityCompat interface
-    Will be called automatically when a permission is requested using  ActivityCompat.requestPermissions()
-     @param requestCode: Code passed to ActivityCompat.requestPermissions()
-     @param permissions: Permission requested
-     @param grantResults: codes indicating whether permission has been granted or not
-     */
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            String permissions[],
-            int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_ENABLE_BT:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
-                }
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        //Stop the handler
+        handler.removeCallbacks(runnable);
     }
 
-
-    /**
-     creates and shows an AlertDialog explaining the need of a permission to be granted
-     @param title: title of the message to be displayed
-     @param message: message to be displayed
-     @param permission: permission for which the message is displayed
-     @param permissionRequestCode: request code for the permission
-     */
-    private void showExplanation(String title,
-                                 String message,
-                                 final String permission,
-                                 final int permissionRequestCode) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        //If user clicks 'OK', permission is asked again
-        //(dialog, id) is a callback function to decide what happens if user clicks 'OK'
-        builder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, (dialog, id) -> requestPermission(permission, permissionRequestCode));
-        builder.create().show();
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Update UI depending upon Bluetooth state
+        updateUI();
     }
 
-    /**
-     * requests user to grant a specific permission using  ActivityCompat.requestPermissions()
-     * @param permissionName: Name of the permission to be granted
-     * @param permissionRequestCode: request code for the permission
-     */
-    private void requestPermission(String permissionName, int permissionRequestCode) {
-        ActivityCompat.requestPermissions(this,
-                new String[]{permissionName}, permissionRequestCode);
-    }
 
     //Update UI according to Bluetooth State
     public void updateUI()
@@ -190,9 +160,12 @@ public class BluetoothActivity extends AppCompatActivity {
             case BluetoothAdapter.STATE_OFF:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[0]);
                 mBluetoothStateChangeBtn.setText("TURN "+BLUETOOTH_STATE[2]);
-                mBluetoothStateChangeBtn.setOnClickListener(view->
-                        mBluetoothAdapter.enable()
-                );
+                mBluetoothStateChangeBtn.setOnClickListener(view-> {
+                    if (!mBluetoothAdapter.isEnabled()) {
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    }
+                });
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[3]);
@@ -210,7 +183,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 break;
         }
     }
-
 
 
     /*public void setUpBluetooth() {
