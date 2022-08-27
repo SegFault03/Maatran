@@ -18,6 +18,7 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 //Called from RegistrationActivity
 //email based sign-up
@@ -43,9 +44,9 @@ public class EmailSignUp extends AppCompatActivity {
         Button continue_btn = findViewById(R.id.continue_button);
         continue_btn.setOnClickListener(view -> {
             if(isPatient) {
-                email = ((TextInputEditText) findViewById(R.id.sign_in_as_patient_edit)).getText().toString();
-                password = ((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText().toString();
-                confirmPass = ((TextInputEditText) findViewById(R.id.sign_in_confirm_password_edit)).getText().toString();
+                email = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_as_patient_edit)).getText()).toString();
+                password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString();
+                confirmPass = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_confirm_password_edit)).getText()).toString();
             }
             else
             {
@@ -58,7 +59,7 @@ public class EmailSignUp extends AppCompatActivity {
             if(password.length()>=6)
             {
                 if(password.equals(confirmPass)) {
-                    createAccount(email, password, hospitalName, employeeId);
+                    createAccount(email, password);
                 }
                 else
                     Toast.makeText(EmailSignUp.this, "Passwords don't match.",
@@ -70,18 +71,7 @@ public class EmailSignUp extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            reload();
-        }
-    }
-
-
-    private void createAccount(String email, String password, String hospitalName, String employeeId) {
+    private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -105,6 +95,7 @@ public class EmailSignUp extends AppCompatActivity {
         // Send verification email
         // [START send_email_verification]
         final FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
         user.sendEmailVerification()
                 .addOnCompleteListener(this, task -> {
                     // Email sent
@@ -118,27 +109,18 @@ public class EmailSignUp extends AppCompatActivity {
     }
 
 
-    private void reload() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
-        startActivity(intent);
-    }
-
     private void updateUI(FirebaseUser user) {
-        if(user == null)
+        if(user != null)
         {
-            reload();
-        }
-        else {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             Map<String, String> details = new HashMap<>();
-            if(isPatient == false)
+            if(!isPatient)
             {
                 details.put("hospitalName", hospitalName);
                 details.put("employeeId", employeeId);
                 details.put("isWorker", "true");
                 db.collection("UserDetails")
-                        .document(mAuth.getCurrentUser().getEmail())
+                        .document(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()))
                         .set(details, SetOptions.merge())
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
@@ -147,7 +129,7 @@ public class EmailSignUp extends AppCompatActivity {
             {
                 details.put("isWorker", "false");
                 db.collection("UserDetails")
-                        .document(mAuth.getCurrentUser().getEmail())
+                        .document(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()))
                         .set(details, SetOptions.merge())
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));

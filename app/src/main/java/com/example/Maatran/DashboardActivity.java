@@ -15,6 +15,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class DashboardActivity extends AppCompatActivity {
     public static final String TAG = "DashboardActivity";
     ProgressDialog progressDialog;
@@ -65,14 +67,14 @@ public class DashboardActivity extends AppCompatActivity {
     {
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         TextView user_name = findViewById(R.id.dashboard_user_name);
-        DocumentReference df= db.collection("UserDetails").document(user.getEmail());
+        DocumentReference df= db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
         df.get().addOnCompleteListener(task -> {
             if(task.isSuccessful())
             {
                 DocumentSnapshot ds = task.getResult();
                 if(ds.exists()) {
-                    user_name.setText(ds.get("name").toString());
-                    if(ds.get("isWorker").toString().equals("true")) {
+                    user_name.setText(Objects.requireNonNull(ds.get("name")).toString());
+                    if(Objects.requireNonNull(ds.get("isWorker")).toString().equals("true")) {
                         findViewById(R.id.report_button).setVisibility(View.GONE);
                         isPatient = false;
                     }

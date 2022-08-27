@@ -61,14 +61,14 @@
                             android:id="@+id/textView15"
                             android:layout_width="wrap_content"
                             android:layout_height="48dp"
-                            android:layout_marginTop="10dp"
-                            android:drawablePadding="5dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="10dp"
                             android:clickable="true"
+                            android:drawablePadding="5dp"
                             android:onClick="signOut"
                             android:text="Sign Out"
                             android:textColor="#ffffff"
                             android:textSize="20sp"
-                            app:drawableEndCompat="@drawable/ic_signout_24"
                             app:drawableTint="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.98"
@@ -160,10 +160,10 @@
                                 android:clickable="true"
                                 android:onClick="changePassword"
                                 android:text="Change"
-                                android:textStyle="bold"
                                 android:textAlignment="viewEnd"
-                                android:textColor="#5B5B5B"
-                                android:textSize="16sp" />
+                                android:textColor="#E91E63"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 

@@ -32,9 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EmailPasswordActivity" />
         <activity android:name=".EmailSignUp" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".ReportsActivity" />

@@ -20,8 +20,12 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Objects;
+
+
 public class EditPatient extends AppCompatActivity {
 
+    public static final String TAG="EditPatient";
     User user;
     String id;
     boolean newDetails, isPatient, isWorker;
@@ -38,14 +42,15 @@ public class EditPatient extends AppCompatActivity {
         employee_id = findViewById(R.id.employee_id);
         isWorker = false;
 
+        assert mUser != null;
         FirebaseFirestore.getInstance()
                 .collection("UserDetails")
-                .document(mUser.getEmail()).get().addOnCompleteListener(task -> {
+                .document(Objects.requireNonNull(mUser.getEmail())).get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
 
                                 if (document.exists()) {
-                                    if (document.getData().get("isWorker").toString().equals("false")) {
+                                    if (Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")) {
                                         findViewById(R.id.hospital_details).setVisibility(View.GONE);
                                         findViewById(R.id.view_l7).setVisibility(View.GONE);
                                         findViewById(R.id.employee_details).setVisibility(View.GONE);
@@ -53,11 +58,16 @@ public class EditPatient extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        //EditText hospital_name = findViewById(R.id.hospital_name);
-                                        hospital_name.setText(document.getData().get("hospitalName").toString());
-                                        //EditText employee_id = findViewById(R.id.employee_id);
-                                        employee_id.setText(document.getData().get("employeeId").toString());
+
+                                        if(document.get("hospitalName")!=null)
+                                        hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
+                                        if(document.get("employeeId")!=null)
+                                        employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
                                         isWorker = true;
+
+
+
+
                                     }
                                 }
                             }
@@ -73,7 +83,7 @@ public class EditPatient extends AppCompatActivity {
         emergency = findViewById(R.id.emergency_no);
         address = findViewById(R.id.patient_address);
 
-        if(isPatient == false)
+        if(!isPatient)
         {
             findViewById(R.id.age_details).setVisibility(View.GONE);
             findViewById(R.id.view_l5).setVisibility(View.GONE);
@@ -81,12 +91,12 @@ public class EditPatient extends AppCompatActivity {
             findViewById(R.id.view_20).setVisibility(View.GONE);
         }
 
-            if (newDetails == false) {
-                user = getIntent().getParcelableExtra("user");
-                name.setText(user.getName());
-                gender.setText(user.getGender());
-                mobile.setText(user.getMobile());
-                address.setText(user.getAddress());
+        if (!newDetails) {
+            user = getIntent().getParcelableExtra("user");
+            name.setText(user.getName());
+            gender.setText(user.getGender());
+            mobile.setText(user.getMobile());
+            address.setText(user.getAddress());
 
                 if (isPatient) {
                     age.setText(Long.toString(user.getAge()));
@@ -102,20 +112,25 @@ public class EditPatient extends AppCompatActivity {
                             .collection("UserDetails")
                             .document(mUser.getEmail());
                 }
-            } else {
-                TextView head_text = findViewById(R.id.edit_details);
-                head_text.setText("ADD DETAILS");
-                if (isPatient) {
-                    Toast.makeText(EditPatient.this, "Enter new patient details.",
+        }
+        else
+        {
+            TextView head_text = findViewById(R.id.edit_details);
+            head_text.setText("ADD DETAILS");
+            if (isPatient)
+            {
+                Toast.makeText(EditPatient.this, "Enter new patient details.",
                             Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(EditPatient.this, "Enter user details.",
-                            Toast.LENGTH_SHORT).show();
-                }
-                docRef = FirebaseFirestore.getInstance()
+            }
+            else
+            {
+                Toast.makeText(EditPatient.this, "Enter user details.", Toast.LENGTH_SHORT).show();
+                findViewById(R.id.cancel).setVisibility(View.GONE);
+            }
+            docRef = FirebaseFirestore.getInstance()
                         .collection("UserDetails")
                         .document(mUser.getEmail());
-            }
+        }
 
     }
 
@@ -142,7 +157,7 @@ public class EditPatient extends AppCompatActivity {
 
         if(checkDetails())
         {
-            if(newDetails == false || (newDetails && isPatient == false))
+            if(!newDetails || !isPatient)
             {
                 docRef.set(user, SetOptions.merge())
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
