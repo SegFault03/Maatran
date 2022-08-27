@@ -45,7 +45,7 @@
         android:layout_marginHorizontal="30dp"
         android:fontFamily="sans-serif-light"
         android:gravity="start"
-        android:hint="@string/sign_in_as_patient_string"
+        android:hint="Sign up with Email"
         android:textColor="@color/register__as_health_worker_color"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/login"
@@ -99,7 +99,6 @@
         android:layout_marginHorizontal="30dp"
         android:fontFamily="sans-serif-light"
         android:hint="@string/hospital_name"
-        android:inputType="textPassword"
         android:textAlignment="viewStart"
         android:textColor="@color/name_color"
         android:textSize="20sp"
@@ -117,7 +116,6 @@
         android:layout_marginHorizontal="30dp"
         android:fontFamily="sans-serif-light"
         android:hint="@string/employee_id_string"
-        android:inputType="textPassword"
         android:textAlignment="viewStart"
         android:textColor="@color/name_color"
         android:textSize="20sp"
@@ -126,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/hospital_name" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/continue_button"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:layout_marginTop="56dp"
@@ -145,7 +143,7 @@
         app:layout_constraintEnd_toStartOf="@+id/fb_logo"
         app:layout_constraintHorizontal_bias="0.911"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
 
     <ImageView
         android:id="@+id/fb_logo"
@@ -156,7 +154,7 @@
         android:contentDescription="fb_logo"
         android:src="@drawable/fb_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
     <TextView
         android:id="@+id/_already_have_an_account__login"
         android:layout_width="match_parent"

@@ -16,6 +16,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 //Activity that initializes the RecyclerView
 //The interface onPatientListener is defined in UserAdapter.class
 public class PatientsView extends AppCompatActivity implements UserAdapter.OnPatientListener {
@@ -26,12 +28,13 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
     FirebaseFirestore db;
     ProgressDialog progressDialog;
     FirebaseUser user;
+    boolean isPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patients_list);
-
+        isPatient = getIntent().getBooleanExtra("isPatient", true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -54,13 +57,16 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
     public void onResume()
     {
         super.onResume();
-        EventChangeListener();
+        if(isPatient)
+            EventChangeListener();
+        else
+            EventChangeListener2();
     }
 
     private void EventChangeListener() {
 
         userArrayList.clear();                                  //clears the existing PatientDetails and fills it up with new and updated data
-        CollectionReference ref = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
+        CollectionReference ref = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail())).collection("Patients");
         ref.get().addOnSuccessListener(value -> {
             for(DocumentSnapshot dc : value.getDocuments())
             {
@@ -68,6 +74,30 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
                 userId.add(dc.getId());
             }
             userAdapter.notifyDataSetChanged();
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
+        });
+    }
+
+    private void EventChangeListener2() {
+        userArrayList.clear();                                  //clears the existing PatientDetails and fills it up with new and updated data
+        CollectionReference ref = db.collection("UserDetails");
+        ref.get().addOnSuccessListener(value -> {
+            for(DocumentSnapshot dc : value.getDocuments()) {
+                Object isWorker = Objects.requireNonNull(dc.getData()).get("isWorker");
+                if (isWorker==null || isWorker.equals("false")) {
+                    CollectionReference colRef = dc.getReference().collection("Patients");
+                    colRef.get().addOnSuccessListener(v -> {
+                        for (DocumentSnapshot doc : v.getDocuments()) {
+                            userArrayList.add(doc.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
+                            userId.add(doc.getId());
+                        }
+                        userAdapter.notifyDataSetChanged();
+                    });
+                }
+                /*userArrayList.add(dc.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
+                userId.add(dc.getId());*/
+            }
             if (progressDialog.isShowing())
                 progressDialog.dismiss();
         });

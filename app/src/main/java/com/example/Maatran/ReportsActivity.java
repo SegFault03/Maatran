@@ -15,6 +15,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class ReportsActivity extends AppCompatActivity {
     User user;
     String userId;
@@ -43,7 +45,7 @@ public class ReportsActivity extends AppCompatActivity {
     {
         super.onResume();
         DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("Patients")
+                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).collection("Patients")
                 .document(userId);
         df.get().addOnCompleteListener(task->{
             if(task.isSuccessful())
@@ -76,9 +78,10 @@ public class ReportsActivity extends AppCompatActivity {
     public void deletePatient(View view)
     {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert mUser != null;
         DocumentReference docRef = FirebaseFirestore.getInstance()
                 .collection("UserDetails")
-                .document(mUser.getEmail())
+                .document(Objects.requireNonNull(mUser.getEmail()))
                 .collection("Patients")
                 .document(userId);
         docRef.delete().addOnCompleteListener(task -> {
