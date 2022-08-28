@@ -37,6 +37,17 @@ public class ReportsActivity extends AppCompatActivity {
         TextView sex = findViewById(R.id.patient_sex);
         sex.setText("Sex: "+user.getGender());
 
+        DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
+                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()));
+        df.get().addOnCompleteListener(task->{
+            DocumentSnapshot ds = task.getResult();
+            if(ds.get("isWorker").equals("true"))
+            {
+                findViewById(R.id.edit_patient).setVisibility(View.INVISIBLE);
+                findViewById(R.id.delete_patient).setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
 
     //For re-rendering ReportsActivity after Patient Details are edited
@@ -45,9 +56,8 @@ public class ReportsActivity extends AppCompatActivity {
     {
         super.onResume();
         DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
-                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).collection("Patients")
-                .document(userId);
-        df.get().addOnCompleteListener(task->{
+                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()));
+        df.collection("Patients").document(userId).get().addOnCompleteListener(task->{
             if(task.isSuccessful())
             {
                 DocumentSnapshot ds = task.getResult();
