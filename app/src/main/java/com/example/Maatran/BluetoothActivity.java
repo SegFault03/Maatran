@@ -3,7 +3,10 @@ package com.example.Maatran;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -19,7 +22,7 @@ import java.util.Set;
 
 
 //Handles all BluetoothActivity
-//NOTE: Ignore all 'errors' related to not requesting permissions and such..
+//NOTE: Ignore all 'errors' related to call 'requires permissions which may be rejected by the user..' and such..
 //BLUETOOTH_ADMIN is declared in the manifest so there's no need to ask for permissions
 public class BluetoothActivity extends AppCompatActivity {
 
@@ -34,6 +37,8 @@ public class BluetoothActivity extends AppCompatActivity {
 
     //Handler for updating UI after a specific time interval
     private Handler handler;
+    //IntentFilter for handling Broadcasts
+    IntentFilter mIntentFilter;
 
     //For debugging
     private static final String TAG = "BluetoothActivity";
@@ -54,11 +59,13 @@ public class BluetoothActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter = null;
     //Set containing BluetoothDevices that have been paired with in the past
     Set<BluetoothDevice> mPairedDevices;
-
+    //Set containing BluetoothDevices that have been discovered upon enabling device discovery
+    Set<BluetoothDevice> mDiscoveredDevices;
     //Global BluetoothService object
     //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
 
     //Runnable for the handler
+    //Callback fn run() is called every 100ms
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -68,6 +75,23 @@ public class BluetoothActivity extends AppCompatActivity {
             handler.postDelayed(this, 100);
         }
     };
+
+    // Create a BroadcastReceiver for ACTION_FOUND.
+    // Broadcasts when a device is found upon device discovery
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Discovery has found a device. Get the BluetoothDevice
+                // object and its info from the Intent.
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mDiscoveredDevices.add(device);
+//                String deviceName = device.getName();
+//                String deviceHardwareAddress = device.getAddress(); // MAC address
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +109,16 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn=findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
+
         //Creating a new handler and binding it with a callback fn: runnable
         handler = new Handler();
         handler.postDelayed(runnable, 100);
 
-        //Setting up bluetooth
+        // Register for broadcasts when a device is discovered.
+        mIntentFilter=new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiver, mIntentFilter);
+
+        //Initialize default BluetoothAdapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         // If the adapter is null, then Bluetooth is not supported
@@ -145,6 +174,8 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onDestroy();
         //Stop the handler
         handler.removeCallbacks(runnable);
+        //unregister the ACTION_FOUND receiver.
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -206,9 +237,26 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    //Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
+    //Calls checkForBondedDevices and startDeviceDiscovery
+    public void setUpBluetooth() {
+        boolean deviceFound=checkForBondedDevices();
+        if(!deviceFound)
+            startDeviceDiscovery();
+
+        mSelectDeviceDisplayText.setVisibility(View.VISIBLE);
+        String[] array = {"Niladri","Rahul","Abhishek"};
+        ArrayAdapter<String> mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements,R.id.device_list_item_lv, array);
+        mBluetoothDeviceList.setAdapter(mListOfDevices);
+    }
+
+    /**Called from setUpBluetooth(). Checks if paired devices are available. Returns true if device
+     * to connect to has already been paired with in the past. Returns false if no paired devices
+     * are found or if the required device is not found.
+     * @return Boolean
+    */
     public boolean checkForBondedDevices()
     {
-        boolean flag=false;
         mPairedDevices = mBluetoothAdapter.getBondedDevices();
         if (mPairedDevices.size() > 0) {
             mProgressDialog.setMessage("Checking if the device to connect has already been paired with in the past...");
@@ -235,17 +283,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public void startDeviceDiscovery()
     {
-
-    }
-
-    public void setUpBluetooth() {
-        boolean deviceFound=checkForBondedDevices();
-        if(!deviceFound)
-            startDeviceDiscovery();
-
-        mSelectDeviceDisplayText.setVisibility(View.VISIBLE);
-        String[] array = {"Niladri","Rahul","Abhishek"};
-        ArrayAdapter<String> mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements,R.id.device_list_item_lv, array);
-        mBluetoothDeviceList.setAdapter(mListOfDevices);
+        //TODO
     }
 }
