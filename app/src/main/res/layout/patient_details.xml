@@ -57,7 +57,7 @@
 
             <LinearLayout
                 android:layout_width="355dp"
-                android:layout_height="736dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
@@ -371,6 +371,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginHorizontal="40dp"
+                    android:layout_marginBottom="10dp"
                     android:backgroundTint="#0B6A77"
                     android:onClick="cancelChanges"
                     android:text="CANCEL" />
