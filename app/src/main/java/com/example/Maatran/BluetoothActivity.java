@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -27,17 +28,25 @@ import java.util.Set;
 public class BluetoothActivity extends AppCompatActivity {
 
     //private data members corresponding to views in the layout
-    private Button mBluetoothStateChangeBtn;                    //Controls changes to Bluetooth state [CONNECT/DISCONNECT]
-    private ListView mBluetoothDeviceList;                      //Displays a list of remote devices
-    private TextView mSelectDeviceDisplayText;                  //Displays 'Select a Device to connect to'
-    private TextView mBluetoothStateText;                       //Displays the current state of Bluetooth [CONNECTED/DISCONNECTED]
-    private Button mFindDevicesBtn;                             //Btn for enabling device discovery
+    /**Controls changes to Bluetooth state [CONNECT/DISCONNECT]*/
+    private Button mBluetoothStateChangeBtn;
+    /**Displays a list of remote devices*/
+    private ListView mBluetoothDeviceList;
+    /**Displays 'Select a Device to connect to'*/
+    private TextView mSelectDeviceDisplayText;
+    /**Displays the current state of Bluetooth [CONNECTED/DISCONNECTED]*/
+    private TextView mBluetoothStateText;
+    /**Btn for enabling device discovery*/
+    private Button mFindDevicesBtn;
     private ProgressDialog mProgressDialog;
+    /**ArrayAdapter for ListView mBluetoothDeviceList*/
+    private ArrayAdapter<String> mListOfDevices;
+    /**ArrayList for ArrayAdapter mListOfDevices*/
+    private ArrayList<String> mNameOfDevices;
 
-
-    //Handler for updating UI after a specific time interval
+    /**Handler for updating UI after a specific time interval*/
     private Handler handler;
-    //IntentFilter for handling Broadcasts
+    /**IntentFilter for handling Broadcasts*/
     IntentFilter mIntentFilter;
 
     //For debugging
@@ -46,26 +55,37 @@ public class BluetoothActivity extends AppCompatActivity {
     //CODES TO INDICATE BLUETOOTH STATUS
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-    private static final int REQUEST_ENABLE_BT = 3;             //This code is returned if request to turn on Bluetooth was granted
+    /**This code is returned if request to turn on Bluetooth was granted*/
+    private static final int REQUEST_ENABLE_BT = 3;
 
     //TODO Stores the name of the device to connect to. Will be different for each patient and
-    //will be received from the calling Activity (to be implemented later)
+    /**will be received from the calling Activity (to be implemented later)*/
     private final String mDeviceToConnect = null;
-    //Stores the name and address of the paired device
+    /**
+     * Stores the name and address of the paired device
+     */
     private String mConnectedDeviceName = null;
     private String mConnectedDeviceHardwareAddress=null;
 
-    //Global BluetoothAdapter class object to use Bluetooth features
+    /**
+     * Global BluetoothAdapter class object to use Bluetooth features
+     */
     private BluetoothAdapter mBluetoothAdapter = null;
-    //Set containing BluetoothDevices that have been paired with in the past
+    /**
+     * Set containing BluetoothDevices that have been paired with in the past
+     */
     Set<BluetoothDevice> mPairedDevices;
-    //Set containing BluetoothDevices that have been discovered upon enabling device discovery
+    /**
+     * Set containing BluetoothDevices that have been discovered upon enabling device discovery
+     */
     Set<BluetoothDevice> mDiscoveredDevices;
     //Global BluetoothService object
     //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
 
-    //Runnable for the handler
-    //Callback fn run() is called every 100ms
+    /**
+     * Runnable for the handler
+     * Callback fn run() is called every 100ms
+     */
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -76,16 +96,26 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     };
 
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    // Broadcasts when a device is found upon device discovery
+    /**
+     * Create a BroadcastReceiver for ACTION_FOUND.
+     * Broadcasts when a device is found upon device discovery
+     */
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            int oldSize,newSize;
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
+                oldSize=mDiscoveredDevices.size();
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 mDiscoveredDevices.add(device);
+                newSize=mDiscoveredDevices.size();
+                if(oldSize!=newSize)
+                {
+                    mNameOfDevices.add(device.getName());
+                    mListOfDevices.notifyDataSetChanged();
+                }
 //                String deviceName = device.getName();
 //                String deviceHardwareAddress = device.getAddress(); // MAC address
             }
@@ -109,6 +139,9 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn=findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
+        mDiscoveredDevices=null;
+        mPairedDevices=null;
+        mNameOfDevices=new ArrayList<>();
 
         //Creating a new handler and binding it with a callback fn: runnable
         handler = new Handler();
@@ -186,7 +219,9 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
 
-    //Update UI according to Bluetooth State
+    /**
+     * Update UI according to Bluetooth State
+     */
     public void updateUI()
     {
         final String[] BLUETOOTH_STATE={"BLUETOOTH OFF","BLUETOOTH TURNING ON","BLUETOOTH ON","BLUETOOTH TURNING OFF"};
@@ -237,8 +272,10 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    //Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
-    //Calls checkForBondedDevices and startDeviceDiscovery
+    /**
+     * Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
+     * Calls checkForBondedDevices and startDeviceDiscovery
+     */
     public void setUpBluetooth() {
         boolean deviceFound=checkForBondedDevices();
         if(!deviceFound)
@@ -246,8 +283,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
         mSelectDeviceDisplayText.setVisibility(View.VISIBLE);
         String[] array = {"Niladri","Rahul","Abhishek"};
-        ArrayAdapter<String> mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements,R.id.device_list_item_lv, array);
-        mBluetoothDeviceList.setAdapter(mListOfDevices);
+
     }
 
     /**Called from setUpBluetooth(). Checks if paired devices are available. Returns true if device
@@ -274,7 +310,9 @@ public class BluetoothActivity extends AppCompatActivity {
                 }
             }
             if (mConnectedDeviceName == null) {
-                mProgressDialog.setMessage("Device required not found among paired devices, moving on to device discovery...");
+                if(mProgressDialog.isShowing())
+                    mProgressDialog.dismiss();
+                Toast.makeText(this,"Device required not found among paired devices, moving on to device discovery...",Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -283,6 +321,13 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public void startDeviceDiscovery()
     {
+        Toast.makeText(this,"Starting Device Dixcovery",Toast.LENGTH_SHORT).show();
+        mBluetoothAdapter.startDiscovery();
+        mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
+        if(mNameOfDevices.size()>0)
+        mBluetoothDeviceList.setAdapter(mListOfDevices);
+
         //TODO
     }
+
 }
