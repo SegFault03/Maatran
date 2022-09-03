@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -113,12 +114,25 @@ public class BluetoothActivity extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.S)
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            int newSize,oldSize;
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 Toast.makeText(BluetoothActivity.this, "Device found!" + device.getName(), Toast.LENGTH_SHORT).show();
-                mListOfDevices.add(device.getName());
+                oldSize=mDiscoveredDevices.size();
+                mDiscoveredDevices.add(device);
+                newSize=mDiscoveredDevices.size();
+                if(oldSize!=newSize)
+                {
+                    String deviceName = device.getName();
+                    String deviceHardwareAddress = device.getAddress();
+                    if(deviceName == null)
+                        mNameOfDevices.add(deviceHardwareAddress);
+                    else
+                        mNameOfDevices.add(deviceName);
+                    mListOfDevices.notifyDataSetChanged();
+                }
 //                String deviceName = device.getName();
 //                String deviceHardwareAddress = device.getAddress(); // MAC address
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
@@ -146,11 +160,14 @@ public class BluetoothActivity extends AppCompatActivity {
         mBluetoothStateText = findViewById(R.id.bluetooth_service_state_text);
         mFindDevicesBtn = findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
-        mFindDevicesBtn.setOnClickListener(v -> setUpBluetooth());
-        mDiscoveredDevices = null;
-        mPairedDevices = null;
-        mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements, R.id.device_list_item_lv);
+
+        mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
+        mDiscoveredDevices=new HashSet<>();
+        mPairedDevices=null;
+        mNameOfDevices=new ArrayList<>();
+        mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
         mBluetoothDeviceList.setAdapter(mListOfDevices);
+
 
         //Initialize default BluetoothAdapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -351,6 +368,7 @@ public class BluetoothActivity extends AppCompatActivity {
             Toast.makeText(this,"Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ENABLE_COARSE_LOCATION);
         }
+
 
         if (mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
