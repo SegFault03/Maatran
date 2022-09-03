@@ -118,7 +118,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Toast.makeText(BluetoothActivity.this, "Device found!" + device.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BluetoothActivity.this, "Device found!" + device.getName(), Toast.LENGTH_SHORT).show();
                 oldSize=mDiscoveredDevices.size();
                 mDiscoveredDevices.add(device);
                 newSize=mDiscoveredDevices.size();
@@ -215,6 +215,12 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
+        }
 
         //Creating a new handler and binding it with a callback fn: runnable
         handler = new Handler();
@@ -357,19 +363,11 @@ public class BluetoothActivity extends AppCompatActivity {
 //            Toast.makeText(this,"Coarse Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
 //            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ENABLE_COARSE_LOCATION);
 //        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
-        }
 
         if (mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
         mBluetoothAdapter.startDiscovery();
-        if(mNameOfDevices.size()==0)
-            Toast.makeText(BluetoothActivity.this,"If you're trying this for the first time, keep pressing 'FIND DEVICES', it takes"
-                   +" a bit to set up",Toast.LENGTH_LONG).show();
-        //TODO
+
     }
 
 }
