@@ -226,7 +226,7 @@ public class BluetoothActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
         {
             Toast.makeText(this,"Scanning Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ENABLE_BT_SCAN);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, REQUEST_ENABLE_BT_SCAN);
         }
 
         //Creating a new handler and binding it with a callback fn: runnable
