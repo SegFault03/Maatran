@@ -65,8 +65,7 @@ public class BluetoothActivity extends AppCompatActivity {
     /**This code is returned if request to turn on Bluetooth was granted*/
     private static final int REQUEST_ENABLE_BT = 3;
     private static final int REQUEST_ENABLE_COARSE_LOCATION = 4;
-    private static final int REQUEST_ENABLE_BT_CONNECT = 5;
-    private static final int REQUEST_ENABLE_BT_SCAN = 6;
+    private static final int REQUEST_ENABLE_FINE_LOCATION = 5;
 
     //TODO Stores the name of the device to connect to. Will be different for each patient and
     /**will be received from the calling Activity (to be implemented later)*/
@@ -217,18 +216,6 @@ public class BluetoothActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getApplicationContext(), "Connect permission not available!", Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(BluetoothActivity.this, new String[]{Manifest.permission.BLUETOOTH},
-                    REQUEST_ENABLE_BT);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
-        {
-            Toast.makeText(this,"Scanning Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, REQUEST_ENABLE_BT_SCAN);
-        }
-
         //Creating a new handler and binding it with a callback fn: runnable
         handler = new Handler();
         handler.postDelayed(runnable, 100);
@@ -237,7 +224,7 @@ public class BluetoothActivity extends AppCompatActivity {
         mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        registerReceiver(receiver, mIntentFilter);
+        BluetoothActivity.this.registerReceiver(receiver, mIntentFilter);
     }
 
     @Override
@@ -247,6 +234,14 @@ public class BluetoothActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         //unregister the ACTION_FOUND receiver.
         unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        if(mBluetoothAdapter.isDiscovering())
+            mBluetoothAdapter.cancelDiscovery();
     }
 
     @Override
@@ -311,7 +306,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
      * Calls checkForBondedDevices and startDeviceDiscovery
      */
-    @RequiresApi(api = Build.VERSION_CODES.S)
+
     public void setUpBluetooth() {
         boolean deviceFound = checkForBondedDevices();
         if (!deviceFound)
@@ -323,7 +318,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * are found or if the required device is not found.
      * @return Boolean
      */
-    @RequiresApi(api = Build.VERSION_CODES.S)
+
     public boolean checkForBondedDevices()
     {
         mPairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -333,12 +328,6 @@ public class BluetoothActivity extends AppCompatActivity {
             // There are paired devices. Get the name and address of each paired device.
             for (BluetoothDevice device : mPairedDevices) {
                 String deviceHardwareAddress = device.getAddress(); // MAC address
-                if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "Connect permission not available!", Toast.LENGTH_SHORT).show();
-                    ActivityCompat.requestPermissions(BluetoothActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT},
-                            REQUEST_ENABLE_BT_CONNECT);
-                }
                 String deviceName = device.getName();
                 if (deviceName.equals(mDeviceToConnect)) {
                     mConnectedDeviceName = deviceName;
@@ -359,20 +348,27 @@ public class BluetoothActivity extends AppCompatActivity {
         return false;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.S)
+
     public void startDeviceDiscovery()
     {
-        Toast.makeText(this, "Starting Device Discovery", Toast.LENGTH_SHORT).show();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        Toast.makeText(this, "Starting Device Discovery, please do not close this app now...", Toast.LENGTH_SHORT).show();
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            Toast.makeText(this,"Coarse Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ENABLE_COARSE_LOCATION);
+//        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            Toast.makeText(this,"Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ENABLE_COARSE_LOCATION);
+            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
         }
-
 
         if (mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
         mBluetoothAdapter.startDiscovery();
+        if(mNameOfDevices.size()==0)
+            Toast.makeText(BluetoothActivity.this,"If you're trying this for the first time, keep pressing 'FIND DEVICES', it takes"
+                   +" a bit to set up",Toast.LENGTH_LONG).show();
         //TODO
     }
 
