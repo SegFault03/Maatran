@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -46,6 +47,8 @@ public class BluetoothActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     /**ArrayAdapter for ListView mBluetoothDeviceList*/
     private ArrayAdapter<String> mListOfDevices;
+    /**ArrayList for ArrayAdapter mListOfDevices*/
+    private ArrayList<String> mNameOfDevices;
 
     /**Handler for updating UI after a specific time interval*/
     private Handler handler;
