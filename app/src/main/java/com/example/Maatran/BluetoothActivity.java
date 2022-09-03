@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -113,7 +114,12 @@ public class BluetoothActivity extends AppCompatActivity {
                 newSize=mDiscoveredDevices.size();
                 if(oldSize!=newSize)
                 {
-                    mNameOfDevices.add(device.getName());
+                    String deviceName = device.getName();
+                    String deviceHardwareAddress = device.getAddress();
+                    if(deviceName == null)
+                        mNameOfDevices.add(deviceHardwareAddress);
+                    else
+                        mNameOfDevices.add(deviceName);
                     mListOfDevices.notifyDataSetChanged();
                 }
 //                String deviceName = device.getName();
@@ -139,9 +145,11 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn=findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
-        mDiscoveredDevices=null;
+        mDiscoveredDevices=new HashSet<>();
         mPairedDevices=null;
         mNameOfDevices=new ArrayList<>();
+        mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
+        mBluetoothDeviceList.setAdapter(mListOfDevices);
 
         //Creating a new handler and binding it with a callback fn: runnable
         handler = new Handler();
@@ -323,9 +331,9 @@ public class BluetoothActivity extends AppCompatActivity {
     {
         Toast.makeText(this,"Starting Device Dixcovery",Toast.LENGTH_SHORT).show();
         mBluetoothAdapter.startDiscovery();
-        mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
-        if(mNameOfDevices.size()>0)
-        mBluetoothDeviceList.setAdapter(mListOfDevices);
+        //mListOfDevices = new ArrayAdapter<>(this, R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
+        /*if(mNameOfDevices.size()>0)
+        mBluetoothDeviceList.setAdapter(mListOfDevices);*/
 
         //TODO
     }
