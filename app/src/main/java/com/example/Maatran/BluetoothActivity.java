@@ -126,10 +126,12 @@ public class BluetoothActivity extends AppCompatActivity {
                 {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress();
-                    if(deviceName == null)
+                    if(deviceName != null)
+                        mNameOfDevices.add(deviceName);
+                    else if(deviceHardwareAddress != null)
                         mNameOfDevices.add(deviceHardwareAddress);
                     else
-                        mNameOfDevices.add(deviceName);
+                        mNameOfDevices.add("Unknown Device");
                     mListOfDevices.notifyDataSetChanged();
                 }
 //                String deviceName = device.getName();
@@ -276,6 +278,8 @@ public class BluetoothActivity extends AppCompatActivity {
             case BluetoothAdapter.STATE_OFF:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[0]);
                 mBluetoothStateChangeBtn.setText("TURN " + BLUETOOTH_STATE[2]);
+                mNameOfDevices.clear();
+                mListOfDevices.notifyDataSetChanged();
                 mBluetoothStateChangeBtn.setOnClickListener(view -> {
                     if (!mBluetoothAdapter.isEnabled()) {
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
