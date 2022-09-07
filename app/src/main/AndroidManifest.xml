@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     package="com.example.Maatran">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:remove="android:maxSdkVersion"/>
 
     <application
         android:allowBackup="true"
@@ -32,14 +41,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EmailPasswordActivity" />
         <activity android:name=".EmailSignUp" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".ReportsActivity" />
         <activity android:name=".PatientsView" />
         <activity android:name=".EditPatient" />
+        <activity android:name=".BluetoothActivity"/>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
     <color name="_bg__google_pixel_5___8_color">#ffffff</color>
     <color name="ellipse_1_color">#548d5a</color>
     <color name="rectangle_1_color">#FF250707</color>
@@ -27,4 +28,9 @@
     <color name="rectangle_26_color">#5587fa</color>
     <color name="rectangle_28_color">#3f62b1</color>
     <color name="patient_color">#ffffff</color>
+    <color name="background_color">@android:color/white</color>
+    <color name="background_color_dark">#363668</color>
+    <color name="dashboard_primary">#667AFF</color>
+    <color name="dashboard_background">#252C4B</color>
+    <color name="card_background">#27325F</color>
 </resources>

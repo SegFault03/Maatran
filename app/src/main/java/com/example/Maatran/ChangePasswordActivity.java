@@ -21,7 +21,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         String user_name = getIntent().getExtras().getString("UserName");
         setContentView(R.layout.change_password);
-        getSupportActionBar().hide();
         TextView tv_name = findViewById(R.id.p_user_name);
         tv_name.setText(user_name);
     }

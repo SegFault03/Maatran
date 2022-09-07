@@ -22,22 +22,27 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class ProfileView extends AppCompatActivity {
     FirebaseFirestore db;
     FirebaseUser user;
+    boolean isWorker;
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
-        getSupportActionBar().hide();
+        setContentView(R.layout.user_profile2);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        TextView email = findViewById(R.id.emailId);
+        email.setText(user.getEmail());
     }
 
     @Override
@@ -50,24 +55,40 @@ public class ProfileView extends AppCompatActivity {
     public void getUserDetails(FirebaseUser user)
     {
 
-        db=FirebaseFirestore.getInstance();
-        DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
+        db = FirebaseFirestore.getInstance();
+        isWorker = false;
+        DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
 
                 if (document.exists()) {
-                    TextView tv_name= findViewById(R.id.user_name);
-                    tv_name.setText(document.getData().get("name").toString());
-                    TextView tv_age= findViewById(R.id.user_age);
-                    tv_age.setText(document.getData().get("age").toString());
-                    TextView tv_gender= findViewById(R.id.user_gender);
-                    tv_gender.setText(document.getData().get("gender").toString());
-                    TextView tv_adr= findViewById(R.id.user_adr);
-                    tv_adr.setText(document.getData().get("address").toString());
-                    TextView tv_mob= findViewById(R.id.user_mob);
-                    tv_mob.setText(document.getData().get("mobile").toString());
-
+                    if(Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")) {
+                        findViewById(R.id.hospital_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l7).setVisibility(View.GONE);
+                        findViewById(R.id.employee_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l8).setVisibility(View.GONE);
+                        findViewById(R.id.age_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l5).setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        isWorker=true;
+                        findViewById(R.id.age_details).setVisibility(View.GONE);
+                        findViewById(R.id.view_l5).setVisibility(View.GONE);
+                        TextView tv_hosp = findViewById(R.id.hospital_name);
+                        tv_hosp.setText(Objects.requireNonNull(document.getData().get("hospitalName")).toString());
+                        TextView tv_eid = findViewById(R.id.employee_id);
+                        tv_eid.setText(Objects.requireNonNull(document.getData().get("employeeId")).toString());
+                    }
+                    TextView tv_name = findViewById(R.id.user_name);
+                    tv_name.setText(Objects.requireNonNull(document.getData().get("name")).toString());
+                    TextView tv_gender = findViewById(R.id.user_gender);
+                    tv_gender.setText(Objects.requireNonNull(document.getData().get("gender")).toString());
+                    TextView tv_adr = findViewById(R.id.user_adr);
+                    tv_adr.setText(Objects.requireNonNull(document.getData().get("address")).toString());
+                    TextView tv_mob = findViewById(R.id.user_mob);
+                    tv_mob.setText(Objects.requireNonNull(document.getData().get("mobile")).toString());
                 }
                 else
                 {
@@ -86,7 +107,7 @@ public class ProfileView extends AppCompatActivity {
     public void editProfile(View view)
     {
         db.collection("UserDetails")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnSuccessListener(documentSnapshot -> {
+                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).get().addOnSuccessListener(documentSnapshot -> {
                     Intent intent = new Intent(getApplicationContext(), EditPatient.class);
                     intent.putExtra("isPatient", false);
                     intent.putExtra("user", documentSnapshot.toObject(User.class));
@@ -105,7 +126,11 @@ public class ProfileView extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(),"You have successfully signed out, redirecting you to the log-in page",Toast.LENGTH_SHORT);
             toast.show();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            super.finish();
         });
         popupConfirmSignOut.findViewById(R.id.btn_no).setOnClickListener(v->popupWindow.dismiss());
     }
@@ -147,6 +172,7 @@ public class ProfileView extends AppCompatActivity {
     public void deleteUserProfile(ProgressDialog progressDialog,PopupWindow popupWindow)
     {
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
         user.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 deleteUserData(user);
@@ -168,21 +194,22 @@ public class ProfileView extends AppCompatActivity {
 
     public void deleteUserData(FirebaseUser user)
     {
-        db=FirebaseFirestore.getInstance();
-        DocumentReference docRef=db.collection("UserDetails").document(user.getEmail());
-        CollectionReference colRef=db.collection("UserDetails").document(user.getEmail()).collection("Patients");
-        colRef.get().addOnSuccessListener(value -> {
-            for(DocumentSnapshot dc : value.getDocuments())
-            {
-                dc.getReference().delete().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    } else {
-                        Log.d(TAG, "Error deleting document", task.getException());
-                    }
-                });
-            }
-        }).addOnFailureListener(aVoid->Log.d(TAG,"No such collection exists"));
+        db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
+        if(!isWorker) {
+            CollectionReference colRef = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
+            colRef.get().addOnSuccessListener(value -> {
+                for (DocumentSnapshot dc : value.getDocuments()) {
+                    dc.getReference().delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        } else {
+                            Log.d(TAG, "Error deleting document", task.getException());
+                        }
+                    });
+                }
+            }).addOnFailureListener(aVoid -> Log.d(TAG, "No such collection exists"));
+        }
 
         docRef.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
