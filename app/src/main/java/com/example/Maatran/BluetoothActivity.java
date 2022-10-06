@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,9 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 
 //Handles all BluetoothActivity
@@ -168,7 +172,15 @@ public class BluetoothActivity extends AppCompatActivity {
         mNameOfDevices=new ArrayList<>();
         mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
         mBluetoothDeviceList.setAdapter(mListOfDevices);
-
+        mBluetoothDeviceList.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    String deviceName = mBluetoothDeviceList.getItemAtPosition(position).toString();
+                    Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
+                    //TODO connect to the device
+                    ConnectThread connectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
+                    connectThread.run();
+                }
+        );
 
         //Initialize default BluetoothAdapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -190,26 +202,24 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-//            case REQUEST_CONNECT_DEVICE_SECURE:
-//                // When DeviceListActivity returns with a device to connect
-//                if (resultCode == AppCompatActivity.RESULT_OK) {
-//                    connectDevice(data, true);
-//                }
-//                break;
-//            case REQUEST_CONNECT_DEVICE_INSECURE:
-//                // When DeviceListActivity returns with a device to connect
-//                if (resultCode == AppCompatActivity.RESULT_OK) {
-//                    connectDevice(data, false);
-//                }
-//                break;
-            case REQUEST_ENABLE_BT:
-                // When the request to enable Bluetooth returns
-                if (resultCode != AppCompatActivity.RESULT_OK) {
-                    // User did not enable Bluetooth or an error occurred
-                    Toast.makeText(this, "Bluetooth is essential for this functionality to work!", Toast.LENGTH_LONG).show();
-                    super.finish();
-                }
+        //            case REQUEST_CONNECT_DEVICE_SECURE:
+        //                // When DeviceListActivity returns with a device to connect
+        //                if (resultCode == AppCompatActivity.RESULT_OK) {
+        //                    connectDevice(data, true);
+        //                }
+        //                break;
+        //            case REQUEST_CONNECT_DEVICE_INSECURE:
+        //                // When DeviceListActivity returns with a device to connect
+        //                if (resultCode == AppCompatActivity.RESULT_OK) {
+        //                    connectDevice(data, false);
+        //                }
+        //                break;
+        if (requestCode == REQUEST_ENABLE_BT) {// When the request to enable Bluetooth returns
+            if (resultCode != AppCompatActivity.RESULT_OK) {
+                // User did not enable Bluetooth or an error occurred
+                Toast.makeText(this, "Bluetooth is essential for this functionality to work!", Toast.LENGTH_LONG).show();
+                super.finish();
+            }
         }
     }
 
@@ -347,13 +357,11 @@ public class BluetoothActivity extends AppCompatActivity {
                     return true;
                 }
             }
-            if (mConnectedDeviceName == null) {
-                if (mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
-                Toast.makeText(this, "Device required not found among paired devices, moving on to device discovery...",
+
+            if (mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
+            Toast.makeText(this, "Device required not found among paired devices, moving on to device discovery...",
                         Toast.LENGTH_SHORT).show();
-                return false;
-            }
         }
         return false;
     }
@@ -372,6 +380,85 @@ public class BluetoothActivity extends AppCompatActivity {
             mBluetoothAdapter.cancelDiscovery();
         mBluetoothAdapter.startDiscovery();
 
+    }
+
+    private class ConnectThread extends Thread {
+        private BluetoothSocket mmSocket;
+        private BluetoothDevice mmDevice;
+        private final UUID MY_UUID =  UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //This is random. Change as necessary.
+
+        public ConnectThread(BluetoothDevice device) {
+            // Use a temporary object that is later assigned to mmSocket
+            // because mmSocket is final.
+            BluetoothSocket tmp = null;
+            mmDevice = device;
+
+            try {
+                // Get a BluetoothSocket to connect with the given BluetoothDevice.
+                // MY_UUID is the app's UUID string, also used in the server code.
+                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+            } catch (IOException e) {
+                Log.e(TAG, "Socket's create() method failed", e);
+            }
+            mmSocket = tmp;
+        }
+
+        public void run() {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // Cancel discovery because it otherwise slows down the connection.
+                    mBluetoothAdapter.cancelDiscovery();
+
+                    try {
+                        // Connect to the remote device through the socket. This call blocks
+                        // until it succeeds or throws an exception.
+                        mmSocket.connect();
+
+                        Toast.makeText(BluetoothActivity.this, "Device connected",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (IOException connectException) {
+                        // Unable to connect; move on to fallback socket.
+                        //Log.e(TAG, "Connect Exception", connectException);
+                        try {
+                            Log.e("","trying fallback...");
+
+                            mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);
+                            mmSocket.connect();
+
+                            Toast.makeText(BluetoothActivity.this, "Device connected",
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e("","Connected");
+                        } catch (Exception connectException2) {
+                            Log.e(TAG, "Connect Exception", connectException2);
+                            Toast.makeText(BluetoothActivity.this, "Unable to connect",
+                                    Toast.LENGTH_SHORT).show();
+
+                            try {
+                                mmSocket.close();
+                            }
+                            catch(Exception closeException) {
+                                Log.e(TAG, "Could not close the client socket", closeException);
+                            }
+                            return;
+                        }
+                    }
+                }
+            });
+
+            // The connection attempt succeeded. Perform work associated with
+            // the connection in a separate thread.
+            //manageMyConnectedSocket(mmSocket);
+
+        }
+
+        // Closes the client socket and causes the thread to finish.
+        public void cancel() {
+            try {
+                mmSocket.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Could not close the client socket", e);
+            }
+        }
     }
 
 }
