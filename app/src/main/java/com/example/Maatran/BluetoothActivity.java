@@ -60,6 +60,8 @@ public class BluetoothActivity extends AppCompatActivity {
     /**IntentFilter for handling Broadcasts*/
     IntentFilter mIntentFilter;
 
+    private ConnectThread mConnectThread;
+
     //For debugging
     private static final String TAG = "BluetoothActivity";
 
@@ -73,7 +75,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
     //TODO Stores the name of the device to connect to. Will be different for each patient and
     /**will be received from the calling Activity (to be implemented later)*/
-    private final String mDeviceToConnect = "Lenovo";
+    private final String mDeviceToConnect = "Redmi 9 Prime";
     /**
      * Stores the name and address of the paired device
      */
@@ -122,7 +124,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-//                Toast.makeText(BluetoothActivity.this, "Device found!" + device.getName(), Toast.LENGTH_SHORT).show();
                 oldSize=mDiscoveredDevices.size();
                 mDiscoveredDevices.add(device);
                 newSize=mDiscoveredDevices.size();
@@ -177,10 +178,18 @@ public class BluetoothActivity extends AppCompatActivity {
                     String deviceName = mBluetoothDeviceList.getItemAtPosition(position).toString();
                     Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
                     //TODO connect to the device
-                    ConnectThread connectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
-                    connectThread.run();
+                    if(mConnectThread!=null)
+                        mConnectThread.cancel();
+                    mConnectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
+                    mConnectThread.start();
                 }
         );
+        //TODO TESTING
+        // Register for broadcasts when a device is discovered.
+        mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        BluetoothActivity.this.registerReceiver(receiver, mIntentFilter);
 
         //Initialize default BluetoothAdapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -238,11 +247,11 @@ public class BluetoothActivity extends AppCompatActivity {
         handler = new Handler();
         handler.postDelayed(runnable, 100);
 
-        // Register for broadcasts when a device is discovered.
-        mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        BluetoothActivity.this.registerReceiver(receiver, mIntentFilter);
+//        // Register for broadcasts when a device is discovered.
+//        mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//        mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+//        mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+//        BluetoothActivity.this.registerReceiver(receiver, mIntentFilter);
     }
 
     @Override
@@ -328,6 +337,8 @@ public class BluetoothActivity extends AppCompatActivity {
      */
 
     public void setUpBluetooth() {
+        if(mBluetoothAdapter.isDiscovering())
+            mBluetoothAdapter.cancelDiscovery();
         boolean deviceFound = checkForBondedDevices();
         if (!deviceFound)
             startDeviceDiscovery();
@@ -353,6 +364,11 @@ public class BluetoothActivity extends AppCompatActivity {
                     mConnectedDeviceName = deviceName;
                     mConnectedDeviceHardwareAddress = deviceHardwareAddress;
                     Toast.makeText(this, "Device Found!", Toast.LENGTH_SHORT).show();
+                    //TESTING
+                    mDiscoveredDevices.add(device);
+                    if(!mNameOfDevices.contains(deviceName))
+                        mNameOfDevices.add(deviceName);
+                    mListOfDevices.notifyDataSetChanged();
                     mProgressDialog.dismiss();
                     return true;
                 }
@@ -397,6 +413,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 // Get a BluetoothSocket to connect with the given BluetoothDevice.
                 // MY_UUID is the app's UUID string, also used in the server code.
                 tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+                Log.v(TAG, "Socket created");
             } catch (IOException e) {
                 Log.e(TAG, "Socket's create() method failed", e);
             }
@@ -412,8 +429,9 @@ public class BluetoothActivity extends AppCompatActivity {
                     try {
                         // Connect to the remote device through the socket. This call blocks
                         // until it succeeds or throws an exception.
+                        Log.v(TAG, "Trying to connect to socket");
                         mmSocket.connect();
-
+                        Log.v(TAG, "Socket connected");
                         Toast.makeText(BluetoothActivity.this, "Device connected",
                                 Toast.LENGTH_SHORT).show();
                     } catch (IOException connectException) {
