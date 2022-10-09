@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +31,8 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
     FirebaseFirestore db;
     ProgressDialog progressDialog;
     FirebaseUser user;
+    Spinner spinner_locality;
+    String locality="Howrah";
     boolean isPatient;
 
     @Override
@@ -41,6 +46,15 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
 
+        spinner_locality=findViewById(R.id.locality_spinner);
+        ArrayAdapter<CharSequence> loc_adapter=ArrayAdapter.createFromResource(this, R.array.localities, android.R.layout.simple_spinner_item);
+        loc_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner_locality.setAdapter(loc_adapter);
+        if(isPatient)
+        {
+            spinner_locality.setVisibility(View.GONE);
+        }
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -50,6 +64,18 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         recyclerView.setAdapter(userAdapter);
         db = FirebaseFirestore.getInstance();
         userId = new ArrayList<>();
+        spinner_locality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                locality = (String) adapterView.getItemAtPosition(i);
+                EventChangeListener2();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     //For re-rendering the RecyclerView when some change is made (Patient Data is Edited/Deleted)
@@ -82,21 +108,17 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
     private void EventChangeListener2() {
         userArrayList.clear();                                  //clears the existing PatientDetails and fills it up with new and updated data
         CollectionReference ref = db.collection("UserDetails");
-        ref.get().addOnSuccessListener(value -> {
+        ref.whereEqualTo("isWorker","false").get().addOnSuccessListener(value -> {
             for(DocumentSnapshot dc : value.getDocuments()) {
-                Object isWorker = Objects.requireNonNull(dc.getData()).get("isWorker");
-                if (isWorker==null || isWorker.equals("false")) {
                     CollectionReference colRef = dc.getReference().collection("Patients");
-                    colRef.get().addOnSuccessListener(v -> {
+                    colRef.whereEqualTo("locality",locality).get().addOnSuccessListener(v -> {
                         for (DocumentSnapshot doc : v.getDocuments()) {
-                            userArrayList.add(doc.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
-                            userId.add(doc.getId());
+                                userArrayList.add(doc.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
+                                userId.add(doc.getId());
+
                         }
                         userAdapter.notifyDataSetChanged();
                     });
-                }
-                /*userArrayList.add(dc.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
-                userId.add(dc.getId());*/
             }
             if (progressDialog.isShowing())
                 progressDialog.dismiss();

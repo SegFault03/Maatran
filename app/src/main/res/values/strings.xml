@@ -50,4 +50,11 @@
     <string name="dashboard_string">DASHBOARD</string>
     <string name="family_members">Family Members</string>
     <string name="username_email">Email/Username</string>
+    <string-array name="localities">
+        <item>Howrah</item>
+        <item>Ballygunge</item>
+        <item>Central</item>
+        <item>Sector V</item>
+        <item>College More</item>
+    </string-array>
 </resources>
