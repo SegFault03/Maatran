@@ -47,6 +47,8 @@ public class BluetoothActivity extends AppCompatActivity {
     private TextView mSelectDeviceDisplayText;
     /**Displays the current state of Bluetooth [CONNECTED/DISCONNECTED]*/
     private TextView mBluetoothStateText;
+    /**Displays status (device discovery, connected, etc.)*/
+    private TextView mStatusBarText;
     /**Btn for enabling device discovery*/
     private Button mFindDevicesBtn;
     private ProgressDialog mProgressDialog;
@@ -142,9 +144,24 @@ public class BluetoothActivity extends AppCompatActivity {
 //                String deviceName = device.getName();
 //                String deviceHardwareAddress = device.getAddress(); // MAC address
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                Toast.makeText(BluetoothActivity.this, "Device Discovery started...", Toast.LENGTH_SHORT).show();
+                {
+                    Toast.makeText(BluetoothActivity.this, "Device Discovery started...", Toast.LENGTH_SHORT).show();
+                    mStatusBarText.setVisibility(View.VISIBLE);
+                    mStatusBarText.setText("Device Discovery started...");
+                    mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                Toast.makeText(BluetoothActivity.this, "Device Discovery finished...", Toast.LENGTH_SHORT).show();
+                {
+                    if(mNameOfDevices.size()>0) {
+                        mStatusBarText.setText("Device Discovery has ended, No device connected...");
+                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                    }
+                    else{
+                        mStatusBarText.setText("Device Discovery has ended, No device found...");
+                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                    }
+                    Toast.makeText(BluetoothActivity.this, "Device Discovery finished...", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
@@ -164,6 +181,9 @@ public class BluetoothActivity extends AppCompatActivity {
         mSelectDeviceDisplayText = findViewById(R.id.select_device_text);
         mSelectDeviceDisplayText.setVisibility(View.INVISIBLE);
         mBluetoothStateText = findViewById(R.id.bluetooth_service_state_text);
+        mStatusBarText = findViewById(R.id.status_bar_text);
+        mStatusBarText.setVisibility(View.INVISIBLE);
+
         mFindDevicesBtn = findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
 
@@ -198,6 +218,13 @@ public class BluetoothActivity extends AppCompatActivity {
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             super.finish();
+        }
+
+        if(mBluetoothAdapter.getState()==BluetoothAdapter.STATE_ON)
+        {
+            mStatusBarText.setVisibility(View.VISIBLE);
+            mStatusBarText.setText("Not connected to any devices!");
+            mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
         }
     }
 
@@ -257,8 +284,13 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //Stop doing discovery
+        if(mBluetoothAdapter!=null)
+            mBluetoothAdapter.cancelDiscovery();
+
         //Stop the handler
         handler.removeCallbacks(runnable);
+
         //unregister the ACTION_FOUND receiver.
         unregisterReceiver(receiver);
     }
@@ -290,6 +322,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         mBluetoothAdapter.disable()
                 );
+                mStatusBarText.setVisibility(View.VISIBLE);
                 mSelectDeviceDisplayText.setVisibility(View.VISIBLE);
                 mFindDevicesBtn.setVisibility(View.VISIBLE);
                 break;
@@ -305,6 +338,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                     }
                 });
+                mStatusBarText.setVisibility(View.INVISIBLE);
                 mSelectDeviceDisplayText.setVisibility(View.INVISIBLE);
                 mFindDevicesBtn.setVisibility(View.INVISIBLE);
                 break;
@@ -315,6 +349,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         Toast.makeText(this, "not allowed", Toast.LENGTH_SHORT).show()
                 );
+                mStatusBarText.setVisibility(View.INVISIBLE);
                 mSelectDeviceDisplayText.setVisibility(View.INVISIBLE);
                 mFindDevicesBtn.setVisibility(View.INVISIBLE);
                 break;
@@ -325,6 +360,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         Toast.makeText(this, "not allowed", Toast.LENGTH_SHORT).show()
                 );
+                mStatusBarText.setVisibility(View.INVISIBLE);
                 mSelectDeviceDisplayText.setVisibility(View.INVISIBLE);
                 mFindDevicesBtn.setVisibility(View.INVISIBLE);
                 break;
@@ -352,6 +388,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public boolean checkForBondedDevices()
     {
+        mStatusBarText.setVisibility(View.VISIBLE);
+        mStatusBarText.setText("Checking for bonded devices, please wait...");
+        mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
         mPairedDevices = mBluetoothAdapter.getBondedDevices();
         if (mPairedDevices.size() > 0) {
             mProgressDialog.setMessage("Checking if the device to connect has already been paired with in the past...");
@@ -385,13 +424,10 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public void startDeviceDiscovery()
     {
+        mStatusBarText.setVisibility(View.VISIBLE);
+        mStatusBarText.setText("Performing device discovery, please wait...");
+        mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
         Toast.makeText(this, "Starting Device Discovery, please do not close this app now...", Toast.LENGTH_SHORT).show();
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            Toast.makeText(this,"Coarse Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ENABLE_COARSE_LOCATION);
-//        }
-
         if (mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
         mBluetoothAdapter.startDiscovery();
