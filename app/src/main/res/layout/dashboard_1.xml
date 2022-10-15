@@ -54,9 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="292dp"
         android:layout_marginEnd="40dp"
+        android:src="@drawable/rectangle_3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/rectangle_3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -64,9 +64,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:src="@drawable/alertsnone"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6"
-        android:src="@drawable/alertsnone" />
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -74,9 +74,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="40dp"
+        android:src="@drawable/arrow_right"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        android:src="@drawable/arrow_right" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -99,11 +99,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="224dp"
         android:layout_marginBottom="9dp"
+        android:src="@drawable/rectangle_5"
         app:layout_constraintBottom_toBottomOf="@+id/imageView9"
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
         app:layout_constraintTop_toTopOf="@+id/imageView9"
-        app:layout_constraintVertical_bias="0.0"
-        android:src="@drawable/rectangle_5" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -111,9 +111,9 @@
         android:layout_height="24dp"
         android:layout_marginEnd="236dp"
         android:layout_marginBottom="20dp"
+        android:src="@drawable/sos"
         app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintEnd_toEndOf="@+id/imageView9"
-        android:src="@drawable/sos" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView9" />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -121,17 +121,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
+        android:src="@drawable/emergency"
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toTopOf="@+id/imageView9"
-        android:src="@drawable/emergency" />
+        app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
     <Button
         android:id="@+id/report_button"
         android:layout_width="144dp"
         android:layout_height="46dp"
         android:layout_marginTop="188dp"
-        android:text="Add Patient"
         android:onClick="addPatient"
+        android:text="Add Patient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
@@ -194,8 +194,20 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView9"
         app:layout_constraintVertical_bias="0.14" />
 
-
-
+    <Button
+        android:id="@+id/bluetooth_test_btn"
+        android:layout_width="272dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="6dp"
+        android:text="TEST_BLUETOOTH"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintVertical_bias="0.066"
+        android:onClick="bluetoothService"/>
 
 
     <!--<androidx.cardview.widget.CardView
