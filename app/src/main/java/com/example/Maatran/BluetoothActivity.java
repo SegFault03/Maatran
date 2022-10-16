@@ -115,6 +115,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * Set containing BluetoothDevices that have been paired with in the past
      */
     Set<BluetoothDevice> mPairedDevices;
+    Set<BluetoothDevice> mDiscoveredDevices;
     //Global BluetoothService object
     //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
 
@@ -151,19 +152,22 @@ public class BluetoothActivity extends AppCompatActivity {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
-                String deviceHardwareAddress = device.getAddress();
-                if(deviceName != null) {
-                    if(!mNameOfDevices.contains(deviceName))
-                    mNameOfDevices.add(deviceName);
+                int oldSize = mDiscoveredDevices.size();
+                mDiscoveredDevices.add(device);
+                int newSize = mDiscoveredDevices.size();
+                if(oldSize!=newSize) {
+                    String deviceName = device.getName();
+                    String deviceHardwareAddress = device.getAddress();
+                    if (deviceName != null) {
+                        if (!mNameOfDevices.contains(deviceName))
+                            mNameOfDevices.add(deviceName);
+                    } else if (deviceHardwareAddress != null) {
+                        if (!mNameOfDevices.contains(deviceHardwareAddress))
+                            mNameOfDevices.add(deviceHardwareAddress);
+                    } else
+                        mNameOfDevices.add("Unknown Device");
+                    mListOfDevices.notifyDataSetChanged();
                 }
-                else if(deviceHardwareAddress != null) {
-                    if(!mNameOfDevices.contains(deviceHardwareAddress))
-                    mNameOfDevices.add(deviceHardwareAddress);
-                }
-                else
-                    mNameOfDevices.add("Unknown Device");
-                mListOfDevices.notifyDataSetChanged();
 
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 Toast.makeText(BluetoothActivity.this, "Device Discovery started...", Toast.LENGTH_SHORT).show();
