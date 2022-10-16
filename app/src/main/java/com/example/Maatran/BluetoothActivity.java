@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.os.Message;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,16 +20,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 
 //Handles all BluetoothActivity
@@ -41,28 +38,34 @@ public class BluetoothActivity extends AppCompatActivity {
     //private data members corresponding to views in the layout
     /**Controls changes to Bluetooth state [CONNECT/DISCONNECT]*/
     private Button mBluetoothStateChangeBtn;
+
     /**Displays a list of remote devices*/
     private ListView mBluetoothDeviceList;
+
     /**Displays 'Select a Device to connect to'*/
     private TextView mSelectDeviceDisplayText;
+
     /**Displays the current state of Bluetooth [CONNECTED/DISCONNECTED]*/
     private TextView mBluetoothStateText;
+
     /**Displays status (device discovery, connected, etc.)*/
     private TextView mStatusBarText;
+
     /**Btn for enabling device discovery*/
     private Button mFindDevicesBtn;
     private ProgressDialog mProgressDialog;
+
     /**ArrayAdapter for ListView mBluetoothDeviceList*/
     private ArrayAdapter<String> mListOfDevices;
+
     /**ArrayList for ArrayAdapter mListOfDevices*/
     private ArrayList<String> mNameOfDevices;
 
     /**Handler for updating UI after a specific time interval*/
-    private Handler handler;
+    private Handler mHandlerForBluetoothBroadcasts;
+
     /**IntentFilter for handling Broadcasts*/
     IntentFilter mIntentFilter;
-
-    private ConnectThread mConnectThread;
 
     //For debugging
     private static final String TAG = "BluetoothActivity";
@@ -70,19 +73,33 @@ public class BluetoothActivity extends AppCompatActivity {
     //CODES TO INDICATE BLUETOOTH STATUS
     /**Codes for requesting permissions, is used in onActivityResult*/
     private static final int REQUEST_ENABLE_BT = 3;
-    private static final int REQUEST_ENABLE_COARSE_LOCATION = 4;
     private static final int REQUEST_ENABLE_FINE_LOCATION = 5;
 
     /**0 if bluetooth is not enabled, 1 otherwise*/
     private static int BLUETOOTH_STATUS;
-    /**1 if some device is connected*/
+
+    /**2 if some device is connected, 1 if attempting to connect to some device, 0 otherwise*/
     private static int BLUETOOTH_CONNECTION_STATUS;
-    /**1 if device discovery has been performed at least once, 0 otherwise**/
+
+    /**1 if device discovery is in action, 0 if not, 2 if device discovery has finished**/
     private static int BLUETOOTH_DISCOVERY_STATUS;
 
+    // Message types sent from the BluetoothChatService Handler
+    static final int MESSAGE_STATE_CHANGE = 1;
+    static final int MESSAGE_READ = 2;
+    static final int MESSAGE_WRITE = 3;
+    static final int MESSAGE_DEVICE_NAME = 4;
+    static final int MESSAGE_TOAST = 5;
+
+    // Key names received from the BluetoothChatService Handler
+    static final String DEVICE_NAME = "device_name";
+    static final String TOAST = "toast";
+
     //TODO Stores the name of the device to connect to. Will be different for each patient and
+
     /**will be received from the calling Activity (to be implemented later)*/
     private final String mDeviceToConnect = "Redmi 9 Prime";
+
     /**
      * Stores the name and address of the paired device
      */
@@ -93,19 +110,16 @@ public class BluetoothActivity extends AppCompatActivity {
      * Global BluetoothAdapter class object to use Bluetooth features
      */
     private BluetoothAdapter mBluetoothAdapter = null;
+
     /**
      * Set containing BluetoothDevices that have been paired with in the past
      */
     Set<BluetoothDevice> mPairedDevices;
-    /**
-     * Set containing BluetoothDevices that have been discovered upon enabling device discovery
-     */
-    Set<BluetoothDevice> mDiscoveredDevices;
     //Global BluetoothService object
     //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
 
     /**
-     * Runnable for the handler
+     * Runnable for the mHandlerForBluetoothBroadcasts
      * Callback fn run() is called every 100ms
      */
     private final Runnable runnable = new Runnable() {
@@ -116,7 +130,7 @@ public class BluetoothActivity extends AppCompatActivity {
             //Update Status Bar text
             updateStatusText();
             //call it again after 100ms
-            handler.postDelayed(this, 100);
+            mHandlerForBluetoothBroadcasts.postDelayed(this, 100);
         }
     };
 
@@ -127,48 +141,37 @@ public class BluetoothActivity extends AppCompatActivity {
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.S)
         public void onReceive(Context context, Intent intent) {
-                BLUETOOTH_DISCOVERY_STATUS = 1;
+
+            //Broadcast device discovery is in action
+            BLUETOOTH_DISCOVERY_STATUS = 1;
+
             String action = intent.getAction();
-            int newSize,oldSize;
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                oldSize=mDiscoveredDevices.size();
-                mDiscoveredDevices.add(device);
-                newSize=mDiscoveredDevices.size();
-                if(oldSize!=newSize)
-                {
-                    String deviceName = device.getName();
-                    String deviceHardwareAddress = device.getAddress();
-                    if(deviceName != null)
-                        mNameOfDevices.add(deviceName);
-                    else if(deviceHardwareAddress != null)
-                        mNameOfDevices.add(deviceHardwareAddress);
-                    else
-                        mNameOfDevices.add("Unknown Device");
-                    mListOfDevices.notifyDataSetChanged();
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress();
+                if(deviceName != null) {
+                    if(!mNameOfDevices.contains(deviceName))
+                    mNameOfDevices.add(deviceName);
                 }
+                else if(deviceHardwareAddress != null) {
+                    if(!mNameOfDevices.contains(deviceHardwareAddress))
+                    mNameOfDevices.add(deviceHardwareAddress);
+                }
+                else
+                    mNameOfDevices.add("Unknown Device");
+                mListOfDevices.notifyDataSetChanged();
 
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                {
-                    Toast.makeText(BluetoothActivity.this, "Device Discovery started...", Toast.LENGTH_SHORT).show();
-                    mStatusBarText.setVisibility(View.VISIBLE);
-                    mStatusBarText.setText("Device Discovery started...");
-                    mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                }
+                Toast.makeText(BluetoothActivity.this, "Device Discovery started...", Toast.LENGTH_SHORT).show();
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                {
-                    if(mNameOfDevices.size()>0) {
-                        mStatusBarText.setText("Device Discovery has ended, No device connected...");
-                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                    }
-                    else{
-                        mStatusBarText.setText("Device Discovery has ended, No device found...");
-                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    }
-                    Toast.makeText(BluetoothActivity.this, "Device Discovery finished...", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(BluetoothActivity.this, "Device Discovery finished...", Toast.LENGTH_SHORT).show();
+
+                //Broadcast that device discovery has finished
+                BLUETOOTH_DISCOVERY_STATUS = 2;
             }
         }
     };
@@ -200,7 +203,6 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
 
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
-        mDiscoveredDevices=new HashSet<>();
         mPairedDevices=null;
         mNameOfDevices=new ArrayList<>();
         mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
@@ -209,13 +211,19 @@ public class BluetoothActivity extends AppCompatActivity {
                 (parent, view, position, id) -> {
                     String deviceName = mBluetoothDeviceList.getItemAtPosition(position).toString();
                     Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
-                    if(mConnectThread!=null)
-                        mConnectThread.cancel();
-                    mConnectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
-                    mConnectThread.start();
+                    //TODO Implement device connection code
+//                    if(mConnectThread!=null)
+//                        mConnectThread.cancel();
+//                    mConnectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
+//                    mConnectThread.start();
                 }
         );
 
+        //Creating a new mHandlerForBluetoothBroadcasts and binding it with a callback fn: runnable
+        mHandlerForBluetoothBroadcasts = new Handler();
+        mHandlerForBluetoothBroadcasts.postDelayed(runnable, 100);
+
+        //Register for broadcasts for device discovery
         mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         mIntentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
@@ -229,7 +237,6 @@ public class BluetoothActivity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             super.finish();
         }
-
         if(mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
 
@@ -247,6 +254,7 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ENABLE_BT) {// When the request to enable Bluetooth returns
             if (resultCode != AppCompatActivity.RESULT_OK) {
+
                 // User did not enable Bluetooth or an error occurred
                 Toast.makeText(this, "Bluetooth is essential for this functionality to work!", Toast.LENGTH_LONG).show();
                 super.finish();
@@ -269,32 +277,28 @@ public class BluetoothActivity extends AppCompatActivity {
             Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
         }
-
-        //Creating a new handler and binding it with a callback fn: runnable
-        handler = new Handler();
-        handler.postDelayed(runnable, 100);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         //Stop doing discovery
         if(mBluetoothAdapter!=null)
             mBluetoothAdapter.cancelDiscovery();
 
-        //Stop the handler
-        handler.removeCallbacks(runnable);
+        //Stop the mHandlerForBluetoothBroadcasts
+        mHandlerForBluetoothBroadcasts.removeCallbacks(runnable);
 
         //unregister the ACTION_FOUND receiver.
         unregisterReceiver(receiver);
     }
 
-    //deleted ondestroy
-
 
     @Override
     public void onResume() {
         super.onResume();
+
         //Update UI depending upon Bluetooth state
         updateUI();
     }
@@ -307,6 +311,7 @@ public class BluetoothActivity extends AppCompatActivity {
         switch (mBluetoothAdapter.getState()) {
             case BluetoothAdapter.STATE_ON:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[2]);
+                BLUETOOTH_STATUS=1;
                 mBluetoothStateChangeBtn.setText("TURN " + BLUETOOTH_STATE[0]);
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         {
@@ -366,27 +371,65 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     //TODO Code for connected status
+
     /**Controls Status Bar text*/
-    private void updateStatusText()
-    {
-        if(BLUETOOTH_STATUS==0)
+    private void updateStatusText() {
+
+        //BLUETOOTH IS NOT ON
+        if (BLUETOOTH_STATUS == 0)
             mStatusBarText.setVisibility(View.INVISIBLE);
-        else
-        {
+        else {
+
+            //BLUETOOTH IS ON
             mStatusBarText.setVisibility(View.VISIBLE);
-            if(mBluetoothAdapter.isDiscovering())
-                return;
-            else
-            {
-                if(BLUETOOTH_DISCOVERY_STATUS!=1)
+            mStatusBarText.setText("DUMMY TEXT FOR TESTING");
+
+            //Device discovery has not yet been performed
+            if (BLUETOOTH_DISCOVERY_STATUS == 0) {
+                mStatusBarText.setVisibility(View.VISIBLE);
+                mStatusBarText.setText("Not connected to any devices!");
+                mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            }
+
+            //Device discovery is now in progress
+            else if (BLUETOOTH_DISCOVERY_STATUS == 1) {
+                mStatusBarText.setText("Device Discovery started...");
+                mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            }
+
+            //Device discovery has finished
+            else {
+
+                //No device has been connected yet
+                if (BLUETOOTH_CONNECTION_STATUS == 0) {
+
+                    //Check if devices are found or not
+                    if (mListOfDevices.getCount() == 0) {
+                        mStatusBarText.setText("Device Discovery has ended, No device found...");
+                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                    } else {
+                        mStatusBarText.setText("Device Discovery has ended, No device connected...");
+                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                    }
+                }
+
+                //Some device has been clicked on and a connection attempt has been made
+                else if(BLUETOOTH_CONNECTION_STATUS==1)
                 {
-                    mStatusBarText.setVisibility(View.VISIBLE);
-                    mStatusBarText.setText("Not connected to any devices!");
-                    mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                    mStatusBarText.setText("Attempting to Connect...");
+                    mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                }
+
+                //Device pairing is successful
+                else {
+                    mStatusBarText.setText("Connected with "+mConnectedDeviceName);
+                    mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                 }
             }
         }
     }
+
+
 
     /**
      * Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
@@ -399,6 +442,7 @@ public class BluetoothActivity extends AppCompatActivity {
         boolean deviceFound = checkForBondedDevices();
         if (!deviceFound)
             startDeviceDiscovery();
+        //TODO Connect with the bonded device
     }
 
     /**Called from setUpBluetooth(). Checks if paired devices are available. Returns true if device
@@ -407,8 +451,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * @return Boolean
      */
 
-    public boolean checkForBondedDevices()
-    {
+    public boolean checkForBondedDevices() {
         mStatusBarText.setVisibility(View.VISIBLE);
         mStatusBarText.setText("Checking for bonded devices, please wait...");
         mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -416,6 +459,7 @@ public class BluetoothActivity extends AppCompatActivity {
         if (mPairedDevices.size() > 0) {
             mProgressDialog.setMessage("Checking if the device to connect has already been paired with in the past...");
             mProgressDialog.show();
+
             // There are paired devices. Get the name and address of each paired device.
             for (BluetoothDevice device : mPairedDevices) {
                 String deviceHardwareAddress = device.getAddress(); // MAC address
@@ -425,8 +469,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     mConnectedDeviceHardwareAddress = deviceHardwareAddress;
                     Toast.makeText(this, "Device Found!", Toast.LENGTH_SHORT).show();
                     //TESTING
-                    mDiscoveredDevices.add(device);
-                    if(!mNameOfDevices.contains(deviceName))
+                    if (!mNameOfDevices.contains(deviceName))
                         mNameOfDevices.add(deviceName);
                     mListOfDevices.notifyDataSetChanged();
                     mProgressDialog.dismiss();
@@ -437,7 +480,7 @@ public class BluetoothActivity extends AppCompatActivity {
             if (mProgressDialog.isShowing())
                 mProgressDialog.dismiss();
             Toast.makeText(this, "Device required not found among paired devices, moving on to device discovery...",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -468,85 +511,49 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    private class ConnectThread extends Thread {
-        private BluetoothSocket mmSocket;
-        private BluetoothDevice mmDevice;
-        private final UUID MY_UUID =  UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //This is random. Change as necessary.
-
-        public ConnectThread(BluetoothDevice device) {
-            // Use a temporary object that is later assigned to mmSocket
-            // because mmSocket is final.
-            BluetoothSocket tmp = null;
-            mmDevice = device;
-
-            try {
-                // Get a BluetoothSocket to connect with the given BluetoothDevice.
-                // MY_UUID is the app's UUID string, also used in the server code.
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
-                Log.v(TAG, "Socket created");
-            } catch (IOException e) {
-                Log.e(TAG, "Socket's create() method failed", e);
-            }
-            mmSocket = tmp;
-        }
-
-        public void run() {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    // Cancel discovery because it otherwise slows down the connection.
-                    mBluetoothAdapter.cancelDiscovery();
-
-                    try {
-                        // Connect to the remote device through the socket. This call blocks
-                        // until it succeeds or throws an exception.
-                        Log.v(TAG, "Trying to connect to socket");
-                        mmSocket.connect();
-                        Log.v(TAG, "Socket connected");
-                        Toast.makeText(BluetoothActivity.this, "Device connected",
-                                Toast.LENGTH_SHORT).show();
-                    } catch (IOException connectException) {
-                        // Unable to connect; move on to fallback socket.
-                        //Log.e(TAG, "Connect Exception", connectException);
-                        try {
-                            Log.e("","trying fallback...");
-
-                            mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);
-                            mmSocket.connect();
-
-                            Toast.makeText(BluetoothActivity.this, "Device connected",
-                                    Toast.LENGTH_SHORT).show();
-                            Log.e("","Connected");
-                        } catch (Exception connectException2) {
-                            Log.e(TAG, "Connect Exception", connectException2);
-                            Toast.makeText(BluetoothActivity.this, "Unable to connect",
-                                    Toast.LENGTH_SHORT).show();
-
-                            try {
-                                mmSocket.close();
-                            }
-                            catch(Exception closeException) {
-                                Log.e(TAG, "Could not close the client socket", closeException);
-                            }
-                            return;
-                        }
+    /**
+     * The Handler that gets information back from the BluetoothChatService
+     */
+    Handler mChatServiceHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case MESSAGE_STATE_CHANGE:
+                    switch (msg.arg1) {
+                        case BluetoothChatService.STATE_CONNECTED:
+                            BLUETOOTH_CONNECTION_STATUS=2;
+                            mListOfDevices.clear();
+                            break;
+                        case BluetoothChatService.STATE_CONNECTING:
+                            BLUETOOTH_CONNECTION_STATUS=1;
+                            break;
+                        case BluetoothChatService.STATE_LISTEN:
+                        case BluetoothChatService.STATE_NONE:
+                            break;
                     }
-                }
-            });
-
-            // The connection attempt succeeded. Perform work associated with
-            // the connection in a separate thread.
-            //manageMyConnectedSocket(mmSocket);
-
-        }
-
-        // Closes the client socket and causes the thread to finish.
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Could not close the client socket", e);
+                    break;
+                case MESSAGE_WRITE:
+                    byte[] writeBuf = (byte[]) msg.obj;
+                    // construct a string from the buffer
+                    String writeMessage = new String(writeBuf);
+                    break;
+                case MESSAGE_READ:
+                    byte[] readBuf = (byte[]) msg.obj;
+                    // construct a string from the valid bytes in the buffer
+                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    Toast.makeText(BluetoothActivity.this,mConnectedDeviceName + ":  " + readMessage,Toast.LENGTH_SHORT).show();
+                    break;
+                case MESSAGE_DEVICE_NAME:
+                    // save the connected device's name
+                    mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
+                    Toast.makeText(BluetoothActivity.this, "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    break;
+                case MESSAGE_TOAST:
+                    Toast.makeText(BluetoothActivity.this, msg.getData().getString(TOAST), Toast.LENGTH_SHORT).show();
+                    break;
             }
+            return false;
         }
-    }
+    });
 
 }
