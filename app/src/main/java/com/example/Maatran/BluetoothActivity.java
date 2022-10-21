@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -99,7 +98,7 @@ public class BluetoothActivity extends AppCompatActivity {
     //TODO Stores the name of the device to connect to. Will be different for each patient and
 
     /**will be received from the calling Activity (to be implemented later)*/
-    private final String mDeviceToConnect = "LAPTOP-OCON4L4I";
+    private final String mDeviceToConnect = "Redmi 9 Prime";
 
     /**
      * Stores the name and address of the paired device
@@ -115,8 +114,12 @@ public class BluetoothActivity extends AppCompatActivity {
     /**
      * Set containing BluetoothDevices that have been paired with in the past
      */
-    Set<BluetoothDevice> mPairedDevices;
-    Set<BluetoothDevice> mDiscoveredDevices;
+
+    ArrayList<BluetoothDevice> mDiscoveredBluetoothDevices;
+
+    /**
+     * Global BluetoothChatService instance
+     */
     BluetoothChatService mBluetoothChatService;
 
     /**
@@ -140,7 +143,6 @@ public class BluetoothActivity extends AppCompatActivity {
      * Broadcasts when a device is found upon device discovery
      */
 
-    //TODO OPTIMIZE CODE
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.S)
         public void onReceive(Context context, Intent intent) {
@@ -154,20 +156,13 @@ public class BluetoothActivity extends AppCompatActivity {
                 // Discovery has found a device. Get the BluetoothDevice
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                int oldSize = mDiscoveredDevices.size();
-                mDiscoveredDevices.add(device);
-                int newSize = mDiscoveredDevices.size();
-                if(oldSize!=newSize) {
-                    String deviceName = device.getName();
-                    String deviceHardwareAddress = device.getAddress();
-                    if (deviceName != null) {
-                        if (!mNameOfDevices.contains(deviceName))
-                            mNameOfDevices.add(deviceName);
-                    } else if (deviceHardwareAddress != null) {
-                        if (!mNameOfDevices.contains(deviceHardwareAddress))
-                            mNameOfDevices.add(deviceHardwareAddress);
-                    } else
-                        mNameOfDevices.add("Unknown Device");
+                String deviceName = device.getName();
+                if(!mDiscoveredBluetoothDevices.contains(device)) {
+                    mDiscoveredBluetoothDevices.add(device);
+                    if(deviceName!=null)
+                        mNameOfDevices.add(deviceName);
+                    else
+                        mNameOfDevices.add(device.getAddress());
                     mListOfDevices.notifyDataSetChanged();
                 }
 
@@ -210,8 +205,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
 
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
-        mPairedDevices = null;
-        mDiscoveredDevices = new HashSet<>();
+        mDiscoveredBluetoothDevices = new ArrayList<>();
         mNameOfDevices = new ArrayList<>();
         mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
         mBluetoothDeviceList.setAdapter(mListOfDevices);
@@ -219,10 +213,9 @@ public class BluetoothActivity extends AppCompatActivity {
                 (parent, view, position, id) -> {
                     String deviceName = mBluetoothDeviceList.getItemAtPosition(position).toString();
                     Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
-                    //TODO Adjust code after optimization
                     if(mBluetoothChatService.getState() != BluetoothChatService.STATE_NONE)
                         mBluetoothChatService.stop();
-                    mBluetoothChatService.connect(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
+                      mBluetoothChatService.connect(mDiscoveredBluetoothDevices.get(position));
                 }
         );
 
@@ -471,23 +464,23 @@ public class BluetoothActivity extends AppCompatActivity {
         mStatusBarText.setVisibility(View.VISIBLE);
         mStatusBarText.setText("Checking for bonded devices, please wait...");
         mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-        mPairedDevices = mBluetoothAdapter.getBondedDevices();
-        if (mPairedDevices.size() > 0) {
+        Set<BluetoothDevice> pairedDevices;
+        pairedDevices = mBluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
             mProgressDialog.setMessage("Checking if the device to connect has already been paired with in the past...");
             mProgressDialog.show();
 
             // There are paired devices. Get the name and address of each paired device.
-            for (BluetoothDevice device : mPairedDevices) {
+            for (BluetoothDevice device : pairedDevices) {
                 String deviceHardwareAddress = device.getAddress(); // MAC address
                 String deviceName = device.getName();
                 if (deviceName.equals(mDeviceToConnect)) {
                     mConnectedDeviceName = deviceName;
                     mConnectedDeviceHardwareAddress = deviceHardwareAddress;
                     Toast.makeText(this, "Device Found!", Toast.LENGTH_SHORT).show();
-                    //TESTING
                     if (!mNameOfDevices.contains(deviceName)) {
-                        mDiscoveredDevices.add(device);
-                        mNameOfDevices.add(deviceName);
+                          mDiscoveredBluetoothDevices.add(device);
+                          mNameOfDevices.add(deviceName);
                     }
                     mListOfDevices.notifyDataSetChanged();
                     mProgressDialog.dismiss();
