@@ -99,7 +99,7 @@ public class BluetoothActivity extends AppCompatActivity {
     //TODO Stores the name of the device to connect to. Will be different for each patient and
 
     /**will be received from the calling Activity (to be implemented later)*/
-    private final String mDeviceToConnect = "Redmi 9 Prime";
+    private final String mDeviceToConnect = "LAPTOP-OCON4L4I";
 
     /**
      * Stores the name and address of the paired device
@@ -484,8 +484,10 @@ public class BluetoothActivity extends AppCompatActivity {
                     mConnectedDeviceHardwareAddress = deviceHardwareAddress;
                     Toast.makeText(this, "Device Found!", Toast.LENGTH_SHORT).show();
                     //TESTING
-                    if (!mNameOfDevices.contains(deviceName))
+                    if (!mNameOfDevices.contains(deviceName)) {
+                        mDiscoveredDevices.add(device);
                         mNameOfDevices.add(deviceName);
+                    }
                     mListOfDevices.notifyDataSetChanged();
                     mProgressDialog.dismiss();
                     return true;
