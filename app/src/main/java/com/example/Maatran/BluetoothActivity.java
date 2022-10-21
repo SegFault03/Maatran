@@ -445,7 +445,9 @@ public class BluetoothActivity extends AppCompatActivity {
     public void setUpBluetooth() {
 
         //clear the existing list of devices
-        mListOfDevices.clear();
+        mDiscoveredBluetoothDevices.clear();
+        mNameOfDevices.clear();
+        mListOfDevices.notifyDataSetChanged();
 
         if(mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
