@@ -118,8 +118,6 @@ public class BluetoothActivity extends AppCompatActivity {
     Set<BluetoothDevice> mPairedDevices;
     Set<BluetoothDevice> mDiscoveredDevices;
     BluetoothChatService mBluetoothChatService;
-    //Global BluetoothService object
-    //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
 
     /**
      * Runnable for the mHandlerForBluetoothBroadcasts
@@ -141,6 +139,8 @@ public class BluetoothActivity extends AppCompatActivity {
      * Create a BroadcastReceiver for ACTION_FOUND.
      * Broadcasts when a device is found upon device discovery
      */
+
+    //TODO OPTIMIZE CODE
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.S)
         public void onReceive(Context context, Intent intent) {
@@ -219,12 +219,10 @@ public class BluetoothActivity extends AppCompatActivity {
                 (parent, view, position, id) -> {
                     String deviceName = mBluetoothDeviceList.getItemAtPosition(position).toString();
                     Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
-                    //TODO Implement device connection code
+                    //TODO Adjust code after optimization
                     if(mBluetoothChatService.getState() != BluetoothChatService.STATE_NONE)
                         mBluetoothChatService.stop();
                     mBluetoothChatService.connect(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
-//                    mConnectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
-//                    mConnectThread.start();
                 }
         );
 
@@ -452,12 +450,15 @@ public class BluetoothActivity extends AppCompatActivity {
      */
 
     public void setUpBluetooth() {
+
+        //clear the existing list of devices
+        mListOfDevices.clear();
+
         if(mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
         boolean deviceFound = checkForBondedDevices();
         if (!deviceFound)
             startDeviceDiscovery();
-        //TODO Connect with the bonded device
     }
 
     /**Called from setUpBluetooth(). Checks if paired devices are available. Returns true if device
@@ -539,12 +540,13 @@ public class BluetoothActivity extends AppCompatActivity {
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             BLUETOOTH_CONNECTION_STATUS=2;
-                            updateStatusText();
+                            Toast.makeText(BluetoothActivity.this,"DEVICE CONNECTED",Toast.LENGTH_SHORT).show();
+                            //updateStatusText();
                             mListOfDevices.clear();
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             BLUETOOTH_CONNECTION_STATUS=1;
-                            updateStatusText();
+                            //updateStatusText();
                             break;
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
