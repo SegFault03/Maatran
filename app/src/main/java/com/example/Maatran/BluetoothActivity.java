@@ -114,9 +114,13 @@ public class BluetoothActivity extends AppCompatActivity {
     /**
      * Set containing BluetoothDevices that have been paired with in the past
      */
-    Set<BluetoothDevice> mPairedDevices;
-    //Global BluetoothService object
-    //private BluetoothService mChatService = null;           //TODO  service for handling data transmissions
+
+    ArrayList<BluetoothDevice> mDiscoveredBluetoothDevices;
+
+    /**
+     * Global BluetoothChatService instance
+     */
+    BluetoothChatService mBluetoothChatService;
 
     /**
      * Runnable for the mHandlerForBluetoothBroadcasts
@@ -138,6 +142,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * Create a BroadcastReceiver for ACTION_FOUND.
      * Broadcasts when a device is found upon device discovery
      */
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.S)
         public void onReceive(Context context, Intent intent) {
@@ -152,18 +157,14 @@ public class BluetoothActivity extends AppCompatActivity {
                 // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
-                String deviceHardwareAddress = device.getAddress();
-                if(deviceName != null) {
-                    if(!mNameOfDevices.contains(deviceName))
-                    mNameOfDevices.add(deviceName);
+                if(!mDiscoveredBluetoothDevices.contains(device)) {
+                    mDiscoveredBluetoothDevices.add(device);
+                    if(deviceName!=null)
+                        mNameOfDevices.add(deviceName);
+                    else
+                        mNameOfDevices.add(device.getAddress());
+                    mListOfDevices.notifyDataSetChanged();
                 }
-                else if(deviceHardwareAddress != null) {
-                    if(!mNameOfDevices.contains(deviceHardwareAddress))
-                    mNameOfDevices.add(deviceHardwareAddress);
-                }
-                else
-                    mNameOfDevices.add("Unknown Device");
-                mListOfDevices.notifyDataSetChanged();
 
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 Toast.makeText(BluetoothActivity.this, "Device Discovery started...", Toast.LENGTH_SHORT).show();
@@ -202,26 +203,26 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn = findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
 
+
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
-        mPairedDevices=null;
-        mNameOfDevices=new ArrayList<>();
+        mDiscoveredBluetoothDevices = new ArrayList<>();
+        mNameOfDevices = new ArrayList<>();
         mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
         mBluetoothDeviceList.setAdapter(mListOfDevices);
         mBluetoothDeviceList.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     String deviceName = mBluetoothDeviceList.getItemAtPosition(position).toString();
                     Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
-                    //TODO Implement device connection code
-//                    if(mConnectThread!=null)
-//                        mConnectThread.cancel();
-//                    mConnectThread = new ConnectThread(mDiscoveredDevices.stream().filter(device -> device.getName().equals(deviceName)).findFirst().get());
-//                    mConnectThread.start();
+                    if(mBluetoothChatService.getState() != BluetoothChatService.STATE_NONE)
+                        mBluetoothChatService.stop();
+                      mBluetoothChatService.connect(mDiscoveredBluetoothDevices.get(position));
                 }
         );
 
         //Creating a new mHandlerForBluetoothBroadcasts and binding it with a callback fn: runnable
         mHandlerForBluetoothBroadcasts = new Handler();
         mHandlerForBluetoothBroadcasts.postDelayed(runnable, 100);
+        mBluetoothChatService = new BluetoothChatService(this, mChatServiceHandler);
 
         //Register for broadcasts for device discovery
         mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -299,6 +300,11 @@ public class BluetoothActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        if(mBluetoothChatService != null)
+        {
+            if(mBluetoothChatService.getState() == BluetoothChatService.STATE_NONE)
+                mBluetoothChatService.start();
+        }
         //Update UI depending upon Bluetooth state
         updateUI();
     }
@@ -437,12 +443,17 @@ public class BluetoothActivity extends AppCompatActivity {
      */
 
     public void setUpBluetooth() {
+
+        //clear the existing list of devices
+        mDiscoveredBluetoothDevices.clear();
+        mNameOfDevices.clear();
+        mListOfDevices.notifyDataSetChanged();
+
         if(mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
         boolean deviceFound = checkForBondedDevices();
         if (!deviceFound)
             startDeviceDiscovery();
-        //TODO Connect with the bonded device
     }
 
     /**Called from setUpBluetooth(). Checks if paired devices are available. Returns true if device
@@ -455,22 +466,24 @@ public class BluetoothActivity extends AppCompatActivity {
         mStatusBarText.setVisibility(View.VISIBLE);
         mStatusBarText.setText("Checking for bonded devices, please wait...");
         mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-        mPairedDevices = mBluetoothAdapter.getBondedDevices();
-        if (mPairedDevices.size() > 0) {
+        Set<BluetoothDevice> pairedDevices;
+        pairedDevices = mBluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
             mProgressDialog.setMessage("Checking if the device to connect has already been paired with in the past...");
             mProgressDialog.show();
 
             // There are paired devices. Get the name and address of each paired device.
-            for (BluetoothDevice device : mPairedDevices) {
+            for (BluetoothDevice device : pairedDevices) {
                 String deviceHardwareAddress = device.getAddress(); // MAC address
                 String deviceName = device.getName();
                 if (deviceName.equals(mDeviceToConnect)) {
                     mConnectedDeviceName = deviceName;
                     mConnectedDeviceHardwareAddress = deviceHardwareAddress;
                     Toast.makeText(this, "Device Found!", Toast.LENGTH_SHORT).show();
-                    //TESTING
-                    if (!mNameOfDevices.contains(deviceName))
-                        mNameOfDevices.add(deviceName);
+                    if (!mNameOfDevices.contains(deviceName)) {
+                          mDiscoveredBluetoothDevices.add(device);
+                          mNameOfDevices.add(deviceName);
+                    }
                     mListOfDevices.notifyDataSetChanged();
                     mProgressDialog.dismiss();
                     return true;
@@ -522,10 +535,13 @@ public class BluetoothActivity extends AppCompatActivity {
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             BLUETOOTH_CONNECTION_STATUS=2;
+                            Toast.makeText(BluetoothActivity.this,"DEVICE CONNECTED",Toast.LENGTH_SHORT).show();
+                            //updateStatusText();
                             mListOfDevices.clear();
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             BLUETOOTH_CONNECTION_STATUS=1;
+                            //updateStatusText();
                             break;
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
@@ -555,5 +571,7 @@ public class BluetoothActivity extends AppCompatActivity {
             return false;
         }
     });
+
+
 
 }

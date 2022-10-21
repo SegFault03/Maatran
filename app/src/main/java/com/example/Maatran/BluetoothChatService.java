@@ -1,5 +1,6 @@
 package com.example.Maatran;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,9 +37,9 @@ public class BluetoothChatService {
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
     // Member fields
-    private final BluetoothAdapter mAdapter;
+    private final BluetoothAdapter mBluetoothAdapter;
     private final Handler mHandler;
-//    private AcceptThread mSecureAcceptThread;
+    //    private AcceptThread mSecureAcceptThread;
 //    private AcceptThread mInsecureAcceptThread;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
@@ -68,7 +70,7 @@ public class BluetoothChatService {
      * @param handler A Handler to send messages back to the UI Activity
      */
     public BluetoothChatService(Context context, Handler handler) {
-        mAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mNewState = mState;
         mHandler = handler;
@@ -129,9 +131,8 @@ public class BluetoothChatService {
      * Start the ConnectThread to initiate a connection to a remote device.
      *
      * @param device The BluetoothDevice to connect
-     * @param secure Socket Security type - Secure (true) , Insecure (false)
      */
-    public synchronized void connect(BluetoothDevice device, boolean secure) {
+    public synchronized void connect(BluetoothDevice device) {
         Log.d(TAG, "connect to: " + device);
 
         // Cancel any thread attempting to make a connection
@@ -149,7 +150,7 @@ public class BluetoothChatService {
         }
 
         // Start the thread to connect with the given device
-        mConnectThread = new ConnectThread(device, secure);
+        mConnectThread = new ConnectThread(device);
         mConnectThread.start();
         // Update UI title
         updateUserInterfaceTitle();
@@ -379,74 +380,84 @@ public class BluetoothChatService {
      * succeeds or fails.
      */
     private class ConnectThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final BluetoothDevice mmDevice;
-        private String mSocketType;
+        private BluetoothSocket mmSocket;
+        private BluetoothDevice mmDevice;
+        private final UUID MY_UUID =  UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //This is random. Change as necessary.
 
-        public ConnectThread(BluetoothDevice device, boolean secure) {
-            mmDevice = device;
+        public ConnectThread(BluetoothDevice device) {
+            // Use a temporary object that is later assigned to mmSocket
+            // because mmSocket is final.
             BluetoothSocket tmp = null;
-            mSocketType = secure ? "Secure" : "Insecure";
+            mmDevice = device;
 
-            // Get a BluetoothSocket for a connection with the
-            // given BluetoothDevice
             try {
-                if (secure) {
-                    tmp = device.createRfcommSocketToServiceRecord(
-                            MY_UUID_SECURE);
-                } else {
-                    tmp = device.createInsecureRfcommSocketToServiceRecord(
-                            MY_UUID_INSECURE);
-                }
+                // Get a BluetoothSocket to connect with the given BluetoothDevice.
+                // MY_UUID is the app's UUID string, also used in the server code.
+                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+                Log.v(TAG, "Socket created");
             } catch (IOException e) {
-                Log.e(TAG, "Socket Type: " + mSocketType + "create() failed", e);
+                Log.e(TAG, "Socket's create() method failed", e);
             }
             mmSocket = tmp;
-            mState = STATE_CONNECTING;
         }
+
 
         public void run() {
-            Log.i(TAG, "BEGIN mConnectThread SocketType:" + mSocketType);
-            setName("ConnectThread" + mSocketType);
+            // Cancel discovery because it otherwise slows down the connection.
+            mBluetoothAdapter.cancelDiscovery();
 
-            // Always cancel discovery because it will slow down a connection
-            mAdapter.cancelDiscovery();
-
-            // Make a connection to the BluetoothSocket
             try {
-                // This is a blocking call and will only return on a
-                // successful connection or an exception
+                // Connect to the remote device through the socket. This call blocks
+                // until it succeeds or throws an exception.
+                Log.v(TAG, "Trying to connect to socket");
                 mmSocket.connect();
-            } catch (IOException e) {
-                // Close the socket
+                Log.v(TAG, "Socket connected");
+                        /*Toast.makeText(this.getApplicationContext(), "Device connected",
+                                Toast.LENGTH_SHORT).show();*/
+            } catch (IOException connectException) {
+                // Unable to connect; move on to fallback socket.
+                //Log.e(TAG, "Connect Exception", connectException);
                 try {
-                    mmSocket.close();
-                } catch (IOException e2) {
-                    Log.e(TAG, "unable to close() " + mSocketType +
-                            " socket during connection failure", e2);
+                    Log.e("","trying fallback...");
+
+                    mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);
+                    mmSocket.connect();
+
+                            /*Toast.makeText(BluetoothActivity.this, "Device connected",
+                                    Toast.LENGTH_SHORT).show();*/
+                    Log.e("","Connected");
+                } catch (Exception connectException2) {
+                    Log.e(TAG, "Connect Exception", connectException2);
+                            /*Toast.makeText(BluetoothActivity.this, "Unable to connect",
+                                    Toast.LENGTH_SHORT).show();*/
+
+                    try {
+                        mmSocket.close();
+                    }
+                    catch(Exception closeException) {
+                        Log.e(TAG, "Could not close the client socket", closeException);
+                    }
+                    return;
                 }
-                connectionFailed();
-                return;
             }
-
-            // Reset the ConnectThread because we're done
-            synchronized (BluetoothChatService.this) {
-                mConnectThread = null;
-            }
-
-            // Start the connected thread
-            connected(mmSocket, mmDevice, mSocketType);
         }
 
+
+        // The connection attempt succeeded. Perform work associated with
+        // the connection in a separate thread.
+        //manageMyConnectedSocket(mmSocket);
+
+
+
+        // Closes the client socket and causes the thread to finish.
         public void cancel() {
             try {
                 mmSocket.close();
             } catch (IOException e) {
-                Log.e(TAG, "close() of connect " + mSocketType + " socket failed", e);
+                Log.e(TAG, "Could not close the client socket", e);
             }
         }
     }
-
     /**
      * This thread runs during a connection with a remote device.
      * It handles all incoming and outgoing transmissions.
