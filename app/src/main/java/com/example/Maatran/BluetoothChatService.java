@@ -390,7 +390,10 @@ public class BluetoothChatService {
     private class ConnectThread extends Thread {
         private BluetoothSocket mmSocket;
         private BluetoothDevice mmDevice;
-        private final UUID MY_UUID =  UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //This is random. Change as necessary.
+
+        //For a bluetooth board: 00001101-0000-1000-8000-00805F9B34FB
+        //App specific: 76d05ac4-ba8f-48c2-b5d7-6e711e6ea58e
+        private final UUID MY_UUID =  UUID.fromString("76d05ac4-ba8f-48c2-b5d7-6e711e6ea58e");
 
         public ConnectThread(BluetoothDevice device) {
             // Use a temporary object that is later assigned to mmSocket
