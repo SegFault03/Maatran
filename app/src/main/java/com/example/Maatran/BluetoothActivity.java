@@ -98,7 +98,7 @@ public class BluetoothActivity extends AppCompatActivity {
     //TODO Stores the name of the device to connect to. Will be different for each patient and
 
     /**will be received from the calling Activity (to be implemented later)*/
-    private final String mDeviceToConnect = "Redmi 9 Prime";
+    private final String mDeviceToConnect = "Lenovo";
 
     /**
      * Stores the name and address of the paired device
@@ -215,7 +215,9 @@ public class BluetoothActivity extends AppCompatActivity {
                     Toast.makeText(BluetoothActivity.this, "Connecting to " + deviceName, Toast.LENGTH_SHORT).show();
                     if(mBluetoothChatService.getState() != BluetoothChatService.STATE_NONE)
                         mBluetoothChatService.stop();
-                      mBluetoothChatService.connect(mDiscoveredBluetoothDevices.get(position));
+                    String deviceToConnectAddress = mDiscoveredBluetoothDevices.get(position).getAddress();
+                    BluetoothDevice deviceToConnect = mBluetoothAdapter.getRemoteDevice(deviceToConnectAddress);
+                      mBluetoothChatService.connect(deviceToConnect);
                 }
         );
 

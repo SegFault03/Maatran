@@ -2,6 +2,7 @@ package com.example.Maatran;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Bundle;
@@ -26,18 +27,17 @@ public class BluetoothChatService {
 
     // Name for the SDP record when creating server socket
     private static final String NAME_SECURE = "BluetoothChatSecure";
-    private static final String NAME_INSECURE = "BluetoothChatInsecure";
+
 
     // Unique UUID for this application
     private static final UUID MY_UUID_SECURE =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
-    private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+            UUID.fromString("76d05ac4-ba8f-48c2-b5d7-6e711e6ea58e");
+
 
     // Member fields
     private final BluetoothAdapter mBluetoothAdapter;
     private final Handler mHandler;
-    //    private AcceptThread mSecureAcceptThread;
+    private AcceptThread mSecureAcceptThread;
 //    private AcceptThread mInsecureAcceptThread;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
@@ -119,11 +119,11 @@ public class BluetoothChatService {
             mConnectedThread = null;
         }
 
-//        // Start the thread to listen on a BluetoothServerSocket
-//        if (mSecureAcceptThread == null) {
-//            mSecureAcceptThread = new AcceptThread(true);
-//            mSecureAcceptThread.start();
-//        }
+        // Start the thread to listen on a BluetoothServerSocket
+        if (mSecureAcceptThread == null) {
+            mSecureAcceptThread = new AcceptThread();
+            mSecureAcceptThread.start();
+        }
 //        if (mInsecureAcceptThread == null) {
 //            mInsecureAcceptThread = new AcceptThread(false);
 //            mInsecureAcceptThread.start();
@@ -184,11 +184,11 @@ public class BluetoothChatService {
             mConnectedThread = null;
         }
 
-//        // Cancel the accept thread because we only want to connect to one device
-//        if (mSecureAcceptThread != null) {
-//            mSecureAcceptThread.cancel();
-//            mSecureAcceptThread = null;
-//        }
+        // Cancel the accept thread because we only want to connect to one device
+        if (mSecureAcceptThread != null) {
+            mSecureAcceptThread.cancel();
+            mSecureAcceptThread = null;
+        }
 //        if (mInsecureAcceptThread != null) {
 //            mInsecureAcceptThread.cancel();
 //            mInsecureAcceptThread = null;
@@ -226,11 +226,11 @@ public class BluetoothChatService {
             mConnectedThread = null;
         }
 
-//        if (mSecureAcceptThread != null) {
-//            mSecureAcceptThread.cancel();
-//            mSecureAcceptThread = null;
-//        }
-//
+        if (mSecureAcceptThread != null) {
+            mSecureAcceptThread.cancel();
+            mSecureAcceptThread = null;
+        }
+
 //        if (mInsecureAcceptThread != null) {
 //            mInsecureAcceptThread.cancel();
 //            mInsecureAcceptThread = null;
@@ -300,25 +300,20 @@ public class BluetoothChatService {
      * This thread runs while listening for incoming connections. It behaves
      * like a server-side client. It runs until a connection is accepted
      * (or until cancelled).
-
+    */
     private class AcceptThread extends Thread {
         // The local server socket
         private final BluetoothServerSocket mmServerSocket;
         private String mSocketType;
 
-        public AcceptThread(boolean secure) {
+        public AcceptThread() {
             BluetoothServerSocket tmp = null;
-            mSocketType = secure ? "Secure" : "Insecure";
+            mSocketType = "secure";
 
             // Create a new listening server socket
             try {
-                if (secure) {
-                    tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE,
+                    tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE,
                             MY_UUID_SECURE);
-                } else {
-                    tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(
-                            NAME_INSECURE, MY_UUID_INSECURE);
-                }
             } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + "listen() failed", e);
             }
@@ -351,8 +346,7 @@ public class BluetoothChatService {
                             case STATE_LISTEN:
                             case STATE_CONNECTING:
                                 // Situation normal. Start the connected thread.
-                                connected(socket, socket.getRemoteDevice(),
-                                        mSocketType);
+                                connected(socket, socket.getRemoteDevice());
                                 break;
                             case STATE_NONE:
                             case STATE_CONNECTED:
@@ -379,7 +373,7 @@ public class BluetoothChatService {
                 Log.e(TAG, "Socket Type" + mSocketType + "close() of server failed", e);
             }
         }
-    }*/
+    }
 
 
     /**
