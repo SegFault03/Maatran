@@ -91,6 +91,13 @@ public class BluetoothChatService {
     /**
      * Return the current connection state.
      */
+    private synchronized void setState(int state) {
+        Log.d(TAG, "setState() " + this.mState + " -> " + state);
+        mState = state;
+        // Give the new state to the Handler so the UI Activity can update
+        //mHandler.obtainMessage(MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+    }
+
     public synchronized int getState() {
         return mState;
     }
@@ -150,6 +157,7 @@ public class BluetoothChatService {
         }
 
         // Start the thread to connect with the given device
+        setState(STATE_CONNECTING);
         mConnectThread = new ConnectThread(device);
         mConnectThread.start();
         // Update UI title
@@ -163,8 +171,8 @@ public class BluetoothChatService {
      * @param device The BluetoothDevice that has been connected
      */
     public synchronized void connected(BluetoothSocket socket, BluetoothDevice
-            device, final String socketType) {
-        Log.d(TAG, "connected, Socket Type:" + socketType);
+            device) {
+        //Log.d(TAG, "connected, Socket Type:" + socketType);
 
         // Cancel the thread that completed the connection
         if (mConnectThread != null) {
@@ -189,8 +197,10 @@ public class BluetoothChatService {
 //        }
 
         // Start the thread to manage the connection and perform transmissions
-        mConnectedThread = new ConnectedThread(socket, socketType);
+        setState(STATE_CONNECTED);
+        mConnectedThread = new ConnectedThread(socket);
         mConnectedThread.start();
+        setState(STATE_CONNECTED);
 
         // Send the name of the connected device back to the UI Activity
         Message msg = mHandler.obtainMessage(MESSAGE_DEVICE_NAME);
@@ -261,8 +271,8 @@ public class BluetoothChatService {
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
-        mState = STATE_NONE;
         // Update UI title
+        setState(STATE_NONE);
         updateUserInterfaceTitle();
 
         // Start the service over to restart listening mode
@@ -405,7 +415,7 @@ public class BluetoothChatService {
         public void run() {
             // Cancel discovery because it otherwise slows down the connection.
             mBluetoothAdapter.cancelDiscovery();
-
+            while(mBluetoothAdapter.isDiscovering());
             try {
                 // Connect to the remote device through the socket. This call blocks
                 // until it succeeds or throws an exception.
@@ -433,13 +443,23 @@ public class BluetoothChatService {
 
                     try {
                         mmSocket.close();
+                        connectionFailed();
                     }
                     catch(Exception closeException) {
                         Log.e(TAG, "Could not close the client socket", closeException);
                     }
                     return;
                 }
+                synchronized (BluetoothChatService.this) {
+                    mConnectThread = null;
+                }
+                connected(mmSocket, mmDevice);
+                return;
             }
+            synchronized (BluetoothChatService.this) {
+                mConnectThread = null;
+            }
+            connected(mmSocket, mmDevice);
         }
 
 
@@ -467,8 +487,8 @@ public class BluetoothChatService {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
 
-        public ConnectedThread(BluetoothSocket socket, String socketType) {
-            Log.d(TAG, "create ConnectedThread: " + socketType);
+        public ConnectedThread(BluetoothSocket socket) {
+            //Log.d(TAG, "create ConnectedThread: " + socketType);
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
