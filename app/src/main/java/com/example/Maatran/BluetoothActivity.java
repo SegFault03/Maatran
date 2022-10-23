@@ -31,12 +31,13 @@ import java.util.Objects;
 import java.util.Set;
 
 
-//Handles all BluetoothActivity
+//This Activity handles all BluetoothActivity
 //NOTE: Ignore all 'errors' related to call 'requires permissions which may be rejected by the user..' and such..
 //BLUETOOTH_ADMIN is declared in the manifest so there's no need to ask for permissions
 public class BluetoothActivity extends AppCompatActivity {
 
     //private data members corresponding to views in the layout
+
     /**Controls changes to Bluetooth state [CONNECT/DISCONNECT]*/
     private Button mBluetoothStateChangeBtn;
 
@@ -404,11 +405,10 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    //TODO Code for connected status
 
     /**Controls Status Bar text*/
-    private void updateStatusText() {
-
+    private void updateStatusText()
+    {
         //BLUETOOTH IS NOT ON
         if (BLUETOOTH_STATUS == 0)
             mStatusBarText.setVisibility(View.INVISIBLE);
@@ -416,53 +416,46 @@ public class BluetoothActivity extends AppCompatActivity {
 
             //BLUETOOTH IS ON
             mStatusBarText.setVisibility(View.VISIBLE);
+            switch (BLUETOOTH_CONNECTION_STATUS)
+            {
+                case 0:
+                    switch (BLUETOOTH_DISCOVERY_STATUS)
+                    {
+                        case 0:
+                            mStatusBarText.setVisibility(View.VISIBLE);
+                            mStatusBarText.setText("Not connected to any devices!");
+                            mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                            break;
 
-            //Device discovery has not yet been performed
-            if (BLUETOOTH_DISCOVERY_STATUS == 0) {
-                mStatusBarText.setVisibility(View.VISIBLE);
-                mStatusBarText.setText("Not connected to any devices!");
-                mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            }
+                        case 1:
+                            mStatusBarText.setText("Device Discovery started...");
+                            mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                            break;
 
-            //Device discovery is now in progress
-            else if (BLUETOOTH_DISCOVERY_STATUS == 1) {
-                mStatusBarText.setText("Device Discovery started...");
-                mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            }
-
-            //Device discovery has finished
-            else {
-
-                //No device has been connected yet
-                if (BLUETOOTH_CONNECTION_STATUS == 0) {
-
-                    //Check if devices are found or not
-                    if (mListOfDevices.getCount() == 0) {
-                        mStatusBarText.setText("Device Discovery has ended, No device found...");
-                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    } else {
-                        mStatusBarText.setText("Device Discovery has ended, No device connected...");
-                        mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                        case 2:
+                            //Check if devices are found or not
+                            if (mListOfDevices.getCount() == 0) {
+                                mStatusBarText.setText("Device Discovery has ended, No device found...");
+                                mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                            } else {
+                                mStatusBarText.setText("Device Discovery has ended, No device connected...");
+                                mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                            }
+                            break;
                     }
-                }
+                    break;
 
-                //Some device has been clicked on and a connection attempt has been made
-                else if(BLUETOOTH_CONNECTION_STATUS==1)
-                {
+                case 1:
                     mStatusBarText.setText("Attempting to Connect...");
                     mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
-                }
+                    break;
 
-                //Device pairing is successful
-                else {
+                case 2:
                     mStatusBarText.setText("Connected with "+mConnectedDeviceName);
                     mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_green_light));
-                }
             }
         }
     }
-
-
 
     /**
      * Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
@@ -564,12 +557,16 @@ public class BluetoothActivity extends AppCompatActivity {
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             BLUETOOTH_CONNECTION_STATUS=2;
+                            if(mBluetoothAdapter.isDiscovering())
+                                mBluetoothAdapter.cancelDiscovery();
+                            BLUETOOTH_DISCOVERY_STATUS = 0;
                             Toast.makeText(BluetoothActivity.this,"DEVICE CONNECTED",Toast.LENGTH_SHORT).show();
                             //updateStatusText();
                             mListOfDevices.clear();
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             BLUETOOTH_CONNECTION_STATUS=1;
+                            BLUETOOTH_DISCOVERY_STATUS = 0;
                             //updateStatusText();
                             break;
                         case BluetoothChatService.STATE_LISTEN:
@@ -596,7 +593,11 @@ public class BluetoothActivity extends AppCompatActivity {
                 case MESSAGE_TOAST:
                     Toast.makeText(BluetoothActivity.this, msg.getData().getString(TOAST), Toast.LENGTH_SHORT).show();
                     if(Objects.equals(msg.getData().getString(TOAST), "Unable to connect device") || Objects.equals(msg.getData().getString(TOAST), "Device connection was lost"))
+                    {
                         BLUETOOTH_CONNECTION_STATUS = 0;
+                        BLUETOOTH_DISCOVERY_STATUS = 0;
+                    }
+
                     break;
             }
             return false;
