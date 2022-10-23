@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -224,7 +225,7 @@ public class BluetoothActivity extends AppCompatActivity {
         //Creating a new mHandlerForBluetoothBroadcasts and binding it with a callback fn: runnable
         mHandlerForBluetoothBroadcasts = new Handler();
         mHandlerForBluetoothBroadcasts.postDelayed(runnable, 100);
-        mBluetoothChatService = new BluetoothChatService(this, mChatServiceHandler);
+
 
         //Register for broadcasts for device discovery
         mIntentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -240,8 +241,6 @@ public class BluetoothActivity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             super.finish();
         }
-        if(mBluetoothAdapter.isDiscovering())
-            mBluetoothAdapter.cancelDiscovery();
 
     }
 
@@ -262,9 +261,12 @@ public class BluetoothActivity extends AppCompatActivity {
                 Toast.makeText(this, "Bluetooth is essential for this functionality to work!", Toast.LENGTH_LONG).show();
                 super.finish();
             }
+
+            //Bluetooth has been turned on. Start the Chat service and initialize other data members as necessary.
             BLUETOOTH_STATUS = 1;
             BLUETOOTH_CONNECTION_STATUS = 0;
             BLUETOOTH_DISCOVERY_STATUS = 0;
+            startBluetoothChatService();
             if(mBluetoothAdapter.isDiscovering())
                 mBluetoothAdapter.cancelDiscovery();
         }
@@ -275,10 +277,12 @@ public class BluetoothActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
+        //Check if Bluetooth is turned on or not, THIS IS ESSENTIAL AS THE APP WILL CRASH IF THIS IS NOT THE CASE
+        if(mBluetoothAdapter.getState()!=BluetoothAdapter.STATE_ON)
+            turnOnBluetooth();
+        else{
+            if(mBluetoothChatService==null)
+                startBluetoothChatService();
         }
     }
 
@@ -290,6 +294,11 @@ public class BluetoothActivity extends AppCompatActivity {
         if(mBluetoothAdapter!=null)
             mBluetoothAdapter.cancelDiscovery();
 
+        //Stop Chat Service
+        if (mBluetoothChatService != null) {
+            mBluetoothChatService.stop();
+        }
+
         //Stop the mHandlerForBluetoothBroadcasts
         mHandlerForBluetoothBroadcasts.removeCallbacks(runnable);
 
@@ -297,11 +306,15 @@ public class BluetoothActivity extends AppCompatActivity {
         unregisterReceiver(receiver);
     }
 
-
+    //todo add documentation
     @Override
     public void onResume() {
         super.onResume();
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
+        }
         if(mBluetoothChatService != null)
         {
             if(mBluetoothChatService.getState() == BluetoothChatService.STATE_NONE)
@@ -309,6 +322,23 @@ public class BluetoothActivity extends AppCompatActivity {
         }
         //Update UI depending upon Bluetooth state
         updateUI();
+    }
+
+    /*Turns on Bluetooth*/
+    public void turnOnBluetooth()
+    {
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+    }
+
+    /*Initializes and starts BluetoothChatService**/
+    public void startBluetoothChatService()
+    {
+        if(mBluetoothChatService==null)
+            mBluetoothChatService = new BluetoothChatService(BluetoothActivity.this,mChatServiceHandler);
+        mBluetoothChatService.start();
     }
 
     /**
@@ -323,6 +353,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 mBluetoothStateChangeBtn.setText("TURN " + BLUETOOTH_STATE[0]);
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         {
+                            mBluetoothChatService.stop();
                             mBluetoothAdapter.disable();
                             BLUETOOTH_STATUS = 0;
                         }
@@ -337,12 +368,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 mBluetoothStateChangeBtn.setText("TURN " + BLUETOOTH_STATE[2]);
                 mNameOfDevices.clear();
                 mListOfDevices.notifyDataSetChanged();
-                mBluetoothStateChangeBtn.setOnClickListener(view -> {
-                    if (!mBluetoothAdapter.isEnabled()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                    }
-                });
+                mBluetoothStateChangeBtn.setOnClickListener(view -> turnOnBluetooth());
                 mStatusBarText.setVisibility(View.INVISIBLE);
                 mSelectDeviceDisplayText.setVisibility(View.INVISIBLE);
                 mFindDevicesBtn.setVisibility(View.INVISIBLE);
@@ -390,7 +416,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
             //BLUETOOTH IS ON
             mStatusBarText.setVisibility(View.VISIBLE);
-            mStatusBarText.setText("DUMMY TEXT FOR TESTING");
 
             //Device discovery has not yet been performed
             if (BLUETOOTH_DISCOVERY_STATUS == 0) {
@@ -453,6 +478,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
         if(mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
+
+        //Ensure that the current device is discoverable to begin listening to connection attempts
+        ensureDiscoverable();
         boolean deviceFound = checkForBondedDevices();
         if (!deviceFound)
             startDeviceDiscovery();
@@ -503,7 +531,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public void startDeviceDiscovery()
     {
-        ensureDiscoverable();
         mStatusBarText.setVisibility(View.VISIBLE);
         mStatusBarText.setText("Performing device discovery, please wait...");
         mStatusBarText.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -568,6 +595,8 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
                 case MESSAGE_TOAST:
                     Toast.makeText(BluetoothActivity.this, msg.getData().getString(TOAST), Toast.LENGTH_SHORT).show();
+                    if(Objects.equals(msg.getData().getString(TOAST), "Unable to connect device") || Objects.equals(msg.getData().getString(TOAST), "Device connection was lost"))
+                        BLUETOOTH_CONNECTION_STATUS = 0;
                     break;
             }
             return false;
