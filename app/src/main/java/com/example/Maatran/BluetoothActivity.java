@@ -349,6 +349,7 @@ public class BluetoothActivity extends AppCompatActivity {
         switch (mBluetoothAdapter.getState()) {
             case BluetoothAdapter.STATE_ON:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[2]);
+                mBluetoothStateText.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                 BLUETOOTH_STATUS=1;
                 mBluetoothStateChangeBtn.setText("TURN " + BLUETOOTH_STATE[0]);
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
@@ -365,6 +366,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
             case BluetoothAdapter.STATE_OFF:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[0]);
+                mBluetoothStateText.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
                 mBluetoothStateChangeBtn.setText("TURN " + BLUETOOTH_STATE[2]);
                 mNameOfDevices.clear();
                 mListOfDevices.notifyDataSetChanged();
@@ -376,6 +378,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
             case BluetoothAdapter.STATE_TURNING_OFF:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[3]);
+                mBluetoothStateText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
                 mBluetoothStateChangeBtn.setText(BLUETOOTH_STATE[3]);
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         Toast.makeText(this, "not allowed", Toast.LENGTH_SHORT).show()
@@ -390,6 +393,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
             case BluetoothAdapter.STATE_TURNING_ON:
                 mBluetoothStateText.setText(BLUETOOTH_STATE[1]);
+                mBluetoothStateText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
                 mBluetoothStateChangeBtn.setText(BLUETOOTH_STATE[1]);
                 mBluetoothStateChangeBtn.setOnClickListener(view ->
                         Toast.makeText(this, "not allowed", Toast.LENGTH_SHORT).show()
