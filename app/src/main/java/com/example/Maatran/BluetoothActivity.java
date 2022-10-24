@@ -12,10 +12,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +29,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -98,7 +105,7 @@ public class BluetoothActivity extends AppCompatActivity {
     //TODO Stores the name of the device to connect to. Will be different for each patient and
 
     /**will be received from the calling Activity (to be implemented later)*/
-    private final String mDeviceToConnect = "Lenovo";
+    private String mDeviceToConnect = "Lenovo";
 
     /**
      * Stores the name and address of the paired device
@@ -204,6 +211,9 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn = findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
 
+        //Initializing the Bluetooth settings btn and binding it with a callback:
+        ImageView openBluetoothSettings = findViewById(R.id.bluetooth_settings);
+        openBluetoothSettings.setOnClickListener(this::changeDeviceToConnect);
 
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
         mDiscoveredBluetoothDevices = new ArrayList<>();
@@ -483,6 +493,29 @@ public class BluetoothActivity extends AppCompatActivity {
         if (!deviceFound)
             startDeviceDiscovery();
     }
+
+    /**
+     * Opens a popup window that allows the user to change the device name that is to be located.
+     * @param view: The view that was clicked
+     * */
+    public void changeDeviceToConnect(View view)
+    {
+        View popupChangeDeviceToConnect = getLayoutInflater().inflate(R.layout.popupview_editdevicetoconnect,null);
+        if(mDeviceToConnect==null)
+            ((TextView) popupChangeDeviceToConnect.findViewById(R.id.text_dialog)).setText("Enter the name of the device to connect:");
+        else
+            ((TextView) popupChangeDeviceToConnect.findViewById(R.id.text_dialog)).setText("Change the name of the device to connect:");
+        EditText editText = popupChangeDeviceToConnect.findViewById(R.id.edited_device_name);
+        PopupWindow popupWindow = new PopupWindow(popupChangeDeviceToConnect, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
+        popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
+        popupChangeDeviceToConnect.findViewById(R.id.btn_ok).setOnClickListener(v-> {
+            mDeviceToConnect = editText.getText().toString();
+            Toast.makeText(this,"Successfully changed device name",Toast.LENGTH_SHORT).show();
+            popupWindow.dismiss();
+        });
+        popupChangeDeviceToConnect.findViewById(R.id.btn_cancel).setOnClickListener(v->popupWindow.dismiss());
+    }
+
 
     /**Called from setUpBluetooth(). Checks if paired devices are available. Returns true if device
      * to connect to has already been paired with in the past. Returns false if no paired devices
