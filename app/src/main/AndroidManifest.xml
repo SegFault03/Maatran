@@ -15,7 +15,7 @@
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/maatran_icon_foreground"
+        android:roundIcon="@mipmap/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
         <activity
