@@ -30,8 +30,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
@@ -43,6 +41,9 @@ import java.util.Set;
 public class BluetoothActivity extends AppCompatActivity {
 
     //private data members corresponding to views in the layout
+
+    /**Start data transmission*/
+    private Button mStartDeviceTransmissionBtn;
 
     /**Controls changes to Bluetooth state [CONNECT/DISCONNECT]*/
     private Button mBluetoothStateChangeBtn;
@@ -214,6 +215,11 @@ public class BluetoothActivity extends AppCompatActivity {
         //Initializing the Bluetooth settings btn and binding it with a callback:
         ImageView openBluetoothSettings = findViewById(R.id.bluetooth_settings);
         openBluetoothSettings.setOnClickListener(this::changeDeviceToConnect);
+
+        //TODO This is the button for starting data transmissions.
+        mStartDeviceTransmissionBtn = findViewById(R.id.start_transmission_btn);
+        mStartDeviceTransmissionBtn.setVisibility(View.GONE);
+        mStartDeviceTransmissionBtn.setOnClickListener(this::startDeviceTransmissions);
 
         mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
         mDiscoveredBluetoothDevices = new ArrayList<>();
@@ -419,7 +425,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
 
-    /**Controls Status Bar text*/
+    /**Controls Status Bar text and other views corresponding to device connections status*/
     private void updateStatusText()
     {
         //BLUETOOTH IS NOT ON
@@ -434,6 +440,7 @@ public class BluetoothActivity extends AppCompatActivity {
             switch (BLUETOOTH_CONNECTION_STATUS)
             {
                 case 0:
+                    mStartDeviceTransmissionBtn.setVisibility(View.INVISIBLE);
                     switch (BLUETOOTH_DISCOVERY_STATUS)
                     {
                         case 0:
@@ -461,11 +468,13 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
 
                 case 1:
+                    mStartDeviceTransmissionBtn.setVisibility(View.GONE);
                     mStatusBarText.setText("Attempting to Connect...");
                     mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
                     break;
 
                 case 2:
+                    mStartDeviceTransmissionBtn.setVisibility(View.VISIBLE);
                     mStatusBarText.setText("Connected with "+mConnectedDeviceName);
                     mStatusBarText.setTextColor(getResources().getColor(android.R.color.holo_green_light));
             }
@@ -578,6 +587,17 @@ public class BluetoothActivity extends AppCompatActivity {
             startActivity(discoverableIntent);
         }
     }
+
+    //TODO Implement data transmissions here:
+    /**
+     * Starts device transmissions (read/write)
+     * @param view: view that is clicked
+     * */
+    public void startDeviceTransmissions(View view)
+    {
+        Toast.makeText(this,"Maybe implement some action first?",Toast.LENGTH_SHORT).show();
+    }
+
 
     /**
      * The Handler that gets information back from the BluetoothChatService
