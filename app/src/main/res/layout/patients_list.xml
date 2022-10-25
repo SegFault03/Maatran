@@ -21,19 +21,28 @@
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow_right" /><![CDATA[
-
-
-
-    />
-
-
-
+        app:srcCompat="@drawable/arrow_right" /><![CDATA[    />
 ]]>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/locality_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:backgroundTint="#FDF2E1"
+            android:textSize="25sp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#E4D2BB" />
+    </LinearLayout>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

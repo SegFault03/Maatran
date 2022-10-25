@@ -113,24 +113,26 @@ ProgressDialog progressDialog;
 
     private void signInWithTestAccount()
     {
-        String email = "testpatient4@gmail.com";
-        String password = "123456";
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success");
-                        Toast.makeText(this,"WARNING: USE THIS FEATURE FOR DEBUG/TEST PURPOSES ONLY",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                        startActivity(intent);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        Intent blintent = new Intent(getApplicationContext(), BluetoothActivity.class);
+        startActivity(blintent);
+        //        String email = "testpatient4@gmail.com";
+//        String password = "123456";
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        auth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, task -> {
+//                    if (task.isSuccessful()) {
+//                        // Sign in success, update UI with the signed-in user's information
+//                        Log.d(TAG, "signInWithEmail:success");
+//                        Toast.makeText(this,"WARNING: USE THIS FEATURE FOR DEBUG/TEST PURPOSES ONLY",Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+//                        startActivity(intent);
+//                    } else {
+//                        // If sign in fails, display a message to the user.
+//                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                        Toast.makeText(this, "Authentication failed.",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 }
 

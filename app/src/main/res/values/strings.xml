@@ -1,7 +1,7 @@
 <resources>
     <!-- google_pixel_5___4 strings -->
 
-    <string name="app_name">MAATRAN</string>
+    <string name="app_name">Maatran</string>
     <string name="ek_img_content">ExportKit Image</string>
     <string name="mum_tran_string">MAATRAN</string>
     <string name="sign_in_as_patient_string">Sign In with Email</string>
@@ -50,4 +50,11 @@
     <string name="dashboard_string">DASHBOARD</string>
     <string name="family_members">Family Members</string>
     <string name="username_email">Email/Username</string>
+    <string-array name="localities">
+        <item>Howrah</item>
+        <item>Ballygunge</item>
+        <item>Central</item>
+        <item>Sector V</item>
+        <item>College More</item>
+    </string-array>
 </resources>
