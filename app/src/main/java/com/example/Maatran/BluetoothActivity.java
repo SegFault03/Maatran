@@ -593,9 +593,18 @@ public class BluetoothActivity extends AppCompatActivity {
      * Starts device transmissions (read/write)
      * @param view: view that is clicked
      * */
-    public void startDeviceTransmissions(View view)
-    {
-        Toast.makeText(this,"Maybe implement some action first?",Toast.LENGTH_SHORT).show();
+    public void startDeviceTransmissions(View view) {
+
+        String message="Hi!This is ";
+        // Check that we're actually connected before trying anything
+        if (mBluetoothChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
+            Toast.makeText(this, "not_connected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Get the message bytes and tell the BluetoothChatService to write
+        byte[] send = message.getBytes();
+        mBluetoothChatService.write(send);
     }
 
 
