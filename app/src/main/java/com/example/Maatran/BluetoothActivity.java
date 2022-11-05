@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -307,9 +308,6 @@ public class BluetoothActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        //Call manageCachedFiles to initialize mDeviceToConnect
-        manageCachedFiles(false);
-
         //Check if Bluetooth is turned on or not, THIS IS ESSENTIAL AS THE APP WILL CRASH IF THIS IS NOT THE CASE
         if(mBluetoothAdapter.getState()!=BluetoothAdapter.STATE_ON)
             turnOnBluetooth();
@@ -388,7 +386,7 @@ public class BluetoothActivity extends AppCompatActivity {
         FileWriter fileWriter = null;
 
         //Try creating a file object
-        mCachedUserDataFile = new File(this.getCacheDir(), "maatran_user_data");
+        mCachedUserDataFile = new File(this.getFilesDir(), "maatran_user_data_final.tmp");
 
         //If file object has been initialized, check that it really exists
         if(mCachedUserDataFile.exists())
@@ -416,8 +414,8 @@ public class BluetoothActivity extends AppCompatActivity {
         {
             //Create the file and write to it
             try{
-                File.createTempFile("maatran_user_data", null, this.getCacheDir());
-                mCachedUserDataFile = new File(this.getCacheDir(), "maatran_user_data");
+//                mCachedUserDataFile=File.createTempFile("maatran_user_data.tmp", null, this.getCacheDir());
+                boolean check = mCachedUserDataFile.createNewFile();
                 if(mCachedUserDataFile.exists())
                 {
                     //Create a temporary field
@@ -678,7 +676,8 @@ public class BluetoothActivity extends AppCompatActivity {
      */
 
     public void setUpBluetooth() {
-
+        //Call manageCachedFiles to initialize mDeviceToConnect
+        manageCachedFiles(false);
         //clear the existing list of devices
         mDiscoveredBluetoothDevices.clear();
         mNameOfDevices.clear();
