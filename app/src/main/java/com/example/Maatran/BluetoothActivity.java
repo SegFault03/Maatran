@@ -115,7 +115,7 @@ public class BluetoothActivity extends AppCompatActivity {
     //TODO Stores the name of the device to connect to. Will be different for each patient and
 
     /**will be received from the calling Activity (to be implemented later)*/
-    private String mDeviceToConnect = "Lenovo";
+    private String mDeviceToConnect;
 
     /**
      * Stores the name and address of the paired device
@@ -353,6 +353,8 @@ public class BluetoothActivity extends AppCompatActivity {
         }
         //Update UI depending upon Bluetooth state
         updateUI();
+        if(mDeviceToConnect==null)
+            manageCachedFiles(false);
     }
 
     /*Turns on Bluetooth*/
@@ -384,53 +386,24 @@ public class BluetoothActivity extends AppCompatActivity {
         Scanner fileScanner = null;
         StringBuffer fileContents = null;
         FileWriter fileWriter = null;
+        String tempDeviceName = null;
 
-        //Try creating a file object
-        mCachedUserDataFile = new File(this.getFilesDir(), "maatran_user_data_final.tmp");
-
-        //If file object has been initialized, check that it really exists
-        if(mCachedUserDataFile.exists())
-        {
-            //Instantiate the objects needed for file handling
-            try {
-                fileScanner = new Scanner(mCachedUserDataFile);
-                fileScanner.useDelimiter("\n");
-            }
-            catch (Exception e)
-            {
-                Log.e(TAG,"Could not create Scanner object!");
-                return;
-            }
-            try {
-                fileWriter = new FileWriter(mCachedUserDataFile, true);
-            }
-            catch (Exception e)
-            {
-                Log.e(TAG,"Could not create FileWriter object!");
-            }
-            fileContents = new StringBuffer();
+        //Try creating a file object, do it only once
+        if(mCachedUserDataFile==null){
+            mCachedUserDataFile = new File(this.getFilesDir(), "maatran_user_data_final.tmp");
         }
-        else
+
+        //Check if file exists or not
+        if(!mCachedUserDataFile.exists())
         {
-            //Create the file and write to it
+
+            //File does not exist, create the file and write to it
             try{
 //                mCachedUserDataFile=File.createTempFile("maatran_user_data.tmp", null, this.getCacheDir());
                 boolean check = mCachedUserDataFile.createNewFile();
                 if(mCachedUserDataFile.exists())
                 {
-                    //Create a temporary field
-                    fileWriter = new FileWriter(mCachedUserDataFile, true);
-                    try{
-                        fileWriter.append("\ndevice_to_connect:PLACEHOLDER\n");
-                    }
-                    catch (Exception e)
-                    {
-                        Log.e(TAG,"Failed to write to file");
-                        fileWriter.close();
-                        return;
-                    }
-                    //Open bluetooth Settings to ask user to enter a device name
-                    changeDeviceToConnect(mOpenBluetoothSettings);
+                    tempDeviceName = "PLACEHOLDER";
                 }
                 else {
                     Log.v(TAG, "File doesn't exist");
@@ -445,23 +418,71 @@ public class BluetoothActivity extends AppCompatActivity {
 
         }
 
+        //Instantiate the objects needed for file handling
+        try {
+            fileScanner = new Scanner(mCachedUserDataFile);
+            fileScanner.useDelimiter("\n");
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG,"Could not create Scanner object!");
+            return;
+        }
+        try {
+            fileWriter = new FileWriter(mCachedUserDataFile, true);
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG,"Could not create FileWriter object!");
+        }
+        fileContents = new StringBuffer();
+
+
+        //File exists
+        //Check if the required field exists or not
+        while(fileScanner.hasNext())
+        {
+            String temp = fileScanner.next();
+            if(temp.contains("device_to_connect"))
+            {
+                //field exists
+                tempDeviceName = temp.substring(temp.indexOf(":")+1);
+                //exit func
+            }
+        }
+
+
+        //No such field present
+        if(tempDeviceName==null)
+        {
+            //Create a temporary field
+            assert fileWriter != null;
+            try{
+                fileWriter.append("\ndevice_to_connect:PLACEHOLDER\n");
+            }
+            catch (Exception e)
+            {
+                Log.e(TAG,"Failed to write to file");
+            }
+            //Open bluetooth Settings to ask user to enter a device name
+//            changeDeviceToConnect(mOpenBluetoothSettings);
+            tempDeviceName = "PLACEHOLDER";
+        }
+
+
         //TODO TESTING
         //This block will only execute when the device name needs to be changed
         //It assumes that both the file as well as the field exists.
         if(update)
         {
-            if(fileScanner==null)
-            {
-                //fileScanner will be null iff file does not exist
-                Log.v(TAG,"Failed to update! File does not exist!");
-                return;
-            }
             try {
                 String oldDeviceName = null;
+                fileScanner = new Scanner(mCachedUserDataFile);
+                fileScanner.useDelimiter("\n");
                 while(fileScanner.hasNext())
                 {
                     String temp = fileScanner.next();
-                    if(temp.equals("device_to_connect")) {
+                    if(temp.contains("device_to_connect")) {
                         temp+="\n";
                         oldDeviceName = temp;
                     }
@@ -475,11 +496,10 @@ public class BluetoothActivity extends AppCompatActivity {
                     fileScanner.close();
                     return;
                 }
-                String newFileContents = oldFileContents.replace(oldDeviceName,mDeviceToConnect+"\n");
-                try (FileOutputStream fos = this.openFileOutput("maatran_user_data", Context.MODE_PRIVATE)) {
+                String newFileContents = oldFileContents.replace(oldDeviceName,"device_to_connect:"+mDeviceToConnect+"\n");
+                try (FileOutputStream fos = this.openFileOutput("maatran_user_data_final.tmp", Context.MODE_PRIVATE)) {
                     fos.write(newFileContents.getBytes());
                 }
-
             }
             catch (Exception e)
             {
@@ -487,58 +507,18 @@ public class BluetoothActivity extends AppCompatActivity {
                 return;
             }
 
-            //Close all the streams
-            try {
-                if (fileWriter != null)
-                    fileWriter.close();
-                fileScanner.close();
-            }
-            catch (Exception e)
-            {
-                Log.e(TAG,"Failed to close streams"+e);
-                return;
-            }
         }
-
-
-        //File exists
-        //Check if the required field exists or not
-        if(fileScanner==null)
-            return;
-        while(fileScanner.hasNext())
+        else
         {
-            String temp = fileScanner.next();
-            if(temp.substring(0,temp.indexOf(":")).equals("device_to_connect"))
-            {
-                //field exists
-                mDeviceToConnect = temp.substring(temp.indexOf(":")+1);
-                //exit func
-            }
+            //We only need the name of the device to connect
+            mDeviceToConnect = tempDeviceName;
         }
-
-        //No such field present
-        if(!fileScanner.hasNext())
-        {
-            //Create a temporary field
-            assert fileWriter != null;
-            try{
-                fileWriter.append("\ndevice_to_connect:PLACEHOLDER\n");
-            }
-            catch (Exception e)
-            {
-                Log.e(TAG,"Failed to write to file");
-            }
-            //Open bluetooth Settings to ask user to enter a device name
-            changeDeviceToConnect(mOpenBluetoothSettings);
-        }
-
 
         //Close all the streams
         try {
             if (fileWriter != null)
                 fileWriter.close();
-            if (fileScanner != null)
-                fileScanner.close();
+            fileScanner.close();
         }
         catch (Exception e)
         {
@@ -677,7 +657,8 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public void setUpBluetooth() {
         //Call manageCachedFiles to initialize mDeviceToConnect
-        manageCachedFiles(false);
+        if(mDeviceToConnect.equals("PLACEHOLDER"))
+            changeDeviceToConnect(mOpenBluetoothSettings);
         //clear the existing list of devices
         mDiscoveredBluetoothDevices.clear();
         mNameOfDevices.clear();
@@ -700,16 +681,25 @@ public class BluetoothActivity extends AppCompatActivity {
     public void changeDeviceToConnect(View view)
     {
         View popupChangeDeviceToConnect = getLayoutInflater().inflate(R.layout.popupview_editdevicetoconnect,null);
-        if(mDeviceToConnect==null)
-            ((TextView) popupChangeDeviceToConnect.findViewById(R.id.text_dialog)).setText("Enter the name of the device to connect:");
-        else
-            ((TextView) popupChangeDeviceToConnect.findViewById(R.id.text_dialog)).setText("Change the name of the device to connect:");
         EditText editText = popupChangeDeviceToConnect.findViewById(R.id.edited_device_name);
+        if(mDeviceToConnect.equals("PLACEHOLDER"))
+            ((TextView) popupChangeDeviceToConnect.findViewById(R.id.text_dialog)).setText("Enter the name of the device to connect:");
+        else {
+            ((TextView) popupChangeDeviceToConnect.findViewById(R.id.text_dialog)).setText("Change the name of the device to connect:");
+            editText.setText(mDeviceToConnect);
+        }
+
         PopupWindow popupWindow = new PopupWindow(popupChangeDeviceToConnect, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
         popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
         popupChangeDeviceToConnect.findViewById(R.id.btn_ok).setOnClickListener(v-> {
             mDeviceToConnect = editText.getText().toString();
+            if(mDeviceToConnect.trim().length()>0)
             manageCachedFiles(true);
+            else
+            {
+                Toast.makeText(BluetoothActivity.this,"Device name field is empty!",Toast.LENGTH_SHORT).show();
+                return;
+            }
             Toast.makeText(this,"Successfully changed device name",Toast.LENGTH_SHORT).show();
             popupWindow.dismiss();
         });
