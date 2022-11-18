@@ -403,7 +403,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 boolean check = mCachedUserDataFile.createNewFile();
                 if(mCachedUserDataFile.exists())
                 {
-                    tempDeviceName = "PLACEHOLDER";
+                    Log.v(TAG,"File created successfully");
                 }
                 else {
                     Log.v(TAG, "File doesn't exist");
