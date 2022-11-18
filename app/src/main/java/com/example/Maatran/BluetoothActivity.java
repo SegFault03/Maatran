@@ -236,7 +236,7 @@ public class BluetoothActivity extends AppCompatActivity {
         mStartDeviceTransmissionBtn.setVisibility(View.GONE);
         mStartDeviceTransmissionBtn.setOnClickListener(this::startDeviceTransmissions);
 
-        mFindDevicesBtn.setOnClickListener(v->setUpBluetooth());
+        mFindDevicesBtn.setOnClickListener(v->checkForDeviceToConnect());
         mDiscoveredBluetoothDevices = new ArrayList<>();
         mNameOfDevices = new ArrayList<>();
         mListOfDevices = new ArrayAdapter<>(getApplicationContext(), R.layout.listview_elements,R.id.device_list_item_lv,mNameOfDevices);
@@ -650,15 +650,21 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+
+    public void checkForDeviceToConnect(){
+        //Call manageCachedFiles to initialize mDeviceToConnect
+        if(mDeviceToConnect.equals("PLACEHOLDER"))
+            changeDeviceToConnect(mOpenBluetoothSettings);
+        else
+            setUpBluetooth();
+    }
+
     /**
      * Main function for managing Bluetooth-related activities. Performs discovery, makes connection, etc.
      * Calls checkForBondedDevices and startDeviceDiscovery
      */
 
     public void setUpBluetooth() {
-        //Call manageCachedFiles to initialize mDeviceToConnect
-        if(mDeviceToConnect.equals("PLACEHOLDER"))
-            changeDeviceToConnect(mOpenBluetoothSettings);
         //clear the existing list of devices
         mDiscoveredBluetoothDevices.clear();
         mNameOfDevices.clear();
@@ -702,6 +708,7 @@ public class BluetoothActivity extends AppCompatActivity {
             }
             Toast.makeText(this,"Successfully changed device name",Toast.LENGTH_SHORT).show();
             popupWindow.dismiss();
+            setUpBluetooth();
         });
         popupChangeDeviceToConnect.findViewById(R.id.btn_cancel).setOnClickListener(v->popupWindow.dismiss());
     }
