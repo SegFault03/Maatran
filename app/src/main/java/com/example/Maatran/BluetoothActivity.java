@@ -698,7 +698,7 @@ public class BluetoothActivity extends AppCompatActivity {
         PopupWindow popupWindow = new PopupWindow(popupChangeDeviceToConnect, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
         popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
         popupChangeDeviceToConnect.findViewById(R.id.btn_ok).setOnClickListener(v-> {
-            mDeviceToConnect = editText.getText().toString();
+            mDeviceToConnect = editText.getText().toString().trim();
             if(mDeviceToConnect.trim().length()>0)
             manageCachedFiles(true);
             else
