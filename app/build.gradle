@@ -1,6 +1,6 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.github.alexfu.androidautoversion'
 
 android {
     compileSdk 31
@@ -9,9 +9,9 @@ android {
         applicationId "com.example.maatran"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
-
+        versionName androidAutoVersion.versionName
+        versionCode androidAutoVersion.versionCode
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -19,6 +19,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions androidAutoVersion.versionName
+    productFlavors {
+        alpha {
+            dimension androidAutoVersion.versionName
+            versionNameSuffix "-alpha"
+        }
+
+        beta {
+            dimension androidAutoVersion.versionName
+            versionNameSuffix "-beta"
         }
     }
     compileOptions {
@@ -30,9 +42,6 @@ android {
     }
 
 }
-
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 dependencies {
 

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +22,6 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.Objects;
 
 
@@ -28,8 +30,10 @@ public class EditPatient extends AppCompatActivity {
     public static final String TAG="EditPatient";
     User user;
     String id;
+    private String locality;
     boolean newDetails, isPatient, isWorker;
     private EditText name, age, gender, mobile, emergency, address, hospital_name, employee_id;
+    Spinner spinner_locality;
     DocumentReference docRef;
 
     @Override
@@ -40,6 +44,21 @@ public class EditPatient extends AppCompatActivity {
 
         hospital_name = findViewById(R.id.hospital_name);
         employee_id = findViewById(R.id.employee_id);
+        spinner_locality=findViewById(R.id.spinner_locality);
+        ArrayAdapter<CharSequence> loc_adapter=ArrayAdapter.createFromResource(this, R.array.localities, android.R.layout.simple_spinner_item);
+        loc_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner_locality.setAdapter(loc_adapter);
+        spinner_locality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                locality=(String) adapterView.getItemAtPosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         isWorker = false;
 
         assert mUser != null;
@@ -64,10 +83,8 @@ public class EditPatient extends AppCompatActivity {
                                         if(document.get("employeeId")!=null)
                                         employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
                                         isWorker = true;
-
-
-
-
+                                        findViewById(R.id.location_details).setVisibility(View.GONE);
+                                        findViewById(R.id.view_21).setVisibility(View.GONE);
                                     }
                                 }
                             }
@@ -89,6 +106,8 @@ public class EditPatient extends AppCompatActivity {
             findViewById(R.id.view_l5).setVisibility(View.GONE);
             findViewById(R.id.emergency).setVisibility(View.GONE);
             findViewById(R.id.view_20).setVisibility(View.GONE);
+            findViewById(R.id.location_details).setVisibility(View.GONE);
+            findViewById(R.id.view_21).setVisibility(View.GONE);
         }
 
         if (!newDetails) {
@@ -98,9 +117,11 @@ public class EditPatient extends AppCompatActivity {
             mobile.setText(user.getMobile());
             address.setText(user.getAddress());
 
+
                 if (isPatient) {
                     age.setText(Long.toString(user.getAge()));
                     emergency.setText(user.getEmergency());
+                    spinner_locality.setSelection(((ArrayAdapter<String>)spinner_locality.getAdapter()).getPosition(user.getLocality()));
                     id = getIntent().getStringExtra("id");
                     docRef = FirebaseFirestore.getInstance()
                             .collection("UserDetails")
@@ -148,6 +169,7 @@ public class EditPatient extends AppCompatActivity {
         if(isPatient) {
             user.setEmergency(emergency.getText().toString());
             user.setAge(Long.parseLong(age.getText().toString()));
+            user.setLocality(locality);
         }
         if(isWorker)
         {

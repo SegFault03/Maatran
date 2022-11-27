@@ -26,16 +26,19 @@ public class ReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_sensor_information);
 
-
         user = getIntent().getParcelableExtra("user");
         userId = getIntent().getStringExtra("id");
 
-        TextView name = findViewById(R.id.patient_name);
-        name.setText("Name: "+user.getName());
-        TextView age = findViewById(R.id.patient_age);
-        age.setText("Age: "+user.getAge());
-        TextView sex = findViewById(R.id.patient_sex);
-        sex.setText("Sex: "+user.getGender());
+        DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
+                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()));
+        df.get().addOnCompleteListener(task->{
+            DocumentSnapshot ds = task.getResult();
+            if(ds.get("isWorker").equals("true"))
+            {
+                findViewById(R.id.edit_patient).setVisibility(View.INVISIBLE);
+                findViewById(R.id.delete_patient).setVisibility(View.INVISIBLE);
+            }
+        });
 
     }
 
@@ -44,27 +47,12 @@ public class ReportsActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
-                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).collection("Patients")
-                .document(userId);
-        df.get().addOnCompleteListener(task->{
-            if(task.isSuccessful())
-            {
-                DocumentSnapshot ds = task.getResult();
-                if(ds.exists()) {
-                    TextView name = findViewById(R.id.patient_name);
-                    name.setText("Name: " + ds.get("name"));
-                    TextView age = findViewById(R.id.patient_age);
-                    age.setText("Age: " + ds.get("age"));
-                    TextView sex = findViewById(R.id.patient_sex);
-                    sex.setText("Sex: " + ds.get("gender"));
-                }
-                else
-                    Log.d("ReprtsActivity","No such documents exist");
-            }
-            else
-                Log.d("ReprtsActivity", "get failed with ", task.getException());
-        });
+        TextView name = findViewById(R.id.patient_name);
+        name.setText("Name: "+user.getName());
+        TextView age = findViewById(R.id.patient_age);
+        age.setText("Age: "+user.getAge());
+        TextView sex = findViewById(R.id.patient_sex);
+        sex.setText("Sex: "+user.getGender());
     }
 
     public void editPatient(View view)

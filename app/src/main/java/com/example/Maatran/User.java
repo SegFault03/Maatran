@@ -10,7 +10,7 @@ import android.os.Parcelable;
 //https://developer.android.com/guide/components/activities/parcelables-and-bundles#java
 
 public class User implements Parcelable {
-    private String name, gender, mobile, address, emergency;
+    private String name, gender, mobile, address, emergency, locality;
     private long age;
 
     public User()
@@ -19,13 +19,14 @@ public class User implements Parcelable {
     }
 
     //parameterized constructor for constructing a user object
-    public User(String name, long age, String gender, String mobile, String address, String emergency) {
+    public User(String name, long age, String gender, String mobile, String address, String emergency, String locality) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.mobile = mobile;
         this.address = address;
         this.emergency = emergency;
+        this.locality = locality;
     }
 
     //constructor for creating a User.class object from type Parcel
@@ -35,6 +36,7 @@ public class User implements Parcelable {
         mobile = in.readString();
         address = in.readString();
         emergency = in.readString();
+        locality = in.readString();
         age = in.readLong();
     }
 
@@ -105,7 +107,13 @@ public class User implements Parcelable {
         this.age = age;
     }
 
+    public String getLocality() {
+        return locality;
+    }
 
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
 
     @Override
     public int describeContents() {
@@ -120,6 +128,8 @@ public class User implements Parcelable {
         parcel.writeString(mobile);
         parcel.writeString(address);
         parcel.writeString(emergency);
+        parcel.writeString(locality);
         parcel.writeLong(age);
     }
+
 }
