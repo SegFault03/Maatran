@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_color">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitStart"
+        android:src="@drawable/dashboard_background"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintVertical_bias="0.03"
+        android:paddingBottom="80dp"
+        android:id="@+id/top_header"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_as_patient_string"
+        android:textSize="28sp"
+        android:textColor="@color/background_color_dark"
+        app:layout_constraintTop_toBottomOf="@id/top_header"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="0dp"
+        android:id="@+id/login"/>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="match_parent"
+        android:id="@+id/sign_in_as_patient"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        android:hint="@string/username_email"
+        android:fontFamily="sans-serif-light"
+        app:helperText="Required *"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="@color/red"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/login">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="30"
+            android:id="@+id/sign_in_as_patient_edit" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="match_parent"
+        android:id="@+id/password"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:helperText="Required *"
+        app:endIconMode="password_toggle"
+        app:helperTextTextColor="@color/red"
+        android:hint="@string/password_string"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_as_patient">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/sign_in_password_edit" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="match_parent"
+        android:id="@+id/confirm_password"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:helperText="Required *"
+        app:endIconMode="password_toggle"
+        app:helperTextTextColor="@color/red"
+        android:hint="Confirm Password"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/sign_in_confirm_password_edit" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/continue_button"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_marginHorizontal="36dp"
+        android:text="Continue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+
+    <ImageView
+        android:id="@+id/google_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="google_logo"
+        android:src="@drawable/google_logo"
+        app:layout_constraintEnd_toStartOf="@+id/fb_logo"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
+
+    <ImageView
+        android:id="@+id/fb_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="124dp"
+        android:contentDescription="fb_logo"
+        android:src="@drawable/fb_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continue_button" />
+    <TextView
+        android:id="@+id/_already_have_an_account__login"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fb_logo"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:onClick="signInOptions"
+        android:text="@string/_already_have_an_account__login_string"
+        android:textColor="@color/background_color_dark"
+        android:textSize="20sp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

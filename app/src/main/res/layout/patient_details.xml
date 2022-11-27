@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDEAF8">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DDEAF8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <!--<Button
+        android:id="@+id/cancel"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#0B6A77"
+        android:text="CANCEL"
+        android:textSize="25sp"
+        android:onClick="cancelChanges"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/save"
+        app:layout_constraintVertical_bias="0.0" />-->
+
+    <TextView
+        android:id="@+id/edit_details"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/rectangle_13"
+        android:gravity="center"
+        android:text="EDIT DETAILS"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/edit_img"
+                android:layout_width="127dp"
+                android:layout_height="107dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/img"
+                app:layout_constraintTop_toBottomOf="@+id/edit_details"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <LinearLayout
+                android:layout_width="355dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/white_background"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_img"
+                app:layout_constraintVertical_bias="0.163">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/name_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Name"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/patient_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mobile_number_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/mobile_number_string"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/patient_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="phone"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:id="@+id/emergency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/emergency_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Emergency Number"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/emergency_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="phone"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/gender_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Gender:"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/patient_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:id="@+id/age_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/age_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Age:"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/patient_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/address_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Address:"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/patient_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:id="@+id/location_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/locality"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Locality:"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_locality"
+                        android:layout_width="139dp"
+                        android:layout_height="match_parent"
+                        android:spinnerMode="dropdown"
+                        android:layout_weight="1"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp"/>
+
+                    <!--<EditText
+                        android:id="@+id/locality_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />-->
+
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:id="@+id/hospital_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hospital"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hospital Name:"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/hospital_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <LinearLayout
+                    android:id="@+id/employee_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/employee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Employee ID:"
+                        android:textColor="#182693"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/employee_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#5B5B5B"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_l6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="40dp"
+                    android:backgroundTint="#20909F"
+                    android:onClick="saveDetails"
+                    android:text="SAVE" />
+
+                <View
+                    android:id="@+id/view_l9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#D9D9D9" />
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="#0B6A77"
+                    android:onClick="cancelChanges"
+                    android:text="CANCEL" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
