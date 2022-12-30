@@ -80,13 +80,13 @@
 
     <TextView
         android:id="@+id/patients"
-        android:layout_width="257dp"
-        android:layout_height="83dp"
+        android:layout_width="235dp"
+        android:layout_height="66dp"
         android:fontFamily="monospace"
         android:gravity="center_vertical"
         android:text="PATIENTS"
         android:textColor="#373636"
-        android:textSize="45sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.367"

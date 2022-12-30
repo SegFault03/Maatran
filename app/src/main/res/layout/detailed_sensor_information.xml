@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#84B192"><![CDATA[
+    android:background="#9EC1EA">
 
+    <View
+        android:id="@+id/viewHeaderBackground"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></View>
 
-    />
-
-
-    ]]>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/back_to_dashboard_btn"
         android:layout_width="56dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="82dp"
         android:clickable="true"
-        android:onClick="backToHome"
+        android:gravity="center_vertical"
+        android:onClick="backToDashboard"
         android:rotation="180"
         android:rotationY="4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintBottom_toBottomOf="@+id/viewHeaderBackground"
+        app:layout_constraintEnd_toEndOf="@+id/viewHeaderBackground"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewHeaderBackground"
+        app:layout_constraintVertical_bias="0.622"
         app:srcCompat="@drawable/arrow_right" />
 
     <TextView
         android:id="@+id/detailed_header"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
-        android:layout_marginTop="32dp"
-        android:text="Patient Details"
+        android:layout_marginTop="52dp"
+        android:text="PATIENT DETAILS"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,71 +52,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
         app:cardCornerRadius="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_header">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailed_header"
+        app:layout_constraintVertical_bias="0.134">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:orientation="vertical"
             android:paddingBottom="10dp">
-        <TextView
-            android:id="@+id/patient_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name: Rudraneel Dutta"
-            android:textSize="16sp"
 
-            app:layout_constraintTop_toTopOf="@+id/patient_details_card" />
+            <TextView
+                android:id="@+id/patient_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name: Rudraneel Dutta"
+                android:textSize="16sp"
 
-        <TextView
-            android:id="@+id/patient_age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Age: 20"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/patient_name" />
+                app:layout_constraintTop_toTopOf="@+id/patient_details_card" />
 
-        <TextView
-            android:id="@+id/patient_sex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sex: Male"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/patient_age" />
+            <TextView
+                android:id="@+id/patient_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Age: 20"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/patient_name" />
 
-        <TextView
-            android:id="@+id/locality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="locality: "
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/patient_sex" />
+            <TextView
+                android:id="@+id/patient_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sex: Male"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/patient_age" />
 
-        <TextView
-            android:id="@+id/patient_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address: "
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/patient_spo2" />
+            <TextView
+                android:id="@+id/locality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="locality: "
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/patient_sex" />
 
-        <TextView
-            android:id="@+id/patient_no"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Emergency no: "
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/patient_temp" />
+            <TextView
+                android:id="@+id/patient_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address: "
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/patient_spo2" />
+
+            <TextView
+                android:id="@+id/patient_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Emergency no: "
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/patient_temp" />
 
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -128,6 +138,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
+                android:background="#68A8C5"
                 android:gravity="center_horizontal"
                 android:padding="5sp"
                 android:text="REALTIME RISK ANALYSIS"
@@ -137,8 +148,6 @@
         </TableRow>
 
         <TableRow android:background="#96c896">
-
-
 
 
         </TableRow>
@@ -155,7 +164,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="SPO2"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
             <TextView
@@ -179,7 +188,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="Pulse Rate"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
             <TextView
@@ -202,7 +211,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="Temperature"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
             <TextView
@@ -225,7 +234,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="Systolic Pressure"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
             <TextView
@@ -248,7 +257,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="Diastolic Pressure"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
             <TextView
@@ -291,9 +300,9 @@
 
     <Button
         android:id="@+id/edit_patient"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#CC6B92"
+        android:backgroundTint="#273455"
         android:onClick="editPatient"
         android:text="Edit Details"
         android:textSize="25sp"
@@ -302,15 +311,17 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.255" />
+        app:layout_constraintVertical_bias="0.135" />
 
     <Button
         android:id="@+id/delete_patient"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="#CF0A0A"
         android:onClick="deletePatient"
         android:text="Delete Patient"
         android:textSize="25sp"
+        app:iconTint="#120A0A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.518"
