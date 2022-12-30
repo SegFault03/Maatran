@@ -8,7 +8,7 @@
     android:layout_height="100dp"
     android:layout_margin="20dp"
     android:clickable="true"
-    app:cardBackgroundColor="#EDC7C7"
+    app:cardBackgroundColor="#7FCCC4"
     app:cardCornerRadius="15dp">
 
     <ImageView
