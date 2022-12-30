@@ -51,6 +51,7 @@
     <string name="family_members">Family Members</string>
     <string name="username_email">Email/Username</string>
     <string-array name="localities">
+        <item>Show all</item>
         <item>Howrah</item>
         <item>Ballygunge</item>
         <item>Central</item>

@@ -109,14 +109,27 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         ref.whereEqualTo("isWorker","false").get().addOnSuccessListener(value -> {
             for(DocumentSnapshot dc : value.getDocuments()) {
                     CollectionReference colRef = dc.getReference().collection("Patients");
-                    colRef.whereEqualTo("locality",locality).get().addOnSuccessListener(v -> {
-                        for (DocumentSnapshot doc : v.getDocuments()) {
+                    if(!locality.equals("Show all")) {
+                        colRef.whereEqualTo("locality", locality).get().addOnSuccessListener(v -> {
+                            for (DocumentSnapshot doc : v.getDocuments()) {
                                 userArrayList.add(doc.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
                                 userId.add(doc.getId());
 
-                        }
-                        userAdapter.notifyDataSetChanged();
-                    });
+                            }
+                            userAdapter.notifyDataSetChanged();
+                        });
+                    }
+                    else
+                    {
+                        colRef.get().addOnSuccessListener(value2->{
+                            for(DocumentSnapshot ds : value2.getDocuments())
+                            {
+                                userArrayList.add(ds.toObject(User.class));     //Converting the DocuSnapshot to a User.class object
+                                userId.add(ds.getId());
+                            }
+                            userAdapter.notifyDataSetChanged();
+                        });
+                    }
             }
             if (progressDialog.isShowing())
                 progressDialog.dismiss();
