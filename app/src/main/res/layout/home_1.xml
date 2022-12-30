@@ -1,201 +1,126 @@
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:overScrollMode="never">
-    <!--
-    /*
-     *	This content is generated from the API File Info.
-     *	(Alt+Shift+Ctrl+I).
-     *
-     *	@desc
-     *	@file 		google_pixel_5___4
-     *	@date 		Monday 20th of June 2022 08:14:33 AM
-     *	@title 		Google Pixel 5  4
-     *	@author
-     *	@keywords
-     *	@generator 	Export Kit v1.3.xd
-     *
-     */
-    -->
-    <ScrollView
-        android:id="@+id/google_pixel_5___4"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <RelativeLayout
-            android:id="@+id/content_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/_bg__google_pixel_5___1"
-                android:layout_width="393dp"
-                android:layout_height="851dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/_bg__google_pixel_5___1_shape" />
+    <View
+        android:id="@+id/bg"
+        android:layout_width="1124dp"
+        android:layout_height="1185dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.317" />
 
-            <ImageView
-                android:id="@+id/_motherhood"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="-1000dp"
-                android:layout_marginTop="0dp"
-                android:contentDescription="_motherhood"
-                android:overScrollMode="never"
-                android:scrollbarAlwaysDrawHorizontalTrack="false"
-                android:scrollbarAlwaysDrawVerticalTrack="false"
-                android:src="@drawable/_motherhood" />
+    <TextView
+        android:id="@+id/mumtran"
+        android:layout_width="275dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_marginTop="176dp"
+        android:fontFamily="@font/alegreya_sans"
+        android:gravity="center"
+        android:text="@string/mum_tran_string"
+        android:textColor="#373737"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/rectangle_1"
-                android:layout_width="395dp"
-                android:layout_height="221dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="230dp"
-                android:alpha="0.47"
-                android:background="@drawable/rectangle_1_shape"
-                android:backgroundTint="#250707" />
+    <ImageButton
+        android:id="@+id/_rectangle_2"
+        android:layout_width="344dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/rectangle_1_shape"
+        android:backgroundTint="#042E2D"
+        android:onClick="signInOptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mumtran" />
 
-            <TextView
-                android:id="@+id/mumtran"
-                android:layout_width="275dp"
-                android:layout_height="86dp"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center_horizontal|center"
-                android:layout_marginLeft="72dp"
-                android:layout_marginTop="42dp"
-                android:fontFamily="@font/amarante"
-                android:gravity="center"
-                android:text="@string/mum_tran_string"
-                android:textColor="@color/mum_tran_color"
-                android:textSize="40sp" />
+    <TextView
+        android:id="@+id/sign_in"
+        android:layout_width="93dp"
+        android:layout_height="46.5dp"
+        android:layout_alignTop="@+id/_rectangle_13"
+        android:layout_alignBottom="@+id/_rectangle_2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/sign_in_string"
+        android:textColor="@color/mum_tran_color"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="@+id/_rectangle_2"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/_rectangle_2"
+        app:layout_constraintTop_toTopOf="@+id/_rectangle_2" />
 
-            <ImageButton
-                android:id="@+id/_rectangle_2"
-                android:layout_width="344dp"
-                android:layout_height="54dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="492dp"
-                android:layout_marginEnd="31dp"
-                android:alpha="0.82"
-                android:background="@drawable/_rectangle_2_shape"
-                android:onClick="signInOptions" />
+    <ImageButton
+        android:id="@+id/_rectangle_13"
+        android:layout_width="344dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/rectangle_1_shape"
+        android:backgroundTint="#042E2D"
+        android:onClick="registerOptions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in"
+        app:layout_constraintVertical_bias="0.075" />
 
-            <TextView
-                android:id="@+id/sign_in"
-                android:layout_width="93dp"
-                android:layout_height="46.5dp"
-                android:layout_alignTop="@+id/_rectangle_2"
-                android:layout_alignBottom="@+id/_rectangle_2"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_horizontal|center"
-                android:layout_marginStart="148dp"
-                android:layout_marginLeft="166dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="154dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="@string/sign_in_string"
-                android:textColor="@color/mum_tran_color"
-                android:textSize="25sp" />
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/_rectangle_13"
+        android:layout_alignBottom="@+id/_rectangle_13"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_horizontal|center"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="REGISTER"
+        android:textColor="@color/mum_tran_color"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/_rectangle_13"
+        app:layout_constraintEnd_toEndOf="@+id/_rectangle_13"
+        app:layout_constraintStart_toStartOf="@+id/_rectangle_13"
+        app:layout_constraintTop_toTopOf="@+id/_rectangle_13"
+        app:layout_constraintVertical_bias="0.666" />
 
-            <TextView
-                android:id="@+id/healthcare_for_pregnancy__at_one_stop__"
-                android:layout_width="283dp"
-                android:layout_height="83.5dp"
-                android:layout_alignTop="@+id/rectangle_1"
-                android:layout_alignBottom="@+id/rectangle_1"
-                android:layout_gravity="center_horizontal|center"
-                android:layout_marginLeft="54dp"
-                android:layout_marginTop="67dp"
-                android:layout_marginBottom="70dp"
-                android:fontFamily="@font/alegreya_sans"
-                android:gravity="center"
-                android:text="@string/healthcare_for_pregnancy__at_one_stop___string"
-                android:textColor="@color/mum_tran_color"
-                android:textSize="25sp" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="147dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="132dp"
+        android:fontFamily="@font/amarante"
+        android:text="Healthcare for pregnancy at one stop."
+        android:textAlignment="center"
+        android:textColor="#2C1B1B"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_rectangle_13" />
 
-            <View
-                android:id="@+id/ellipse_3"
-                android:layout_width="11dp"
-                android:layout_height="13dp"
-                android:layout_marginStart="210dp"
-                android:layout_marginTop="827dp"
-                android:background="@drawable/ellipse_3_shape" />
-
-            <View
-                android:id="@+id/ellipse_4"
-                android:layout_width="11dp"
-                android:layout_height="13dp"
-                android:layout_marginStart="191dp"
-                android:layout_marginTop="827dp"
-                android:background="@drawable/ellipse_4_shape"
-                android:backgroundTint="#2E2E2E" />
-
-            <ImageButton
-                android:id="@+id/_rectangle_13"
-                android:layout_width="344dp"
-                android:layout_height="54dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="566dp"
-                android:layout_marginEnd="26dp"
-                android:alpha="0.82"
-                android:background="@drawable/_rectangle_13_shape"
-                android:onClick="registerOptions" />
-
-            <View
-                android:id="@+id/ellipse_5"
-                android:layout_width="11dp"
-                android:layout_height="13dp"
-                android:layout_marginStart="229dp"
-                android:layout_marginTop="827dp"
-                android:background="@drawable/ellipse_5_shape" />
-
-            <TextView
-                android:id="@+id/register"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/_rectangle_13"
-                android:layout_alignBottom="@+id/_rectangle_13"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_horizontal|center"
-                android:layout_marginStart="134dp"
-                android:layout_marginLeft="157dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginEnd="121dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="@string/register_string"
-                android:textColor="@color/mum_tran_color"
-                android:textSize="25sp" />
-
-            <Button
-                android:id="@+id/test_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/_rectangle_13"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="152dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="149dp"
-                android:text="TEST"
-                android:textSize="25sp" />
-
-        </RelativeLayout>
-
-    </ScrollView>
-</HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
