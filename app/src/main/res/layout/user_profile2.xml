@@ -402,25 +402,28 @@
 
                         <Button
                             android:id="@+id/button7"
-                            android:layout_width="match_parent"
+                            android:layout_width="260dp"
                             android:layout_height="48dp"
                             android:layout_marginHorizontal="40dp"
                             android:onClick="editProfile"
                             android:text="EDIT PROFILE" />
+
+                        <Button
+                            android:id="@+id/button8"
+                            android:layout_width="260dp"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="40dp"
+                            android:backgroundTint="@color/red"
+                            android:onClick="deleteProfile"
+                            android:text="Delete Account"
+
+                            />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/button8"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Delete Account"
-                android:onClick="deleteProfile"
-                android:layout_marginHorizontal="30dp"
-                android:backgroundTint="@color/red"
-                />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
