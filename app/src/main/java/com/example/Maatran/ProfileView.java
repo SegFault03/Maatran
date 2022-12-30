@@ -2,12 +2,14 @@ package com.example.Maatran;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileView extends AppCompatActivity {
@@ -30,7 +33,7 @@ public class ProfileView extends AppCompatActivity {
     boolean isWorker;
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
-
+    ImageView mProfilePic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,8 @@ public class ProfileView extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         TextView email = findViewById(R.id.emailId);
         email.setText(user.getEmail());
+        mProfilePic = (ImageView)findViewById(R.id.user_profile_pic);
+        mProfilePic.setImageResource(R.drawable.profile_ico_white);
     }
 
     @Override
@@ -89,6 +94,21 @@ public class ProfileView extends AppCompatActivity {
                     tv_adr.setText(Objects.requireNonNull(document.getData().get("address")).toString());
                     TextView tv_mob = findViewById(R.id.user_mob);
                     tv_mob.setText(Objects.requireNonNull(document.getData().get("mobile")).toString());
+
+                    String type,gen;
+                    type=isWorker?"h":"p";
+                    if(isWorker)
+                        gen = Objects.requireNonNull(document.getData().get("gender")).toString().trim().equalsIgnoreCase("male") ?"m":"w";
+
+                    else {
+                        int age = Integer.parseInt(document.getData().get("age").toString());
+                        gen = Objects.requireNonNull(document.getData().get("gender")).toString().trim().equalsIgnoreCase("male") ? "m" : "w";
+                        gen = gen.equals("m")?(age>20?"m":"b"):(age>20?"w":"g");
+                    }
+                    String uri = "@drawable/"+type+"_"+gen;
+                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    mProfilePic.setImageDrawable(res);
                 }
                 else
                 {
