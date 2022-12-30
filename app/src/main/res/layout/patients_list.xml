@@ -64,7 +64,7 @@
         <Spinner
             android:id="@+id/locality_spinner"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="50dp"
             android:backgroundTint="#0B0600"
             android:backgroundTintMode="screen"
             android:foregroundTint="#595959"
