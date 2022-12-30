@@ -82,36 +82,30 @@
             app:layout_constraintTop_toBottomOf="@+id/patient_age" />
 
         <TextView
-            android:id="@+id/patient_spo2"
+            android:id="@+id/locality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SpO2 level: xxx"
+            android:text="locality: "
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/patient_sex" />
 
         <TextView
-            android:id="@+id/patient_temp"
+            android:id="@+id/patient_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Temp: 100C"
+            android:text="Address: "
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/patient_spo2" />
 
         <TextView
-            android:id="@+id/patient_sys_pressure"
+            android:id="@+id/patient_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Systolic pressure: "
+            android:text="Emergency no: "
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/patient_temp" />
 
-        <TextView
-            android:id="@+id/patient_dia_pressure"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Diastolic pressure: xxx"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/patient_sys_pressure" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -136,43 +130,15 @@
                 android:layout_weight="4"
                 android:gravity="center_horizontal"
                 android:padding="5sp"
-                android:text="RISK ANALYSIS RESULTS"
-                android:textColor="@android:color/white"
+                android:text="REALTIME RISK ANALYSIS"
+                android:textColor="@color/_already_have_an_account__login_color"
                 android:textSize="18sp" />
 
         </TableRow>
 
         <TableRow android:background="#96c896">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="5sp"
-                android:text="@string/normal"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_horizontal"
-                android:padding="5sp"
-                android:text="@string/moderate_risk"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/high_risk"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
 
 
         </TableRow>
@@ -182,32 +148,47 @@
         <TableRow>
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/spo2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="SPO2()"
+                android:text="SPO2"
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row1Age"
+                android:text="xxx"
+                android:textSize="12sp" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="Pulse Rate"
+                android:textColor="@android:color/holo_green_light"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row1Surname"
-                android:textColor="@android:color/holo_red_light"
+                android:text="xxx"
                 android:textSize="12sp" />
 
         </TableRow>
@@ -215,32 +196,22 @@
         <TableRow>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row2Name"
+                android:text="Temperature"
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row2Age"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="string/row2Surname"
-                android:textColor="@android:color/holo_red_light"
+                android:text="xxx"
                 android:textSize="12sp" />
 
         </TableRow>
@@ -248,33 +219,71 @@
         <TableRow>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row3Name"
+                android:text="Systolic Pressure"
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row3Age"
+                android:text="xxx"
+                android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="Diastolic Pressure"
+                android:textColor="@android:color/holo_green_light"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
-                android:text="string/row3Surname"
-                android:textColor="@android:color/holo_red_light"
+                android:text="xxx"
                 android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="Risk Prediction"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:padding="10sp"
+                android:text="xxx"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
         </TableRow>
 

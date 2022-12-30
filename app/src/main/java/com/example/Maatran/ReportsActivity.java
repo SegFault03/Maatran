@@ -53,6 +53,12 @@ public class ReportsActivity extends AppCompatActivity {
         age.setText("Age: "+user.getAge());
         TextView sex = findViewById(R.id.patient_sex);
         sex.setText("Sex: "+user.getGender());
+        TextView address = findViewById(R.id.patient_add);
+        address.setText("Address: "+user.getAddress());
+        TextView locality = findViewById(R.id.locality);
+        locality.setText("Locality: "+user.getLocality());
+        TextView no = findViewById(R.id.patient_no);
+        no.setText("Emergency no: "+user.getEmergency());
     }
 
     public void editPatient(View view)
