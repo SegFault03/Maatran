@@ -94,9 +94,9 @@ public class EditPatient extends AppCompatActivity {
                                     {
 
                                         if(document.get("hospitalName")!=null)
-                                        hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
+                                            hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
                                         if(document.get("employeeId")!=null)
-                                        employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
+                                            employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
                                         isWorker = true;
                                         findViewById(R.id.location_details).setVisibility(View.GONE);
                                         findViewById(R.id.view_21).setVisibility(View.GONE);
