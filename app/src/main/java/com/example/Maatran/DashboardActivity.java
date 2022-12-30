@@ -36,12 +36,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_1);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
-        {
-            Toast.makeText(this,"Permission ti send messages not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_SEND_SMS);
-        }
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
@@ -54,6 +48,22 @@ public class DashboardActivity extends AppCompatActivity {
     {
         super.onResume();
         fetchUserDetails();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sendSOS();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
     }
 
     public void viewPatients(View view)
@@ -103,13 +113,22 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-    public void sendSOS(View View)
+    public void attemptSOS(View View)
+    {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(this,"Permission to send messages not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_SEND_SMS);
+        }
+        else
+            sendSOS();
+    }
+
+    public void sendSOS()
     {
         FirebaseFirestore db=FirebaseFirestore.getInstance();
         DocumentReference df= db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
         CollectionReference ref = df.collection("Patients");
-        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-        PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,PendingIntent.FLAG_IMMUTABLE);
         SmsManager sms=SmsManager.getDefault();
         df.get().addOnCompleteListener(task -> {
             if(task.isSuccessful())
@@ -117,12 +136,8 @@ public class DashboardActivity extends AppCompatActivity {
                 DocumentSnapshot ds = task.getResult();
                 if(ds.exists()) {
                     String number = Objects.requireNonNull(ds.get("mobile")).toString();
-                    //Getting intent and PendingIntent instance
-
-
-                    //Get the SmsManager instance and call the sendTextMessage method to send message
-                    sms.sendTextMessage(number, null, "I need help!", pi,null);
-
+                    //TODO Why the f is there a 0 before the number??
+                    sms.sendTextMessage(number, null, "I need help!\n-Message sent from: "+number+" from app: Maatran", null,null);
                 }
                 else
                     Log.d(TAG, "No such document");
@@ -135,9 +150,10 @@ public class DashboardActivity extends AppCompatActivity {
         ref.get().addOnSuccessListener(value -> {
             for (DocumentSnapshot dc : value.getDocuments()) {
                 String number = Objects.requireNonNull(dc.get("mobile")).toString();
-                sms.sendTextMessage(number, null, "I need help!", pi,null);
+                sms.sendTextMessage(number, null, "I need help!\n-Message sent from"+number+" from app: Maatran", null,null);
             }
         });
+        Toast.makeText(this,"sms sent successfully",Toast.LENGTH_SHORT).show();
     }
 
     public void bluetoothService(View view)
