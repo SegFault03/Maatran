@@ -6,23 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PatientsView"><![CDATA[
-
-
-
-
-
-        />
-
-
-
-
-
-
-
-
-
-    ]]>
+    tools:context=".PatientsView">
 
     <View
         android:id="@+id/viewHeaderBackground"
@@ -32,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></View>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/back_to_dashboard_btn"
@@ -63,11 +47,11 @@
 
         <Spinner
             android:id="@+id/locality_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:backgroundTint="#0B0600"
-            android:backgroundTintMode="screen"
-            android:foregroundTint="#595959"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/spinner_bg"
             android:spinnerMode="dropdown"
             android:textSize="40sp" />
 
