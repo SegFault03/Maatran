@@ -44,6 +44,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.name.setText("NAME: "+user.getName());
         holder.age.setText("AGE: "+ user.getAge());
         holder.gender.setText("GENDER: "+user.getGender());
+        if(user.getLocality()!=null)
+            holder.locality.setText("LOCALITY: "+user.getLocality());
+        else
+            holder.locality.setText("LOCALITY: Not Available");
         holder.profilePic.setImageDrawable(setProfilePic(user, user.getGender(), (int) user.getAge()));
     }
 
@@ -67,7 +71,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     //ViewHolder class for defining a ViewHolder object
     public static class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView name, age, gender;
+        TextView name, age, gender, locality;
         OnPatientListener onPatientListener;
         ImageView profilePic;
 
@@ -78,6 +82,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             age = itemView.findViewById(R.id.patient_age_1);
             gender = itemView.findViewById(R.id.patient_gender_1);
             profilePic = itemView.findViewById(R.id.profilePicListItem);
+            locality = itemView.findViewById(R.id.patient_address_1);
             this.onPatientListener = onPatientListener;
             itemView.setOnClickListener(this);              //onClick listener for the View
         }
