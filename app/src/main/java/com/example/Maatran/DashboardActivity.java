@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,7 +77,15 @@ public class DashboardActivity extends AppCompatActivity {
                     user_name.setText(Objects.requireNonNull(ds.get("name")).toString());
                     if(Objects.requireNonNull(ds.get("isWorker")).toString().equals("true")) {
                         findViewById(R.id.report_button).setVisibility(View.GONE);
+                        findViewById(R.id.bluetooth_test_btn).setVisibility(View.GONE);
                         isPatient = false;
+                    }
+                    else
+                    {
+                        Button viewFamilybtn = findViewById(R.id.viewUsersBtn);
+                        Button addFamilybtn = findViewById(R.id.report_button);
+                        viewFamilybtn.setText("VIEW FAMILY");
+                        addFamilybtn.setText("ADD A FAMILY MEMBER");
                     }
                 }
                 else
