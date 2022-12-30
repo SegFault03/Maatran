@@ -1,15 +1,16 @@
 package com.example.Maatran;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseUser user;
     boolean isPatient = true;
     private static final int PERMISSION_SEND_SMS = 123;
+    ImageButton mProfilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class DashboardActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
+        mProfilePic = findViewById(R.id.dashboardProfilePic);
+        mProfilePic.setImageResource(R.drawable.profile_ico_white);
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
@@ -111,6 +115,7 @@ public class DashboardActivity extends AppCompatActivity {
                         viewFamilybtn.setText("VIEW FAMILY");
                         addFamilybtn.setText("ADD A FAMILY MEMBER");
                     }
+                    setUserProfile(ds);
                 }
                 else
                     Log.d(TAG, "No such document");
@@ -163,6 +168,28 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         Toast.makeText(this,"sms sent successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Sets the user profile pic depending upon the age, gender and type of the user-profile.
+     * Requires a global ImageView element which in this case is called {@link ProfileView#mProfilePic}
+     * @param document: DocumentSnapshot of the document containing the data from which gender, age, etc.
+     * from which the profile pic will be inferred.
+     */
+    public void setUserProfile(DocumentSnapshot document) {
+        String type,gen = Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("gender")).toString().trim();
+        type = Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")?"p":"h";
+        gen = gen.equalsIgnoreCase("male") ?"m":(gen.equalsIgnoreCase("female")?"w":"o");
+
+        if(!type.equals("h")) {
+            int age = Integer.parseInt(Objects.requireNonNull(document.getData().get("age")).toString());
+            if(!gen.equals("o"))
+                gen = gen.equals("m")?(age>20?"m":"b"):(age>20?"w":"g");
+        }
+        String uri = gen.equals("o")?"@drawable/profile_ico_white":"@drawable/"+type+"_"+gen;
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        mProfilePic.setImageDrawable(res);
     }
 
     public void bluetoothService(View view)
