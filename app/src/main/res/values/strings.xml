@@ -57,4 +57,9 @@
         <item>Sector V</item>
         <item>College More</item>
     </string-array>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

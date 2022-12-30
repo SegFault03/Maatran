@@ -23,7 +23,7 @@
         android:layout_height="82dp"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:onClick="backToDashboard"
+        android:onClick="backToHome"
         android:rotation="180"
         android:rotationY="4"
         app:layout_constraintBottom_toBottomOf="@+id/viewHeaderBackground"
