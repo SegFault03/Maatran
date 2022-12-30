@@ -94,21 +94,7 @@ public class ProfileView extends AppCompatActivity {
                     tv_adr.setText(Objects.requireNonNull(document.getData().get("address")).toString());
                     TextView tv_mob = findViewById(R.id.user_mob);
                     tv_mob.setText(Objects.requireNonNull(document.getData().get("mobile")).toString());
-
-                    String type,gen;
-                    type=isWorker?"h":"p";
-                    if(isWorker)
-                        gen = Objects.requireNonNull(document.getData().get("gender")).toString().trim().equalsIgnoreCase("male") ?"m":"w";
-
-                    else {
-                        int age = Integer.parseInt(document.getData().get("age").toString());
-                        gen = Objects.requireNonNull(document.getData().get("gender")).toString().trim().equalsIgnoreCase("male") ? "m" : "w";
-                        gen = gen.equals("m")?(age>20?"m":"b"):(age>20?"w":"g");
-                    }
-                    String uri = "@drawable/"+type+"_"+gen;
-                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                    Drawable res = getResources().getDrawable(imageResource);
-                    mProfilePic.setImageDrawable(res);
+                    setUserProfile(document);
                 }
                 else
                 {
@@ -238,5 +224,26 @@ public class ProfileView extends AppCompatActivity {
                 Log.d(TAG, "Error deleting document", task.getException());
             }
         });
+    }
+    /**
+     * Sets the user profile pic depending upon the age, gender and type of the user-profile.
+     * Requires a global ImageView element which in this case is called {@link ProfileView#mProfilePic}
+     * @param document: DocumentSnapshot of the document containing the data from which gender, age, etc.
+     * from which the profile pic will be inferred.
+    */
+    public void setUserProfile(DocumentSnapshot document) {
+        String type,gen = Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("gender")).toString().trim();
+        type=isWorker?"h":"p";
+        gen = gen.equalsIgnoreCase("male") ?"m":(gen.equalsIgnoreCase("female")?"w":"o");
+
+        if(!isWorker) {
+            int age = Integer.parseInt(Objects.requireNonNull(document.getData().get("age")).toString());
+            if(!gen.equals("o"))
+                gen = gen.equals("m")?(age>20?"m":"b"):(age>20?"w":"g");
+        }
+        String uri = gen.equals("o")?"@drawable/profile_ico_white":"@drawable/"+type+"_"+gen;
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        mProfilePic.setImageDrawable(res);
     }
 }
