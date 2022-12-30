@@ -33,8 +33,8 @@ ProgressDialog progressDialog;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_1);
         progressDialog=new ProgressDialog(this);
-        Button test_btn = findViewById(R.id.test_btn);
-        test_btn.setOnClickListener(v-> signInWithTestAccount());
+        //Button test_btn = findViewById(R.id.test_btn);
+        //test_btn.setOnClickListener(v-> signInWithTestAccount());
     }
 
     //for signing-in, calls LoginActivity.class

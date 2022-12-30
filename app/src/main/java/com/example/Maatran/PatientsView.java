@@ -85,8 +85,6 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         super.onResume();
         if(isPatient)
             EventChangeListener();
-        else
-            EventChangeListener2();
     }
 
     private void EventChangeListener() {
