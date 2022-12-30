@@ -2,10 +2,10 @@ name: Android CI
 
 env:
   # The name of the main module repository
-  main_project_module: app
+  main_project_module: Maatran
 
   # The name of the Play Store
-  playstore_name: Frogobox ID
+  playstore_name: Maatran
 
 on:
   # Triggers the workflow on push or pull request events but only for default and protected branches
