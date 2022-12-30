@@ -1,16 +1,26 @@
 package com.example.Maatran;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,16 +32,19 @@ public class DashboardActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     FirebaseUser user;
     boolean isPatient = true;
+    private static final int PERMISSION_SEND_SMS = 123;
+    ImageButton mProfilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_1);
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
         progressDialog.show();
+        mProfilePic = findViewById(R.id.dashboardProfilePic);
+        mProfilePic.setImageResource(R.drawable.profile_ico_white);
         user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
@@ -40,6 +53,22 @@ public class DashboardActivity extends AppCompatActivity {
     {
         super.onResume();
         fetchUserDetails();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sendSOS();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
     }
 
     public void viewPatients(View view)
@@ -76,8 +105,17 @@ public class DashboardActivity extends AppCompatActivity {
                     user_name.setText(Objects.requireNonNull(ds.get("name")).toString());
                     if(Objects.requireNonNull(ds.get("isWorker")).toString().equals("true")) {
                         findViewById(R.id.report_button).setVisibility(View.GONE);
+                        findViewById(R.id.bluetooth_test_btn).setVisibility(View.GONE);
                         isPatient = false;
                     }
+                    else
+                    {
+                        Button viewFamilybtn = findViewById(R.id.viewUsersBtn);
+                        Button addFamilybtn = findViewById(R.id.report_button);
+                        viewFamilybtn.setText("VIEW FAMILY");
+                        addFamilybtn.setText("ADD A FAMILY MEMBER");
+                    }
+                    setUserProfile(ds);
                 }
                 else
                     Log.d(TAG, "No such document");
@@ -87,6 +125,71 @@ public class DashboardActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
         });
+    }
+
+    public void attemptSOS(View View)
+    {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(this,"Permission to send messages not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PERMISSION_SEND_SMS);
+        }
+        else
+            sendSOS();
+    }
+
+    public void sendSOS()
+    {
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        DocumentReference df= db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
+        CollectionReference ref = df.collection("Patients");
+        SmsManager sms=SmsManager.getDefault();
+        df.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful())
+            {
+                DocumentSnapshot ds = task.getResult();
+                if(ds.exists()) {
+                    String number = Objects.requireNonNull(ds.get("mobile")).toString();
+                    //TODO Why the f is there a 0 before the number??
+                    sms.sendTextMessage(number, null, "I need help!\n-Message sent from: "+number+" from app: Maatran", null,null);
+                }
+                else
+                    Log.d(TAG, "No such document");
+            }
+            else
+                Log.d(TAG, "get failed with ", task.getException());
+            if(progressDialog.isShowing())
+                progressDialog.dismiss();
+        });
+        ref.get().addOnSuccessListener(value -> {
+            for (DocumentSnapshot dc : value.getDocuments()) {
+                String number = Objects.requireNonNull(dc.get("mobile")).toString();
+                sms.sendTextMessage(number, null, "I need help!\n-Message sent from"+number+" from app: Maatran", null,null);
+            }
+        });
+        Toast.makeText(this,"sms sent successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Sets the user profile pic depending upon the age, gender and type of the user-profile.
+     * Requires a global ImageView element which in this case is called {@link ProfileView#mProfilePic}
+     * @param document: DocumentSnapshot of the document containing the data from which gender, age, etc.
+     * from which the profile pic will be inferred.
+     */
+    public void setUserProfile(DocumentSnapshot document) {
+        String type,gen = Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("gender")).toString().trim();
+        type = Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")?"p":"h";
+        gen = gen.equalsIgnoreCase("male") ?"m":(gen.equalsIgnoreCase("female")?"w":"o");
+
+        if(!type.equals("h")) {
+            int age = Integer.parseInt(Objects.requireNonNull(document.getData().get("age")).toString());
+            if(!gen.equals("o"))
+                gen = gen.equals("m")?(age>20?"m":"b"):(age>20?"w":"g");
+        }
+        String uri = gen.equals("o")?"@drawable/profile_ico_white":"@drawable/"+type+"_"+gen;
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        mProfilePic.setImageDrawable(res);
     }
 
     public void bluetoothService(View view)
