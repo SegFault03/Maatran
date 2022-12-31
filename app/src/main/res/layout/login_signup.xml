@@ -146,7 +146,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button6" />
 
-
-
+    <TextView
+        android:id="@+id/forgot_pwd_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Forgot Password?"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fb_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
