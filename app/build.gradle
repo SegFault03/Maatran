@@ -36,7 +36,6 @@ android {
 
         prod {
             dimension androidAutoVersion.versionName
-            versionNameSuffix "-release"
         }
     }
     compileOptions {
