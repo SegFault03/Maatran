@@ -24,7 +24,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileView extends AppCompatActivity {
@@ -34,6 +33,7 @@ public class ProfileView extends AppCompatActivity {
     public static final String TAG="ProfileView";
     ProgressDialog progressDialog;
     ImageView mProfilePic;
+    String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +46,7 @@ public class ProfileView extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         TextView email = findViewById(R.id.emailId);
         email.setText(user.getEmail());
+        url = "@drawable/profile_ico_white";
         mProfilePic = (ImageView)findViewById(R.id.user_profile_pic);
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
     }
@@ -172,6 +173,7 @@ public class ProfileView extends AppCompatActivity {
     {
         Intent intent = new Intent(getApplicationContext(),ChangePasswordActivity.class);
         intent.putExtra("UserName",((TextView) findViewById(R.id.user_name)).getText().toString());
+        intent.putExtra("ResLoc",url);
         startActivity(intent);
     }
 
@@ -245,5 +247,6 @@ public class ProfileView extends AppCompatActivity {
         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
         Drawable res = getResources().getDrawable(imageResource);
         mProfilePic.setImageDrawable(res);
+        url = uri;
     }
 }
