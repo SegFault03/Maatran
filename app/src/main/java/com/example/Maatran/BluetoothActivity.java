@@ -861,4 +861,8 @@ public class BluetoothActivity extends AppCompatActivity {
             return false;
         }
     });
+    public void backToDashboard(View view)
+    {
+        super.finish();
+    }
 }

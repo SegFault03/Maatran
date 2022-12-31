@@ -242,6 +242,8 @@ public class DashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
             startActivity(intent);
         }
+        else
+            Toast.makeText(this,"This feature can't work without Bluetooth permissions",Toast.LENGTH_SHORT).show();
     }
 
     public void getPermissions(){
