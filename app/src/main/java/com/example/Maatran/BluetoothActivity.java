@@ -308,10 +308,11 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
+        checkForPermissions();
         //Check if Bluetooth is turned on or not, THIS IS ESSENTIAL AS THE APP WILL CRASH IF THIS IS NOT THE CASE
-        if(mBluetoothAdapter.getState()!=BluetoothAdapter.STATE_ON)
+        if(mBluetoothAdapter.getState()!=BluetoothAdapter.STATE_ON) {
             turnOnBluetooth();
+        }
         else{
             if(mBluetoothChatService==null)
                 startBluetoothChatService();
@@ -342,11 +343,6 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
-        }
         if(mBluetoothChatService != null)
         {
             if(mBluetoothChatService.getState() == BluetoothChatService.STATE_NONE)
@@ -356,6 +352,34 @@ public class BluetoothActivity extends AppCompatActivity {
         updateUI();
         if(mDeviceToConnect==null)
             manageCachedFiles(false);
+    }
+
+    public void checkForPermissions()
+    {
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            Log.d(TAG,"Access Fine location permission not available");
+//            Toast.makeText(this,"Fine Location Permission not available! Please grant it to continue!",Toast.LENGTH_SHORT).show();
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ENABLE_FINE_LOCATION);
+//        }
+        if (ContextCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            {
+                Log.d(TAG,"Bl scan location permission not available");
+                ActivityCompat.requestPermissions(BluetoothActivity.this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, 9);
+                return;
+            }
+        }
+        if (ContextCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            {
+                Log.d(TAG,"Bl connect permission not available");
+                ActivityCompat.requestPermissions(BluetoothActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 8);
+                return;
+            }
+        }
     }
 
     /*Turns on Bluetooth*/
