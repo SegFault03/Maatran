@@ -56,7 +56,7 @@ public class DashboardActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        test();
+        getPermissions();
         fetchUserDetails();
     }
 
@@ -213,11 +213,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     public boolean checkForPermissions()
     {
-        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, BLUETOOTH_CONNECT);
-            }
-        }
         if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED)
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
@@ -242,14 +237,14 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void bluetoothService(View view)
     {
-        test();
+        getPermissions();
         if(checkForPermissions()) {
             Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
             startActivity(intent);
         }
     }
 
-    public void test(){
+    public void getPermissions(){
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = {
                 Manifest.permission.BLUETOOTH_SCAN,
