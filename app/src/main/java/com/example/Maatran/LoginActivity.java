@@ -36,7 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_signup);
         Button login = findViewById(R.id.continue_button);
         TextView forgotPwdText = findViewById(R.id.forgot_pwd_text);
-        forgotPwdText.setVisibility(View.INVISIBLE);
+        forgotPwdText.setOnClickListener(v->{
+            Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
+            startActivity(intent);
+        });
         login.setOnClickListener(view -> {
             String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString();
             String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString();
