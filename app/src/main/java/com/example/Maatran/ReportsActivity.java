@@ -65,12 +65,22 @@ public class ReportsActivity extends AppCompatActivity {
         profilePic.setImageDrawable(setProfilePic(user, user.getGender(), (int) user.getAge()));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 0) {
+            if (data.hasExtra("user")) {
+                user = data.getExtras().getParcelable("user");
+                onResume();
+            }
+        }
+    }
     public void editPatient(View view)
     {
         Intent intent = new Intent(getApplicationContext(), EditPatient.class);
         intent.putExtra("user", user);
         intent.putExtra("id", userId);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     public void deletePatient(View view)

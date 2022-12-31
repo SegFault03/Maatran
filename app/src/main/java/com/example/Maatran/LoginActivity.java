@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.login_signup);
         Button login = findViewById(R.id.continue_button);
+        TextView forgotPwdText = findViewById(R.id.forgot_pwd_text);
+        forgotPwdText.setOnClickListener(v->{
+            Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
+            startActivity(intent);
+        });
         login.setOnClickListener(view -> {
             String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString();
             String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString();

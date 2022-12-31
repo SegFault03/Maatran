@@ -216,6 +216,10 @@ public class EditPatient extends AppCompatActivity {
             }
             else
             {
+                Intent data = new Intent();
+                data.putExtra("user", user);
+                // Activity finished return ok, return the data
+                setResult(RESULT_OK, data);
                 super.finish();
             }
         }

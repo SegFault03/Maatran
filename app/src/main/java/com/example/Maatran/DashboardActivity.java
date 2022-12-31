@@ -2,9 +2,11 @@ package com.example.Maatran;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -33,6 +35,8 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseUser user;
     boolean isPatient = true;
     private static final int PERMISSION_SEND_SMS = 123;
+    private static final int BLUETOOTH_SCAN = 5;
+    private static final int BLUETOOTH_CONNECT = 6;
     ImageButton mProfilePic;
 
     @Override
@@ -52,6 +56,7 @@ public class DashboardActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
+        getPermissions();
         fetchUserDetails();
     }
 
@@ -65,6 +70,20 @@ public class DashboardActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            case BLUETOOTH_CONNECT:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(getApplicationContext(),
+                            "Features using bluetooth will not work without granting this permission.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            case BLUETOOTH_SCAN:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(getApplicationContext(),
+                            "Features using bluetooth will not work without granting this permission.", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -192,9 +211,61 @@ public class DashboardActivity extends AppCompatActivity {
         mProfilePic.setImageDrawable(res);
     }
 
+    public boolean checkForPermissions()
+    {
+        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            {
+                Log.d(TAG,"Bl scan location permission not available");
+                ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, BLUETOOTH_SCAN);
+            }
+            if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED)
+                return false;
+        }
+        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            {
+                ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, BLUETOOTH_CONNECT);
+            }
+            if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_DENIED)
+                return false;
+        }
+        return true;
+    }
+
     public void bluetoothService(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),BluetoothActivity.class);
-        startActivity(intent);
+        getPermissions();
+        if(checkForPermissions()) {
+            Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(this,"This feature can't work without Bluetooth permissions",Toast.LENGTH_SHORT).show();
+    }
+
+    public void getPermissions(){
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_CONNECT,
+        };
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
