@@ -1,9 +1,11 @@
 package com.example.Maatran;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +44,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.name.setText("NAME: "+user.getName());
         holder.age.setText("AGE: "+ user.getAge());
         holder.gender.setText("GENDER: "+user.getGender());
+        if(user.getLocality()!=null)
+            holder.locality.setText("LOCALITY: "+user.getLocality());
+        else
+            holder.locality.setText("LOCALITY: Not Available");
+        holder.profilePic.setImageDrawable(setProfilePic(user, user.getGender(), (int) user.getAge()));
     }
 
     //Used for getting the size of the data set (Number of User objects in userArrayList)
@@ -50,11 +57,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return userArrayList.size();
     }
 
+    public Drawable setProfilePic(User user, String lgen, int age)
+    {
+        String gen = lgen.equalsIgnoreCase("male") ?"m":(lgen.equalsIgnoreCase("female")?"w":"o");
+        if(!gen.equals("o"))
+            gen = gen.equals("m")?(age>20?"m":"b"):(age>20?"w":"g");
+        String uri = gen.equals("o")?"@drawable/profile_ico_white":"@drawable/"+"p"+"_"+gen;
+        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        Drawable res = context.getResources().getDrawable(imageResource);
+        return res;
+    }
+
     //ViewHolder class for defining a ViewHolder object
     public static class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView name, age, gender;
+        TextView name, age, gender, locality;
         OnPatientListener onPatientListener;
+        ImageView profilePic;
 
         //Instantiates UserViewHolder with a View object
         public UserViewHolder(@NonNull View itemView, OnPatientListener onPatientListener) {
@@ -62,6 +81,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             name = itemView.findViewById(R.id.patient_name_1);
             age = itemView.findViewById(R.id.patient_age_1);
             gender = itemView.findViewById(R.id.patient_gender_1);
+            profilePic = itemView.findViewById(R.id.profilePicListItem);
+            locality = itemView.findViewById(R.id.patient_address_1);
             this.onPatientListener = onPatientListener;
             itemView.setOnClickListener(this);              //onClick listener for the View
         }

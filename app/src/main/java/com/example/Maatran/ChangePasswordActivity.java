@@ -2,10 +2,12 @@ package com.example.Maatran;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +22,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         String user_name = getIntent().getExtras().getString("UserName");
+        String url = getIntent().getExtras().getString("ResLoc");
         setContentView(R.layout.change_password);
         TextView tv_name = findViewById(R.id.p_user_name);
+        ImageView profilePic = findViewById(R.id.user_profile_pic2);
         tv_name.setText(user_name);
+        int imageResource = getResources().getIdentifier(url, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        profilePic.setImageDrawable(res);
     }
 
     public void changePassword(View view)

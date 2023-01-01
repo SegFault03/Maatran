@@ -51,10 +51,16 @@
     <string name="family_members">Family Members</string>
     <string name="username_email">Email/Username</string>
     <string-array name="localities">
+        <item>Show all</item>
         <item>Howrah</item>
         <item>Ballygunge</item>
         <item>Central</item>
         <item>Sector V</item>
         <item>College More</item>
+    </string-array>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
     </string-array>
 </resources>

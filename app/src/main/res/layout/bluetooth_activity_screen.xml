@@ -18,11 +18,12 @@
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/back_to_dashboard_btn"
+                android:id="@+id/back_to_dashboard_btn_BL"
                 android:layout_width="56dp"
                 android:layout_height="52dp"
                 android:layout_weight="0.33"
                 android:layout_marginLeft="15dp"
+                android:onClick="backToDashboard"
                 android:clickable="true"
                 android:rotation="180"
                 android:rotationY="4"

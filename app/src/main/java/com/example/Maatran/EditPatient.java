@@ -30,10 +30,10 @@ public class EditPatient extends AppCompatActivity {
     public static final String TAG="EditPatient";
     User user;
     String id;
-    private String locality;
+    private String locality, gender;
     boolean newDetails, isPatient, isWorker;
-    private EditText name, age, gender, mobile, emergency, address, hospital_name, employee_id;
-    Spinner spinner_locality;
+    private EditText name, age, mobile, emergency, address, hospital_name, employee_id;
+    Spinner spinner_locality, spinner_gender;
     DocumentReference docRef;
 
     @Override
@@ -52,6 +52,21 @@ public class EditPatient extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 locality=(String) adapterView.getItemAtPosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinner_gender = findViewById(R.id.spinner_gender);
+        ArrayAdapter<CharSequence> gen_adapter=ArrayAdapter.createFromResource(this, R.array.genders, android.R.layout.simple_spinner_item);
+        gen_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner_gender.setAdapter(gen_adapter);
+        spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gender=(String) adapterView.getItemAtPosition(i);
             }
 
             @Override
@@ -95,7 +110,6 @@ public class EditPatient extends AppCompatActivity {
 
         name = findViewById(R.id.patient_name);
         age = findViewById(R.id.patient_age);
-        gender = findViewById(R.id.patient_gender);
         mobile = findViewById(R.id.patient_mobile);
         emergency = findViewById(R.id.emergency_no);
         address = findViewById(R.id.patient_address);
@@ -113,7 +127,7 @@ public class EditPatient extends AppCompatActivity {
         if (!newDetails) {
             user = getIntent().getParcelableExtra("user");
             name.setText(user.getName());
-            gender.setText(user.getGender());
+            spinner_gender.setSelection(((ArrayAdapter<String>)spinner_gender.getAdapter()).getPosition(user.getGender()));
             mobile.setText(user.getMobile());
             address.setText(user.getAddress());
 
@@ -163,7 +177,7 @@ public class EditPatient extends AppCompatActivity {
             user = new User();
         }
         user.setName(name.getText().toString());
-        user.setGender(gender.getText().toString());
+        user.setGender(gender);
         user.setAddress(address.getText().toString());
         user.setMobile(mobile.getText().toString());
         if(isPatient) {
@@ -202,6 +216,10 @@ public class EditPatient extends AppCompatActivity {
             }
             else
             {
+                Intent data = new Intent();
+                data.putExtra("user", user);
+                // Activity finished return ok, return the data
+                setResult(RESULT_OK, data);
                 super.finish();
             }
         }
