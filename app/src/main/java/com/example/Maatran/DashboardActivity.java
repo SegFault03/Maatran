@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -27,6 +28,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -258,6 +266,12 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    public void callModel(View view)
+    {
+        ModelApi mApi = new ModelApi(this.getApplicationContext());
+        mApi.execute();
+    }
+
     public static boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
             for (String permission : permissions) {
@@ -267,5 +281,64 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    public class ModelApi extends AsyncTask<String, String, String> {
+        private static final String TAG = "ModelApi";
+        StringBuilder response;
+        private Context context;
+        ModelApi(Context context)
+        {
+            this.context=context;
+        }
+        public void sendRequest(String data) throws Exception {
+            // The URL of the API endpoint
+            //URL url = new URL("https://zxv5hi.deta.dev/predict/"+data);
+            URL url = new URL("https://zxv5hi.deta.dev/predict?sample="+data);
+            // Open an HttpURLConnection to the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // Read the response data
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // Print the response data
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject obj = new JSONObject();
+            // In this case, it's an array of arrays
+            JSONArray item1 = new JSONArray();
+            // Inner array has 10 elements
+            item1.add(16);
+            item1.add(100);
+            item1.add(70);
+            item1.add(7.2);
+            item1.add(98);
+            item1.add(80);
+            obj.put("data", item1);
+            //System.out.println(obj.toJSONString());
+            // Make the request using the JSON document string
+            response = new StringBuilder();
+            try{
+                sendRequest(obj.toJSONString());
+                DashboardActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }catch(Exception e)
+            {
+                Log.e(TAG,e.toString());
+            }
+            return null;
+        }
     }
 }
