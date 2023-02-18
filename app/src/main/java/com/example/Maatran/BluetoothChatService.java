@@ -277,6 +277,14 @@ public class BluetoothChatService {
         BluetoothChatService.this.start();
     }
 
+    public void predictionReceived(String prediction) {
+        Message msg = mHandler.obtainMessage(MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(TOAST, prediction);
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);
+    }
+
     /**
      * Indicate that the connection was lost and notify the UI Activity.
      */

@@ -10,12 +10,14 @@ public class BluetoothTransmissionService {
     private static final String TAG = "BTransmissionService";
     sendRequestThread mSendRequestThread;
     ArrayList<String> dataPackets;
+    ModelApi modelApi;
 
     public BluetoothTransmissionService(BluetoothChatService obj)
     {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
+        modelApi = new ModelApi(obj);
     }
 
     public void startRequestThread()
@@ -60,6 +62,10 @@ public class BluetoothTransmissionService {
         Log.v(TAG,"Response received...");
         dataPackets.add(msg);
         isSent = false;
+        if(dataPackets.size() == 6) {
+            modelApi.execute(dataPackets);
+            dataPackets.clear();
+        }
     }
 
     private class sendRequestThread extends Thread{
@@ -73,8 +79,9 @@ public class BluetoothTransmissionService {
         public void run()
         {
             int i = 1;
-            while (i++ <= 4 && !stop)
+            while (i <= 6 && !stop)
                 sendRequest(i);
+                i++;
         }
 
         public void cancel()
