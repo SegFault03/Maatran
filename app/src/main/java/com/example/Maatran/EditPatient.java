@@ -43,6 +43,8 @@ public class EditPatient extends AppCompatActivity {
         setContentView(R.layout.patient_details);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
         hospital_name = findViewById(R.id.hospital_name);
         employee_id = findViewById(R.id.employee_id);
         spinner_locality=findViewById(R.id.spinner_locality);
@@ -138,7 +140,6 @@ public class EditPatient extends AppCompatActivity {
                     emergency.setText(user.getEmergency());
                     spinner_locality.setSelection(((ArrayAdapter<String>)spinner_locality.getAdapter()).getPosition(user.getLocality()));
                     id = getIntent().getStringExtra("id");
-                    and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
                     docRef = FirebaseFirestore.getInstance()
                             .collection("UserDetails")
                             .document(mUser.getEmail())
@@ -186,6 +187,7 @@ public class EditPatient extends AppCompatActivity {
             user.setEmergency(emergency.getText().toString());
             user.setAge(Long.parseLong(age.getText().toString()));
             user.setLocality(locality);
+            if(newDetails)
             user.setAndroid_id(and_id);
         }
         if(isWorker)
