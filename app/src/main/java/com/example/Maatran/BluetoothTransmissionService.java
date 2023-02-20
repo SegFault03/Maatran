@@ -2,7 +2,15 @@ package com.example.Maatran;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BluetoothTransmissionService {
     public boolean isSent;
@@ -11,13 +19,15 @@ public class BluetoothTransmissionService {
     sendRequestThread mSendRequestThread;
     ArrayList<String> dataPackets;
     ModelApi modelApi;
+    private String and_id;
 
-    public BluetoothTransmissionService(BluetoothChatService obj)
+    public BluetoothTransmissionService(BluetoothChatService obj, String and_id)
     {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
         modelApi = new ModelApi(obj);
+        this.and_id = and_id;
     }
 
     public void startRequestThread()
@@ -57,12 +67,43 @@ public class BluetoothTransmissionService {
         Log.v(TAG,"Request Thread sent a request...");
     }
 
+    public void sentToDB()
+    {
+        HashMap<String, String> mp = new HashMap<>();
+        for(int i=1;i<=6;i++)
+        {
+            mp.put(Integer.toString(i), dataPackets.get(i-1));
+        }
+        CollectionReference db= FirebaseFirestore.getInstance().collection("UserDetails");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        db.document(user.getEmail())
+                .collection("Patients")
+                .whereEqualTo("and_id", and_id)
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String id="";
+                        for(DocumentSnapshot ds : task.getResult())
+                        {
+                            id=ds.getId();
+                        }
+                        db.document(user.getEmail())
+                                .collection("Patients")
+                                .document(id)
+                                .set(mp, SetOptions.merge())
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+
+                    }
+                });
+    }
+
     public synchronized void responseReceived(String msg)
     {
         Log.v(TAG,"Response received...");
         dataPackets.add(msg);
         isSent = false;
         if(dataPackets.size() == 6) {
+            sentToDB();
             modelApi.execute(dataPackets);
             dataPackets.clear();
         }

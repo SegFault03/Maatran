@@ -2,6 +2,7 @@ package com.example.Maatran;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +31,7 @@ public class EditPatient extends AppCompatActivity {
     public static final String TAG="EditPatient";
     User user;
     String id;
-    private String locality, gender;
+    private String locality, gender, and_id;
     boolean newDetails, isPatient, isWorker;
     private EditText name, age, mobile, emergency, address, hospital_name, employee_id;
     Spinner spinner_locality, spinner_gender;
@@ -137,6 +138,7 @@ public class EditPatient extends AppCompatActivity {
                     emergency.setText(user.getEmergency());
                     spinner_locality.setSelection(((ArrayAdapter<String>)spinner_locality.getAdapter()).getPosition(user.getLocality()));
                     id = getIntent().getStringExtra("id");
+                    and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
                     docRef = FirebaseFirestore.getInstance()
                             .collection("UserDetails")
                             .document(mUser.getEmail())
@@ -184,6 +186,7 @@ public class EditPatient extends AppCompatActivity {
             user.setEmergency(emergency.getText().toString());
             user.setAge(Long.parseLong(age.getText().toString()));
             user.setLocality(locality);
+            user.setAndroid_id(and_id);
         }
         if(isWorker)
         {
@@ -212,6 +215,7 @@ public class EditPatient extends AppCompatActivity {
             if(newDetails)
             {
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                //intent.putExtra("user",user);
                 startActivity(intent);
             }
             else

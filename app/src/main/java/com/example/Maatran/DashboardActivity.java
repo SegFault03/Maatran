@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,8 @@ public class DashboardActivity extends AppCompatActivity {
     private static final int BLUETOOTH_SCAN = 5;
     private static final int BLUETOOTH_CONNECT = 6;
     ImageButton mProfilePic;
+    private DocumentReference ref;
+    private String and_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
         mProfilePic = findViewById(R.id.dashboardProfilePic);
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     @Override
@@ -248,6 +252,7 @@ public class DashboardActivity extends AppCompatActivity {
         getPermissions();
         if(checkForPermissions()) {
             Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
+            intent.putExtra("and_id", and_id);
             startActivity(intent);
         }
         else

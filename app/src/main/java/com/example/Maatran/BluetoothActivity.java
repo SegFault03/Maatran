@@ -139,6 +139,7 @@ public class BluetoothActivity extends AppCompatActivity {
      */
     BluetoothChatService mBluetoothChatService;
     BluetoothTransmissionService mBtService;
+    private String and_id;
 
     /**
      * File stored in cache memory containing user data, including the name of the device to connect
@@ -209,6 +210,7 @@ public class BluetoothActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_activity_screen);
+        and_id = getIntent().getParcelableExtra("and_id");
 
         //Initializing data members
         mBluetoothStateChangeBtn = findViewById(R.id.bluetooth_service_connect_btn);
@@ -366,7 +368,7 @@ public class BluetoothActivity extends AppCompatActivity {
     public void startBluetoothChatService()
     {
         if(mBluetoothChatService==null)
-            mBluetoothChatService = new BluetoothChatService(BluetoothActivity.this,mChatServiceHandler);
+            mBluetoothChatService = new BluetoothChatService(BluetoothActivity.this,mChatServiceHandler, and_id);
         mBluetoothChatService.start();
     }
 
@@ -787,7 +789,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * */
     public void startDeviceTransmissions(View view) {
 
-        mBtService = new BluetoothTransmissionService(mBluetoothChatService);
+        mBtService = new BluetoothTransmissionService(mBluetoothChatService, and_id);
         mBtService.startRequestThread();
 //        String message="Hi!This is ";
 //        // Check that we're actually connected before trying anything
@@ -838,7 +840,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    Toast.makeText(BluetoothActivity.this,mConnectedDeviceName + ":  " + readMessage,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(BluetoothActivity.this,mConnectedDeviceName + ":  " + readMessage,Toast.LENGTH_SHORT).show();
                     if(mBtService!=null)
                         mBtService.responseReceived(readMessage);
                     break;
