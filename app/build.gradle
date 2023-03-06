@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.github.alexfu.androidautoversion'
+apply plugin: 'com.android.application'
+apply from: "$project.rootDir/tools/script-git-version.gradle"
 
 android {
     compileSdk 33
@@ -9,8 +10,8 @@ android {
         applicationId "com.example.maatran"
         minSdk 21
         targetSdk 33
-        versionName androidAutoVersion.versionName
-        versionCode androidAutoVersion.versionCode
+        versionName gitVersionName
+        versionCode gitVersionCode
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
@@ -22,20 +23,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions androidAutoVersion.versionName
+    flavorDimensions gitVersionName
     productFlavors {
         alpha {
-            dimension androidAutoVersion.versionName
+            versionCode gitVersionCodeTime
+            versionName gitVersionName
             versionNameSuffix "-alpha"
         }
 
         beta {
-            dimension androidAutoVersion.versionName
+            versionCode gitVersionCode
+            versionName gitVersionName
             versionNameSuffix "-beta"
         }
 
         prod {
-            dimension androidAutoVersion.versionName
+            versionCode gitVersionCode
+            versionName gitVersionName
+            versionNameSuffix "-release"
         }
     }
     compileOptions {
