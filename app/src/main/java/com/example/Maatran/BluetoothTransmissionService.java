@@ -86,18 +86,14 @@ public class BluetoothTransmissionService {
                 .whereEqualTo("android_id", and_id)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        String id="";
+                        //Log.v(TAG, "Task Successful"+and_id);
                         for(DocumentSnapshot ds : task.getResult())
                         {
-                            id=ds.getId();
+                            DocumentReference dr=ds.getReference();
+                            dr.set(mp, SetOptions.merge())
+                                    .addOnSuccessListener(aVoid -> Log.v(TAG, "DocumentSnapshot successfully written!"))
+                                    .addOnFailureListener(e -> Log.v(TAG, "Error writing document", e));
                         }
-                        db.document(userId) // use the user's UID here as well
-                                .collection("Patients")
-                                .document(id)
-                                .set(mp, SetOptions.merge())
-                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
-
                     }
                 });
     }
@@ -108,6 +104,7 @@ public class BluetoothTransmissionService {
         dataPackets.add(msg);
         isSent = false;
         if(dataPackets.size() == 6) {
+            Log.v(TAG, "Sending to db");
             sentToDB();
             ArrayList<String> dataPacketsTemp = new ArrayList<>(dataPackets);
             dataPacketsTemp.add("predict");

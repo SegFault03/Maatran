@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -205,8 +206,8 @@ public class BluetoothActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_activity_screen);
-        and_id = getIntent().getParcelableExtra("and_id");
-
+        //and_id = getIntent().getParcelableExtra("and_id");
+        and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         //Initializing data members
         mBluetoothStateChangeBtn = findViewById(R.id.bluetooth_service_connect_btn);
         mBluetoothDeviceList = findViewById(R.id.device_list_lv);
