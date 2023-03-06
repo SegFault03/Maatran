@@ -145,7 +145,7 @@ public class ModelApi extends AsyncTask<ArrayList<String>, String, String> {
                 return "exception: incorrect API endpoint; expected 'wakeup'";
         }
         if(data[0].size()<7)
-            return "exception: Inner array contains less than 8 arguments";
+            return "exception: Inner array contains less than 7 arguments";
         else
         {
             requestType = String.valueOf(data[0].get(6));

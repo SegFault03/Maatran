@@ -26,12 +26,7 @@ public class BluetoothTransmissionService {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
-        ModelApi.ModelApiCallback modelApiCallback = new ModelApi.ModelApiCallback() {
-            @Override
-            public void onModelApiResult(String result) {
-                Log.v(TAG,result);
-            }
-        };
+        ModelApi.ModelApiCallback modelApiCallback = result -> Log.v(TAG,result);
         modelApi = new ModelApi(modelApiCallback);
         this.and_id = and_id;
     }
@@ -109,8 +104,10 @@ public class BluetoothTransmissionService {
         dataPackets.add(msg);
         isSent = false;
         if(dataPackets.size() == 6) {
-            sentToDB();
-            modelApi.execute(dataPackets);
+//            sentToDB();
+            ArrayList<String> dataPacketsTemp = new ArrayList<>(dataPackets);
+            dataPacketsTemp.add("predict");
+            modelApi.execute(dataPacketsTemp);
             dataPackets.clear();
         }
     }
