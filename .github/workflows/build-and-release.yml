@@ -3,10 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - gradleTests
       - release
-    tags:
-      - "v*"
 
 jobs:
   apk:
