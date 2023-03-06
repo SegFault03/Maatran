@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -29,13 +29,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -47,7 +42,6 @@ public class DashboardActivity extends AppCompatActivity {
     private static final int BLUETOOTH_SCAN = 5;
     private static final int BLUETOOTH_CONNECT = 6;
     ImageButton mProfilePic;
-    private DocumentReference ref;
     private String and_id;
 
     @Override
@@ -70,10 +64,11 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         getPermissions();
         fetchUserDetails();
+        new ModelApi(result -> Log.v(TAG,result)).execute(new ArrayList<>(Collections.singletonList("wakeup")));;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_SEND_SMS: {
@@ -271,10 +266,23 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    //TODO This is currently being used for debugging purposes. Should be removed before a release.
     public void callModel(View view)
     {
-        ModelApi mApi = new ModelApi(this.getApplicationContext());
-        mApi.execute();
+        ModelApi.ModelApiCallback modelApiCallback = result -> {
+            Log.v(TAG,result);
+            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        };
+        ModelApi mApi = new ModelApi(modelApiCallback);
+        ArrayList<String> dataPackets = new ArrayList<>();
+        dataPackets.add(String.valueOf(16));
+        dataPackets.add(String.valueOf(100));
+        dataPackets.add(String.valueOf(70));
+        dataPackets.add(String.valueOf(7.2));
+        dataPackets.add(String.valueOf(98));
+        dataPackets.add(String.valueOf(80));
+        dataPackets.add("predict");
+        new ModelApi(modelApiCallback).execute(dataPackets);
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -286,64 +294,5 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
         return true;
-    }
-
-    public class ModelApi extends AsyncTask<String, String, String> {
-        private static final String TAG = "ModelApi";
-        StringBuilder response;
-        private Context context;
-        ModelApi(Context context)
-        {
-            this.context=context;
-        }
-        public void sendRequest(String data) throws Exception {
-            // The URL of the API endpoint
-            //URL url = new URL("https://zxv5hi.deta.dev/predict/"+data);
-            URL url = new URL("https://zxv5hi.deta.dev/predict?sample="+data);
-            // Open an HttpURLConnection to the API endpoint
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            // Read the response data
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
-
-            // Print the response data
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            JSONObject obj = new JSONObject();
-            // In this case, it's an array of arrays
-            JSONArray item1 = new JSONArray();
-            // Inner array has 10 elements
-            item1.add(16);
-            item1.add(100);
-            item1.add(70);
-            item1.add(7.2);
-            item1.add(98);
-            item1.add(80);
-            obj.put("data", item1);
-            //System.out.println(obj.toJSONString());
-            // Make the request using the JSON document string
-            response = new StringBuilder();
-            try{
-                sendRequest(obj.toJSONString());
-                DashboardActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }catch(Exception e)
-            {
-                Log.e(TAG,e.toString());
-            }
-            return null;
-        }
     }
 }

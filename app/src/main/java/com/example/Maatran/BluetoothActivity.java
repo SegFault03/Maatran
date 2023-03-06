@@ -1,13 +1,11 @@
 package com.example.Maatran;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,13 +26,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -791,16 +786,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
         mBtService = new BluetoothTransmissionService(mBluetoothChatService, and_id);
         mBtService.startRequestThread();
-//        String message="Hi!This is ";
-//        // Check that we're actually connected before trying anything
-//        if (mBluetoothChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
-//            Toast.makeText(this, "not_connected", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Get the message bytes and tell the BluetoothChatService to write
-//        byte[] send = message.getBytes();
-//        mBluetoothChatService.write(send);
     }
 
 

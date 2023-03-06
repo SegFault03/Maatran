@@ -26,7 +26,13 @@ public class BluetoothTransmissionService {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
-        modelApi = new ModelApi(obj);
+        ModelApi.ModelApiCallback modelApiCallback = new ModelApi.ModelApiCallback() {
+            @Override
+            public void onModelApiResult(String result) {
+                Log.v(TAG,result);
+            }
+        };
+        modelApi = new ModelApi(modelApiCallback);
         this.and_id = and_id;
     }
 
@@ -120,9 +126,10 @@ public class BluetoothTransmissionService {
         public void run()
         {
             int i = 1;
-            while (i <= 6 && !stop)
+            while (i <= 6 && !stop) {
                 sendRequest(i);
                 i++;
+            }
         }
 
         public void cancel()
