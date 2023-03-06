@@ -157,7 +157,13 @@ public class ModelApi extends AsyncTask<ArrayList<String>, String, String> {
         // In this case, it's an array of arrays
         JSONArray item1 = new JSONArray();
         for(int i=0;i<6;i++) {
-            item1.add(Double.parseDouble(dataPackets.get(i)));
+            try{
+                item1.add(Double.parseDouble(dataPackets.get(i)));
+            }
+            catch (Exception e)
+            {
+                return "exception: "+e.toString();
+            }
         }
         obj.put("data",item1);
         return sendRequest(obj.toJSONString());

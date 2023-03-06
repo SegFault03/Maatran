@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -77,9 +78,12 @@ public class BluetoothTransmissionService {
         }
         CollectionReference db= FirebaseFirestore.getInstance().collection("UserDetails");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        db.document(user.getEmail())
+        assert user != null;
+        String userId = user.getEmail(); // use UID instead of email as the document ID
+        assert userId != null;
+        db.document(userId)
                 .collection("Patients")
-                .whereEqualTo("and_id", and_id)
+                .whereEqualTo("android_id", and_id)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         String id="";
@@ -87,7 +91,7 @@ public class BluetoothTransmissionService {
                         {
                             id=ds.getId();
                         }
-                        db.document(user.getEmail())
+                        db.document(userId) // use the user's UID here as well
                                 .collection("Patients")
                                 .document(id)
                                 .set(mp, SetOptions.merge())
@@ -104,7 +108,7 @@ public class BluetoothTransmissionService {
         dataPackets.add(msg);
         isSent = false;
         if(dataPackets.size() == 6) {
-//            sentToDB();
+            sentToDB();
             ArrayList<String> dataPacketsTemp = new ArrayList<>(dataPackets);
             dataPacketsTemp.add("predict");
             modelApi.execute(dataPacketsTemp);
