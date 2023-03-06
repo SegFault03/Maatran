@@ -49,7 +49,7 @@ ProgressDialog progressDialog;
             checkForUserDetails(user);
         }
     }
-    //TODO this is a test comment v1.0
+
     //for registration, calls RegistrationActivity.class
     public void registerOptions(View view) {
         LayoutInflater inflater = getLayoutInflater();
