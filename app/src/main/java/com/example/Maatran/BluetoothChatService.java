@@ -10,9 +10,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -60,6 +68,7 @@ public class BluetoothChatService {
     // Key names received from the BluetoothChatService Handler
     String DEVICE_NAME = "device_name";
     String TOAST = "toast";
+    private String and_id;
 
     /**
      * Constructor. Prepares a new BluetoothChat session.
@@ -67,11 +76,12 @@ public class BluetoothChatService {
      * @param context The UI Activity Context
      * @param handler A Handler to send messages back to the UI Activity
      */
-    public BluetoothChatService(Context context, Handler handler) {
+    public BluetoothChatService(Context context, Handler handler, String and_id) {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mNewState = mState;
         mHandler = handler;
+        this.and_id = and_id;
     }
 
     /**
@@ -275,6 +285,37 @@ public class BluetoothChatService {
 
         // Start the service over to restart listening mode
         BluetoothChatService.this.start();
+    }
+
+    public void predictionReceived(String prediction) {
+        Message msg = mHandler.obtainMessage(MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(TOAST, prediction);
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);
+        HashMap<String, String> mp = new HashMap<>();
+        mp.put("risk", prediction);
+        CollectionReference db=FirebaseFirestore.getInstance().collection("UserDetails");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        db.document(user.getEmail())
+                .collection("Patients")
+                .whereEqualTo("and_id", and_id)
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String id="";
+                        for(DocumentSnapshot ds : task.getResult())
+                        {
+                            id=ds.getId();
+                        }
+                        db.document(user.getEmail())
+                                .collection("Patients")
+                                .document(id)
+                                .set(mp, SetOptions.merge())
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
+                                .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+
+                    }
+                });
     }
 
     /**
@@ -505,11 +546,10 @@ public class BluetoothChatService {
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
             int bytes;
-
             // Keep listening to the InputStream while connected
             while (mState == STATE_CONNECTED) {
                 try {
-                    // Read from the InputStream
+                     //Read from the InputStream
                     bytes = mmInStream.read(buffer);
 
                     // Send the obtained bytes to the UI Activity

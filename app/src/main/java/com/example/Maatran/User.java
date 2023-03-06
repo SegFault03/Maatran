@@ -12,6 +12,7 @@ import android.os.Parcelable;
 public class User implements Parcelable {
     private String name, gender, mobile, address, emergency, locality;
     private long age;
+    private String android_id;
 
     public User()
     {
@@ -132,4 +133,11 @@ public class User implements Parcelable {
         parcel.writeLong(age);
     }
 
+    public String getAndroid_id() {
+        return android_id;
+    }
+
+    public void setAndroid_id(String android_id) {
+        this.android_id = android_id;
+    }
 }

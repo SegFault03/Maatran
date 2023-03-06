@@ -1,17 +1,16 @@
 package com.example.Maatran;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -28,13 +27,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -90,7 +86,6 @@ public class BluetoothActivity extends AppCompatActivity {
     //CODES TO INDICATE BLUETOOTH STATUS
     /**Codes for requesting permissions, is used in onActivityResult*/
     private static final int REQUEST_ENABLE_BT = 3;
-    private static final int REQUEST_ENABLE_FINE_LOCATION = 5;
 
     /**0 if bluetooth is not enabled, 1 otherwise*/
     private static int BLUETOOTH_STATUS;
@@ -112,7 +107,7 @@ public class BluetoothActivity extends AppCompatActivity {
     static final String DEVICE_NAME = "device_name";
     static final String TOAST = "toast";
 
-    //TODO Stores the name of the device to connect to. Will be different for each patient and
+
 
     /**will be received from the calling Activity (to be implemented later)*/
     private String mDeviceToConnect;
@@ -121,7 +116,6 @@ public class BluetoothActivity extends AppCompatActivity {
      * Stores the name and address of the paired device
      */
     private String mConnectedDeviceName = null;
-    private String mConnectedDeviceHardwareAddress = null;
 
     /**
      * Global BluetoothAdapter class object to use Bluetooth features
@@ -139,6 +133,7 @@ public class BluetoothActivity extends AppCompatActivity {
      */
     BluetoothChatService mBluetoothChatService;
     BluetoothTransmissionService mBtService;
+    private String and_id;
 
     /**
      * File stored in cache memory containing user data, including the name of the device to connect
@@ -210,6 +205,7 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_activity_screen);
 
+        and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         //Initializing data members
         mBluetoothStateChangeBtn = findViewById(R.id.bluetooth_service_connect_btn);
         mBluetoothDeviceList = findViewById(R.id.device_list_lv);
@@ -227,12 +223,12 @@ public class BluetoothActivity extends AppCompatActivity {
         mFindDevicesBtn = findViewById(R.id.find_devices_btn);
         mFindDevicesBtn.setVisibility(View.INVISIBLE);
 
-        //TODO change code
+
         //Initializing the Bluetooth settings btn and binding it with a callback:
         mOpenBluetoothSettings = findViewById(R.id.bluetooth_settings);
         mOpenBluetoothSettings.setOnClickListener(this::changeDeviceToConnect);
 
-        //TODO This is the button for starting data transmissions.
+        //This is the button for starting data transmissions.
         mStartDeviceTransmissionBtn = findViewById(R.id.start_transmission_btn);
         mStartDeviceTransmissionBtn.setVisibility(View.GONE);
         mStartDeviceTransmissionBtn.setOnClickListener(this::startDeviceTransmissions);
@@ -281,7 +277,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * Overrides onActivityResult() in AppCompatActivity class. Is called automatically after startActivityForResult() is called
      * @param requestCode: request code for turning on Bluetooth
      * @param resultCode: returned by startActivityForResult; indicates whether request was granted or rejected
-     * @param data: TODO Intent object to be passed (to be implemented in future)
+     * @param data: Intent object to be passed (to be implemented in future)
      * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -366,7 +362,7 @@ public class BluetoothActivity extends AppCompatActivity {
     public void startBluetoothChatService()
     {
         if(mBluetoothChatService==null)
-            mBluetoothChatService = new BluetoothChatService(BluetoothActivity.this,mChatServiceHandler);
+            mBluetoothChatService = new BluetoothChatService(BluetoothActivity.this,mChatServiceHandler, and_id);
         mBluetoothChatService.start();
     }
 
@@ -375,12 +371,12 @@ public class BluetoothActivity extends AppCompatActivity {
      * Manages file operations - creation, updation
      * @param update boolean object that indicates whether updation is to be performed or not
      * */
-    //TODO Implement caching
+
     public void manageCachedFiles(boolean update)
     {
         //Create objects for file handling
-        Scanner fileScanner = null;
-        StringBuffer fileContents = null;
+        Scanner fileScanner;
+        StringBuilder fileContents;
         FileWriter fileWriter = null;
         String tempDeviceName = null;
 
@@ -395,7 +391,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
             //File does not exist, create the file and write to it
             try{
-//                mCachedUserDataFile=File.createTempFile("maatran_user_data.tmp", null, this.getCacheDir());
+
                 boolean check = mCachedUserDataFile.createNewFile();
                 if(mCachedUserDataFile.exists())
                 {
@@ -431,7 +427,7 @@ public class BluetoothActivity extends AppCompatActivity {
         {
             Log.e(TAG,"Could not create FileWriter object!");
         }
-        fileContents = new StringBuffer();
+        fileContents = new StringBuilder();
 
 
         //File exists
@@ -466,7 +462,7 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
 
-        //TODO TESTING
+
         //This block will only execute when the device name needs to be changed
         //It assumes that both the file as well as the field exists.
         if(update)
@@ -589,7 +585,7 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    //TODO STATUS BAR NOT VISIBLE POST CONNECTION
+
     /**Controls Status Bar text and other views corresponding to device connections status*/
     private void updateStatusText()
     {
@@ -737,7 +733,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 String deviceName = device.getName();
                 if (deviceName.equals(mDeviceToConnect)) {
                     mConnectedDeviceName = deviceName;
-                    mConnectedDeviceHardwareAddress = deviceHardwareAddress;
                     Toast.makeText(this, "Device Found!", Toast.LENGTH_SHORT).show();
                     if (!mNameOfDevices.contains(deviceName)) {
                           mDiscoveredBluetoothDevices.add(device);
@@ -780,25 +775,15 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    //TODO Implement data transmissions here:
+
     /**
      * Starts device transmissions (read/write)
      * @param view: view that is clicked
      * */
     public void startDeviceTransmissions(View view) {
 
-        mBtService = new BluetoothTransmissionService(mBluetoothChatService);
+        mBtService = new BluetoothTransmissionService(mBluetoothChatService, and_id);
         mBtService.startRequestThread();
-//        String message="Hi!This is ";
-//        // Check that we're actually connected before trying anything
-//        if (mBluetoothChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
-//            Toast.makeText(this, "not_connected", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // Get the message bytes and tell the BluetoothChatService to write
-//        byte[] send = message.getBytes();
-//        mBluetoothChatService.write(send);
     }
 
 
@@ -838,7 +823,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    Toast.makeText(BluetoothActivity.this,mConnectedDeviceName + ":  " + readMessage,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(BluetoothActivity.this,mConnectedDeviceName + ":  " + readMessage,Toast.LENGTH_SHORT).show();
                     if(mBtService!=null)
                         mBtService.responseReceived(readMessage);
                     break;

@@ -2,7 +2,16 @@ package com.example.Maatran;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BluetoothTransmissionService {
     public boolean isSent;
@@ -10,12 +19,17 @@ public class BluetoothTransmissionService {
     private static final String TAG = "BTransmissionService";
     sendRequestThread mSendRequestThread;
     ArrayList<String> dataPackets;
+    ModelApi modelApi;
+    private String and_id;
 
-    public BluetoothTransmissionService(BluetoothChatService obj)
+    public BluetoothTransmissionService(BluetoothChatService obj, String and_id)
     {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
+        ModelApi.ModelApiCallback modelApiCallback = result -> Log.v(TAG,result);
+        modelApi = new ModelApi(modelApiCallback);
+        this.and_id = and_id;
     }
 
     public void startRequestThread()
@@ -55,11 +69,48 @@ public class BluetoothTransmissionService {
         Log.v(TAG,"Request Thread sent a request...");
     }
 
+    public void sentToDB()
+    {
+        HashMap<String, String> mp = new HashMap<>();
+        for(int i=1;i<=6;i++)
+        {
+            mp.put(Integer.toString(i), dataPackets.get(i-1));
+        }
+        CollectionReference db= FirebaseFirestore.getInstance().collection("UserDetails");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        String userId = user.getEmail();
+        assert userId != null;
+        db.document(userId)
+                .collection("Patients")
+                .whereEqualTo("android_id", and_id)
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        //Log.v(TAG, "Task Successful"+and_id);
+                        for(DocumentSnapshot ds : task.getResult())
+                        {
+                            DocumentReference dr=ds.getReference();
+                            dr.set(mp, SetOptions.merge())
+                                    .addOnSuccessListener(aVoid -> Log.v(TAG, "DocumentSnapshot successfully written!"))
+                                    .addOnFailureListener(e -> Log.v(TAG, "Error writing document", e));
+                        }
+                    }
+                });
+    }
+
     public synchronized void responseReceived(String msg)
     {
         Log.v(TAG,"Response received...");
         dataPackets.add(msg);
         isSent = false;
+        if(dataPackets.size() == 6) {
+            Log.v(TAG, "Sending to db");
+            sentToDB();
+            ArrayList<String> dataPacketsTemp = new ArrayList<>(dataPackets);
+            dataPacketsTemp.add("predict");
+            modelApi.execute(dataPacketsTemp);
+            dataPackets.clear();
+        }
     }
 
     private class sendRequestThread extends Thread{
@@ -73,8 +124,10 @@ public class BluetoothTransmissionService {
         public void run()
         {
             int i = 1;
-            while (i++ <= 4 && !stop)
+            while (i <= 6 && !stop) {
                 sendRequest(i);
+                i++;
+            }
         }
 
         public void cancel()

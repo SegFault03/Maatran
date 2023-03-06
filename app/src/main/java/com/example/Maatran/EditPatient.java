@@ -2,6 +2,7 @@ package com.example.Maatran;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +31,7 @@ public class EditPatient extends AppCompatActivity {
     public static final String TAG="EditPatient";
     User user;
     String id;
-    private String locality, gender;
+    private String locality, gender, and_id;
     boolean newDetails, isPatient, isWorker;
     private EditText name, age, mobile, emergency, address, hospital_name, employee_id;
     Spinner spinner_locality, spinner_gender;
@@ -41,6 +42,8 @@ public class EditPatient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_details);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         hospital_name = findViewById(R.id.hospital_name);
         employee_id = findViewById(R.id.employee_id);
@@ -94,9 +97,9 @@ public class EditPatient extends AppCompatActivity {
                                     {
 
                                         if(document.get("hospitalName")!=null)
-                                        hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
+                                            hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
                                         if(document.get("employeeId")!=null)
-                                        employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
+                                            employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
                                         isWorker = true;
                                         findViewById(R.id.location_details).setVisibility(View.GONE);
                                         findViewById(R.id.view_21).setVisibility(View.GONE);
@@ -184,6 +187,8 @@ public class EditPatient extends AppCompatActivity {
             user.setEmergency(emergency.getText().toString());
             user.setAge(Long.parseLong(age.getText().toString()));
             user.setLocality(locality);
+            if(newDetails)
+                user.setAndroid_id(and_id);
         }
         if(isWorker)
         {
@@ -212,6 +217,7 @@ public class EditPatient extends AppCompatActivity {
             if(newDetails)
             {
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                //intent.putExtra("user",user);
                 startActivity(intent);
             }
             else

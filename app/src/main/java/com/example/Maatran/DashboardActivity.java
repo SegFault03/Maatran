@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,6 +29,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -38,6 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final int BLUETOOTH_SCAN = 5;
     private static final int BLUETOOTH_CONNECT = 6;
     ImageButton mProfilePic;
+    private String and_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
         mProfilePic = findViewById(R.id.dashboardProfilePic);
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     @Override
@@ -58,10 +64,11 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         getPermissions();
         fetchUserDetails();
+        new ModelApi(result -> Log.v(TAG,result)).execute(new ArrayList<>(Collections.singletonList("wakeup")));
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_SEND_SMS: {
@@ -240,6 +247,7 @@ public class DashboardActivity extends AppCompatActivity {
         getPermissions();
         if(checkForPermissions()) {
             Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
+            intent.putExtra("and_id", and_id);
             startActivity(intent);
         }
         else
@@ -256,6 +264,25 @@ public class DashboardActivity extends AppCompatActivity {
         if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
+    }
+
+    //TODO This is currently being used for debugging purposes. Should be removed before a release.
+    public void callModel(View view)
+    {
+        ModelApi.ModelApiCallback modelApiCallback = result -> {
+            Log.v(TAG,result);
+            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        };
+        ModelApi mApi = new ModelApi(modelApiCallback);
+        ArrayList<String> dataPackets = new ArrayList<>();
+        dataPackets.add(String.valueOf(16));
+        dataPackets.add(String.valueOf(100));
+        dataPackets.add(String.valueOf(70));
+        dataPackets.add(String.valueOf(7.2));
+        dataPackets.add(String.valueOf(98));
+        dataPackets.add(String.valueOf(80));
+        dataPackets.add("predict");
+        new ModelApi(modelApiCallback).execute(dataPackets);
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.github.alexfu.androidautoversion'
+apply plugin: 'com.android.application'
+apply from: "$project.rootDir/tools/script-git-version.gradle"
 
 android {
     compileSdk 33
@@ -9,8 +10,8 @@ android {
         applicationId "com.example.maatran"
         minSdk 21
         targetSdk 33
-        versionName androidAutoVersion.versionName
-        versionCode androidAutoVersion.versionCode
+        versionName gitVersionName
+        versionCode gitVersionCode
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
@@ -22,20 +23,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions androidAutoVersion.versionName
+    flavorDimensions gitVersionName
     productFlavors {
         alpha {
-            dimension androidAutoVersion.versionName
+            versionCode gitVersionCodeTime
+            versionName gitVersionName
             versionNameSuffix "-alpha"
         }
 
         beta {
-            dimension androidAutoVersion.versionName
+            versionCode gitVersionCode
+            versionName gitVersionName
             versionNameSuffix "-beta"
         }
 
         prod {
-            dimension androidAutoVersion.versionName
+            versionCode gitVersionCode
+            versionName gitVersionName
             versionNameSuffix "-release"
         }
     }
@@ -51,19 +55,28 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.firebase:firebase-auth:21.1.0'
-    implementation 'com.google.firebase:firebase-firestore:24.4.1'
+    implementation 'com.google.firebase:firebase-firestore:24.4.4'
 //Blur background
     implementation 'com.eightbitlab:blurview:1.6.6'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.10'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+}
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
 }
