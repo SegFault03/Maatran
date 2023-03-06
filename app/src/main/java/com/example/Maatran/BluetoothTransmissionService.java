@@ -79,7 +79,7 @@ public class BluetoothTransmissionService {
         CollectionReference db= FirebaseFirestore.getInstance().collection("UserDetails");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
-        String userId = user.getEmail(); // use UID instead of email as the document ID
+        String userId = user.getEmail();
         assert userId != null;
         db.document(userId)
                 .collection("Patients")

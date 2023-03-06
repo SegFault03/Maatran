@@ -64,7 +64,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         getPermissions();
         fetchUserDetails();
-        new ModelApi(result -> Log.v(TAG,result)).execute(new ArrayList<>(Collections.singletonList("wakeup")));;
+        new ModelApi(result -> Log.v(TAG,result)).execute(new ArrayList<>(Collections.singletonList("wakeup")));
     }
 
     @Override
