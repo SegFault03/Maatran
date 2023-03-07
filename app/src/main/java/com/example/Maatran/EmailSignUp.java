@@ -106,6 +106,7 @@ public class EmailSignUp extends AppCompatActivity {
     public void signInOptions(View view) {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
+        super.finish();
     }
 
 
@@ -138,6 +139,7 @@ public class EmailSignUp extends AppCompatActivity {
             intent.putExtra("isPatient", false);
             intent.putExtra("newDetails", true);
             startActivity(intent);
+            super.finish();
         }
     }
 }
