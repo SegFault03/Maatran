@@ -33,8 +33,8 @@ ProgressDialog progressDialog;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_1);
         progressDialog=new ProgressDialog(this);
-        //Button test_btn = findViewById(R.id.test_btn);
-        //test_btn.setOnClickListener(v-> signInWithTestAccount());
+        Button test_btn = findViewById(R.id.test_btn);
+        test_btn.setOnClickListener(v-> startSplashScreenActivity());
     }
 
     //for signing-in, calls LoginActivity.class
@@ -133,6 +133,12 @@ ProgressDialog progressDialog;
 //                                Toast.LENGTH_SHORT).show();
 //                    }
 //                });
+    }
+
+    private void startSplashScreenActivity()
+    {
+        Intent blintent = new Intent(getApplicationContext(), Main2Activity.class);
+        startActivity(blintent);
     }
 }
 
