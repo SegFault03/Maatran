@@ -22,14 +22,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mumtranlogin">
         <activity
-            android:name=".Main2Activity"
-            android:exported="false" />
+            android:name=".MainActivity"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".ProfileView"
             android:exported="false" />
@@ -39,13 +47,8 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".RegisterSignUpActivity"
+            android:exported="false">
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".EmailSignUp" />
