@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/main_activity_splash_art">
+    android:background="@drawable/splash_screen_bg_alt3">
 
 
     <View
@@ -14,9 +14,10 @@
         android:layout_alignParentTop="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.317" />
+        app:layout_constraintVertical_bias="0.314" />
 
     <TextView
         android:id="@+id/mumtran"
@@ -28,11 +29,10 @@
         android:fontFamily="@font/alegreya_sans"
         android:gravity="center"
         android:text="@string/mum_tran_string"
-        android:textColor="#373737"
+        android:textColor="#FDFFFF"
         android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="108dp"
         android:background="@drawable/rectangle_1_shape"
-        android:backgroundTint="#042E2D"
         android:onClick="signInOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
@@ -80,7 +79,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/rectangle_1_shape"
-        android:backgroundTint="#042E2D"
         android:onClick="registerOptions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,31 +105,19 @@
         app:layout_constraintEnd_toEndOf="@+id/_rectangle_13"
         app:layout_constraintStart_toStartOf="@+id/_rectangle_13"
         app:layout_constraintTop_toTopOf="@+id/_rectangle_13"
-        app:layout_constraintVertical_bias="0.666" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="147dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="132dp"
-        android:fontFamily="@font/amarante"
-        android:text="Healthcare for pregnancy at one stop."
-        android:textAlignment="center"
-        android:textColor="#2C1B1B"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_rectangle_13" />
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <Button
         android:id="@+id/test_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="644dp"
+        android:layout_marginTop="712dp"
         android:text="TEST"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bg" />
+        app:layout_constraintTop_toTopOf="@+id/bg"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
