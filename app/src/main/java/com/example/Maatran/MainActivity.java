@@ -11,15 +11,15 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.lang.invoke.ConstantCallSite;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements test{
+public class MainActivity extends AppCompatActivity implements commonUIFunctions {
 
     private static final String TAG = "MainActivity";
     int lastUpdatedDot = 0;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements test{
         setContentView(R.layout.activity_main2);
         ConstraintLayout layout = findViewById(R.id.main_activity_bg);
         Drawable backgroundDrawable = layout.getBackground();
-        change(backgroundDrawable,this);
+        changeStatusBarColor(backgroundDrawable,this);
         loadingDotHandler = new Handler();
         loadingDotHandler.postDelayed(loadingDotRunnable,300);
         signInOptions();

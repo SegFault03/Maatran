@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class ProfileView extends AppCompatActivity implements test{
+public class ProfileView extends AppCompatActivity implements commonUIFunctions {
     FirebaseFirestore db;
     FirebaseUser user;
     boolean isWorker;
@@ -52,7 +52,7 @@ public class ProfileView extends AppCompatActivity implements test{
         mProfilePic = (ImageView)findViewById(R.id.user_profile_pic);
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
         Drawable backgroundDrawable = layout.getBackground();
-        change(backgroundDrawable,ProfileView.this);
+        changeStatusBarColor(backgroundDrawable,ProfileView.this);
     }
 
     @Override

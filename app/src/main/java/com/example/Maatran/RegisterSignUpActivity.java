@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +26,7 @@ import java.util.Objects;
 
 //main Activity
 //XML file: home_1
-public class RegisterSignUpActivity extends AppCompatActivity implements test{
+public class RegisterSignUpActivity extends AppCompatActivity implements commonUIFunctions {
 
 private static final String TAG="RegisterSignUpActivity";
 ProgressDialog progressDialog;
@@ -36,7 +37,7 @@ ProgressDialog progressDialog;
         setContentView(R.layout.home_1);
         ConstraintLayout layout = findViewById(R.id.registrationLogin_bg);
         Drawable backgroundDrawable = layout.getBackground();
-        change(backgroundDrawable,this);
+        changeStatusBarColor(backgroundDrawable,this);
         progressDialog=new ProgressDialog(this);
         Button test_btn = findViewById(R.id.test_btn);
         test_btn.setOnClickListener(v-> signInWithTestAccount());
