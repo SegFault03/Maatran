@@ -1,6 +1,7 @@
 package com.example.Maatran;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,7 +23,7 @@ import java.util.Objects;
 
 //login activity, called from main activity
 //corresponding xml file: screen_1
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements commonUIFunctions {
 
     private static final String TAG = "LoginActivity";
     // [START declare_auth]
@@ -34,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.login_signup);
+        ConstraintLayout layout = findViewById(R.id.login_signup_bg);
+        Drawable backgroundDrawable = layout.getBackground();
+        changeStatusBarColor(backgroundDrawable,this);
         Button login = findViewById(R.id.continue_button);
         TextView forgotPwdText = findViewById(R.id.forgot_pwd_text);
         forgotPwdText.setOnClickListener(v->{

@@ -1,6 +1,7 @@
 package com.example.Maatran;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +26,7 @@ import java.util.Objects;
 //Called from RegistrationActivity
 //email based sign-up
 //xml file: screen-3
-public class EmailSignUp extends AppCompatActivity {
+public class EmailSignUp extends AppCompatActivity implements commonUIFunctions {
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
@@ -33,14 +36,21 @@ public class EmailSignUp extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ConstraintLayout layout;
         mAuth = FirebaseAuth.getInstance();
         isPatient = getIntent().getBooleanExtra("isPatient", true);
 
-        if(isPatient)
+        if(isPatient) {
             setContentView(R.layout.signup_as_patient);
-        else
+            layout = findViewById(R.id.signup_as_patient_bg);
+        }
+        else {
             setContentView(R.layout.signup_as_worker);
+            layout = findViewById(R.id.signup_as_worker_bg);
+        }
 
+        Drawable backgroundDrawable = layout.getBackground();
+        changeStatusBarColor(backgroundDrawable, this);
         Button continue_btn = findViewById(R.id.continue_button);
         continue_btn.setOnClickListener(view -> {
             if(isPatient) {

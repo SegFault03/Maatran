@@ -18,9 +18,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements commonUIFunctions {
     public static final String TAG = "DashboardActivity";
     ProgressDialog progressDialog;
     FirebaseUser user;
@@ -55,6 +57,13 @@ public class DashboardActivity extends AppCompatActivity {
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
         user = FirebaseAuth.getInstance().getCurrentUser();
         and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        // Get a reference to your layout object
+        ConstraintLayout layout = findViewById(R.id.dashboard_bg);
+
+        // Get a reference to your layout's background drawable
+        Drawable backgroundDrawable = layout.getBackground();
+        changeStatusBarColor(backgroundDrawable,DashboardActivity.this);
     }
 
     @Override

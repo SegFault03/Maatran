@@ -12,10 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ChangePasswordActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity implements commonUIFunctions {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,6 +26,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String user_name = getIntent().getExtras().getString("UserName");
         String url = getIntent().getExtras().getString("ResLoc");
         setContentView(R.layout.change_password);
+        ConstraintLayout layout = findViewById(R.id.change_password_bg);
+        Drawable backgroundDrawable = layout.getBackground();
+        changeStatusBarColor(backgroundDrawable,this);
         TextView tv_name = findViewById(R.id.p_user_name);
         ImageView profilePic = findViewById(R.id.user_profile_pic2);
         tv_name.setText(user_name);

@@ -1,21 +1,25 @@
 package com.example.Maatran;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ResetPasswordActivity extends AppCompatActivity {
+public class ResetPasswordActivity extends AppCompatActivity implements commonUIFunctions {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
-
+        Drawable backgroundDrawable = AppCompatResources.getDrawable(this,R.drawable.concept_woman_thinking_laptop_forgot_your_password_account_login_505620_983);
+        changeStatusBarColor(backgroundDrawable,this);
     }
 
     public void resetPassword(View view)
