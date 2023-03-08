@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,9 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.palette.graphics.Palette;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -56,6 +63,29 @@ public class DashboardActivity extends AppCompatActivity {
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
         user = FirebaseAuth.getInstance().getCurrentUser();
         and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        // Get a reference to your layout object
+        ConstraintLayout layout = findViewById(R.id.dashboard_bg);
+
+        // Get a reference to your layout's background drawable
+        Drawable backgroundDrawable = layout.getBackground();
+
+        // Cast the background drawable to a BitmapDrawable
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) backgroundDrawable;
+
+        // Get the bitmap of the BitmapDrawable
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+
+        // Create a Palette object from the bitmap
+        // This method will be called when the Palette has finished processing the image
+        Palette.from(bitmap).generate(palette -> {
+
+            // Get the dominant color from the Palette
+            int color = palette.getDominantColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+            // Set the status bar color to the dominant color
+            getWindow().setStatusBarColor(color);
+        });
     }
 
     @Override
