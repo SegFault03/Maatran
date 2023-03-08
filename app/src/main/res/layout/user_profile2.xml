@@ -46,15 +46,8 @@
                             android:rotationY="4"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/arrow_right" /><![CDATA[
+                            app:srcCompat="@drawable/arrow_right" />
 
-
-
-    />
-
-
-
-]]>
 
                         <TextView
                             android:id="@+id/textView15"
