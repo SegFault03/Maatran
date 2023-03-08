@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPwdText.setOnClickListener(v->{
             Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
             startActivity(intent);
+            super.finish();
         });
         login.setOnClickListener(view -> {
             String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString();
@@ -111,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
             startActivity(intent);
+            super.finish();
         }
     }
 
@@ -133,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("isPatient",false);
                         intent.putExtra("newDetails", true);
                         startActivity(intent);
+                        super.finish();
                     }
                     else
                     {
@@ -151,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
         startActivity(intent);
+        super.finish();
     }
 
     public void signUpAsPatient(View view)
@@ -158,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), EmailSignUp.class);
         intent.putExtra("isPatient", true);
         startActivity(intent);
+        super.finish();
     }
 
     public void signUpAsWorker(View view)
@@ -165,5 +170,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), EmailSignUp.class);
         intent.putExtra("isPatient", false);
         startActivity(intent);
+        super.finish();
     }
 }

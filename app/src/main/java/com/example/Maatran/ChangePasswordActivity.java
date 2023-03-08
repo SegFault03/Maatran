@@ -52,7 +52,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Password updated, logging out now", Toast.LENGTH_SHORT);
                         toast.show();
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), RegisterSignUpActivity.class);
                         startActivity(intent);
                     }
                     else

@@ -219,6 +219,7 @@ public class EditPatient extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                 //intent.putExtra("user",user);
                 startActivity(intent);
+                super.finish();
             }
             else
             {
@@ -259,6 +260,7 @@ public class EditPatient extends AppCompatActivity {
         if(newDetails) {
             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
             startActivity(intent);
+            super.finish();
         }
         else {
             super.finish();
