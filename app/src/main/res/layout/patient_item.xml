@@ -27,7 +27,7 @@
         android:orientation="vertical"
         android:padding="10dp"
         app:cornerRadius="10dp"
-        app:layoutCornerRadius="5dp">
+        >
 
         <TextView
             android:id="@+id/patient_name_1"

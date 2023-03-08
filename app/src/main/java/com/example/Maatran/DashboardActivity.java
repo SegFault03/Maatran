@@ -59,7 +59,7 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
         and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         // Get a reference to your layout object
-        ConstraintLayout layout = findViewById(R.id.dashboard_bg);
+        ConstraintLayout layout = findViewById(R.id.dashboard_new_bg);
 
         // Get a reference to your layout's background drawable
         Drawable backgroundDrawable = layout.getBackground();
