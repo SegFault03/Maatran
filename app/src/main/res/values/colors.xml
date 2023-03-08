@@ -33,4 +33,5 @@
     <color name="dashboard_primary">#667AFF</color>
     <color name="dashboard_background">#252C4B</color>
     <color name="card_background">#27325F</color>
+    <color name="ui_color1">#FFF64497</color>
 </resources>

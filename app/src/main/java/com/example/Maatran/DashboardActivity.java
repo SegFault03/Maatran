@@ -12,7 +12,6 @@ import android.provider.Settings;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +46,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard_1);
+        setContentView(R.layout.dashboard_2);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
@@ -128,19 +127,27 @@ public class DashboardActivity extends AppCompatActivity {
             {
                 DocumentSnapshot ds = task.getResult();
                 if(ds.exists()) {
-                    user_name.setText(Objects.requireNonNull(ds.get("name")).toString());
+                    user_name.setText(Objects.requireNonNull("Hello "+ds.get("name")).toString()+"!");
                     if(Objects.requireNonNull(ds.get("isWorker")).toString().equals("true")) {
-                        findViewById(R.id.report_button).setVisibility(View.GONE);
-                        findViewById(R.id.bluetooth_test_btn).setVisibility(View.GONE);
+                        findViewById(R.id.rectangle_6).setVisibility(View.GONE);
+                        findViewById(R.id.rectangle_3).setVisibility(View.GONE);
+                        findViewById(R.id.rectangle_5).setVisibility(View.GONE);
+                        findViewById(R.id.rectangle_8).setVisibility(View.GONE);
+                        findViewById(R.id.imageView6).setVisibility(View.GONE);
+                        findViewById(R.id.add_patient).setVisibility(View.GONE);
+                        findViewById(R.id.imageView14).setVisibility(View.GONE);
+                        findViewById(R.id.update_health).setVisibility(View.GONE);
+                        TextView tv= findViewById(R.id.view_family);
+                        tv.setText("VIEW PATIENTS");
                         isPatient = false;
                     }
-                    else
-                    {
-                        Button viewFamilybtn = findViewById(R.id.viewUsersBtn);
-                        Button addFamilybtn = findViewById(R.id.report_button);
-                        viewFamilybtn.setText("VIEW FAMILY");
-                        addFamilybtn.setText("ADD A FAMILY MEMBER");
-                    }
+//                    else
+//                    {
+//                        Button viewFamilybtn = findViewById(R.id.viewUsersBtn);
+//                        Button addFamilybtn = findViewById(R.id.report_button);
+//                        viewFamilybtn.setText("VIEW FAMILY");
+//                        addFamilybtn.setText("ADD A FAMILY MEMBER");
+//                    }
                     setUserProfile(ds);
                 }
                 else

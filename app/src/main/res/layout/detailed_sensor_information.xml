@@ -3,19 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#9EC1EA">
+    android:layout_height="match_parent">
+
 
     <View
         android:id="@+id/viewHeaderBackground"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="#FFFFFF"
+        android:layout_width="431dp"
+        android:layout_height="129dp"
+        android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/back_to_dashboard_btn"
@@ -42,6 +40,8 @@
         android:text="PATIENT DETAILS"
         android:textAlignment="center"
         android:textSize="30sp"
+        android:textColor="#000000"
+        app:fontFamily="@font/dm_sans_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,8 +63,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:padding="10dp"
             android:orientation="vertical"
+            android:background="@drawable/rectangle_9"
             android:paddingBottom="10dp">
 
             <TextView
@@ -74,6 +75,7 @@
                 android:text="Name: Rudraneel Dutta"
                 android:textSize="16sp"
 
+                app:fontFamily="@font/lexend"
                 app:layout_constraintTop_toTopOf="@+id/patient_details_card" />
 
             <TextView
@@ -82,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="Age: 20"
                 android:textSize="16sp"
+                app:fontFamily="@font/lexend"
                 app:layout_constraintTop_toBottomOf="@+id/patient_name" />
 
             <TextView
@@ -90,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sex: Male"
                 android:textSize="16sp"
+                app:fontFamily="@font/lexend"
                 app:layout_constraintTop_toBottomOf="@+id/patient_age" />
 
             <TextView
@@ -98,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:text="Locality: "
                 android:textSize="16sp"
+                app:fontFamily="@font/lexend"
                 app:layout_constraintTop_toBottomOf="@+id/patient_sex" />
 
             <TextView
@@ -106,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:text="Address: "
                 android:textSize="16sp"
+                app:fontFamily="@font/lexend"
                 app:layout_constraintTop_toBottomOf="@+id/patient_spo2" />
 
             <TextView
@@ -114,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:text="Emergency no: "
                 android:textSize="16sp"
+                app:fontFamily="@font/lexend"
                 app:layout_constraintTop_toBottomOf="@+id/patient_temp" />
 
 
@@ -126,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:layout_marginTop="85dp"
-        android:background="@android:color/white"
+        android:background="@drawable/rectangle_2_"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +151,8 @@
                 android:padding="5sp"
                 android:text="REALTIME RISK ANALYSIS"
                 android:textColor="@color/_already_have_an_account__login_color"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:fontFamily="@font/dm_sans" />
 
         </TableRow>
 
@@ -166,7 +174,8 @@
                 android:padding="10sp"
                 android:text="SPO2"
                 android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:fontFamily="@font/lexend" />
 
             <TextView
                 android:layout_width="0dp"
@@ -175,6 +184,7 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="xxx"
+                android:textColor="#000000"
                 android:textSize="12sp" />
 
 
@@ -190,7 +200,8 @@
                 android:padding="10sp"
                 android:text="Pulse Rate"
                 android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:fontFamily="@font/lexend" />
 
             <TextView
                 android:layout_width="0dp"
@@ -198,6 +209,7 @@
                 android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
+                android:textColor="#000000"
                 android:text="xxx"
                 android:textSize="12sp" />
 
@@ -213,7 +225,8 @@
                 android:padding="10sp"
                 android:text="Temperature"
                 android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:fontFamily="@font/lexend" />
 
             <TextView
                 android:layout_width="0dp"
@@ -221,6 +234,7 @@
                 android:layout_weight="0.5"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
+                android:textColor="#000000"
                 android:text="xxx"
                 android:textSize="12sp" />
 
@@ -236,13 +250,15 @@
                 android:padding="10sp"
                 android:text="Systolic Pressure"
                 android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:fontFamily="@font/lexend" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center_horizontal"
+                android:textColor="#000000"
                 android:padding="10sp"
                 android:text="xxx"
                 android:textSize="12sp" />
@@ -259,13 +275,15 @@
                 android:padding="10sp"
                 android:text="Diastolic Pressure"
                 android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:fontFamily="@font/lexend" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center_horizontal"
+                android:textColor="#000000"
                 android:padding="10sp"
                 android:text="xxx"
                 android:textSize="12sp" />
@@ -283,7 +301,8 @@
                 android:text="Risk Prediction"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:fontFamily="@font/dm_sans_bold" />
 
             <TextView
                 android:layout_width="0dp"
@@ -335,11 +354,13 @@
         android:layout_width="110dp"
         android:layout_height="105dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/rectangle_2"
         app:layout_constraintBottom_toTopOf="@+id/patient_details_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewHeaderBackground"
         app:layout_constraintVertical_bias="0.4"
-        android:background="@drawable/profile_ico_white"/>
+        app:srcCompat="@drawable/profile_ico_white"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

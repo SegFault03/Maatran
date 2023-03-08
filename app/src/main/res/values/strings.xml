@@ -50,6 +50,7 @@
     <string name="dashboard_string">DASHBOARD</string>
     <string name="family_members">Family Members</string>
     <string name="username_email">Email/Username</string>
+    <string name="maatran_is_">Maatran is a one stop solution to family level health tracking. Check out the panel below for all our features.</string>
     <string-array name="localities">
         <item>Show all</item>
         <item>Howrah</item>
@@ -63,4 +64,5 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
+    <string name="dashboard">DASHBOARD</string>
 </resources>

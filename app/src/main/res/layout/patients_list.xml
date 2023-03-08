@@ -10,11 +10,10 @@
 
     <View
         android:id="@+id/viewHeaderBackground"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="#567EBA"
+        android:layout_width="427dp"
+        android:layout_height="119dp"
+        android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +67,7 @@
         android:id="@+id/patients"
         android:layout_width="235dp"
         android:layout_height="66dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/dm_sans_bold"
         android:gravity="center_vertical"
         android:text="PATIENTS"
         android:textColor="#373636"

@@ -6,6 +6,10 @@
         <item>@font/amarante</item>
         <item>@font/amaranth_bold</item>
         <item>@font/armata</item>
+        <item>@font/dm_sans</item>
+        <item>@font/dm_sans_bold</item>
         <item>@font/dm_serif_display</item>
+        <item>@font/lexend</item>
+        <item>@font/lexend_medium</item>
     </array>
 </resources>

@@ -11,4 +11,70 @@
         <item name="android:layout_height">50dp</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="dashboard">
+        <item name="android:textSize">
+            30sp
+        </item>
+        <item name="android:textColor">
+            #000000
+        </item>
+    </style>
+    <style name="hello_user_">
+
+        <item name="android:textSize">
+            38sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+
+    </style>
+    <style name="maatran_is_">
+
+        <item name="android:textSize">
+            15sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+
+    </style>
+
+    <style name="emergency">
+
+        <item name="android:textSize">
+            25sp
+        </item>
+
+        <item name="android:textColor">
+            #FF0000
+        </item>
+
+    </style>
+    <style name="your_family">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+
+    </style>
+    <style name="add_patient">
+
+        <item name="android:textSize">
+            11sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+    </style>
+
+
 </resources>
