@@ -2,6 +2,7 @@ package com.example.Maatran;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +25,7 @@ import java.util.Objects;
 
 //main Activity
 //XML file: home_1
-public class RegisterSignUpActivity extends AppCompatActivity {
+public class RegisterSignUpActivity extends AppCompatActivity implements test{
 
 private static final String TAG="RegisterSignUpActivity";
 ProgressDialog progressDialog;
@@ -32,6 +34,9 @@ ProgressDialog progressDialog;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_1);
+        ConstraintLayout layout = findViewById(R.id.registrationLogin_bg);
+        Drawable backgroundDrawable = layout.getBackground();
+        change(backgroundDrawable,this);
         progressDialog=new ProgressDialog(this);
         Button test_btn = findViewById(R.id.test_btn);
         test_btn.setOnClickListener(v-> signInWithTestAccount());

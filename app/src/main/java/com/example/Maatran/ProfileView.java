@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class ProfileView extends AppCompatActivity {
+public class ProfileView extends AppCompatActivity implements test{
     FirebaseFirestore db;
     FirebaseUser user;
     boolean isWorker;
@@ -38,7 +40,7 @@ public class ProfileView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile2);
-
+        ConstraintLayout layout = findViewById(R.id.user_profile_bg);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
@@ -49,6 +51,8 @@ public class ProfileView extends AppCompatActivity {
         url = "@drawable/profile_ico_white";
         mProfilePic = (ImageView)findViewById(R.id.user_profile_pic);
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
+        Drawable backgroundDrawable = layout.getBackground();
+        change(backgroundDrawable,ProfileView.this);
     }
 
     @Override

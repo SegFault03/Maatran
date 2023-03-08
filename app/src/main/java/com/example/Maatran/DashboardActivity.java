@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements test {
     public static final String TAG = "DashboardActivity";
     ProgressDialog progressDialog;
     FirebaseUser user;
@@ -69,23 +69,24 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Get a reference to your layout's background drawable
         Drawable backgroundDrawable = layout.getBackground();
-
-        // Cast the background drawable to a BitmapDrawable
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) backgroundDrawable;
-
-        // Get the bitmap of the BitmapDrawable
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-
-        // Create a Palette object from the bitmap
-        // This method will be called when the Palette has finished processing the image
-        Palette.from(bitmap).generate(palette -> {
-
-            // Get the dominant color from the Palette
-            int color = palette.getDominantColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-
-            // Set the status bar color to the dominant color
-            getWindow().setStatusBarColor(color);
-        });
+//
+//        // Cast the background drawable to a BitmapDrawable
+//        BitmapDrawable bitmapDrawable = (BitmapDrawable) backgroundDrawable;
+//
+//        // Get the bitmap of the BitmapDrawable
+//        Bitmap bitmap = bitmapDrawable.getBitmap();
+//
+//        // Create a Palette object from the bitmap
+//        // This method will be called when the Palette has finished processing the image
+//        Palette.from(bitmap).generate(palette -> {
+//
+//            // Get the dominant color from the Palette
+//            int color = palette.getDominantColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+//
+//            // Set the status bar color to the dominant color
+//            getWindow().setStatusBarColor(color);
+//        });
+        change(backgroundDrawable,DashboardActivity.this);
     }
 
     @Override
