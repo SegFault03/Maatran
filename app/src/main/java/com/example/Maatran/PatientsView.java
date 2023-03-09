@@ -178,6 +178,7 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
                             .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                             .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
                 }
+                else Toast.makeText(getApplicationContext(), "Invalid credentials.", Toast.LENGTH_SHORT);
             });
             f=0;
             fetchDetails();
