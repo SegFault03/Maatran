@@ -21,7 +21,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -120,7 +119,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
         db.collection("UserDetails")
                 .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).get().addOnSuccessListener(documentSnapshot -> {
                     Intent intent = new Intent(getApplicationContext(), EditPatient.class);
-                    intent.putExtra("isPatient", false);
+                    intent.putExtra("isPatient", true);
                     intent.putExtra("user", documentSnapshot.toObject(User.class));
                     startActivity(intent);
                 });
@@ -209,18 +208,18 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
         if(!isWorker) {
-            CollectionReference colRef = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
-            colRef.get().addOnSuccessListener(value -> {
-                for (DocumentSnapshot dc : value.getDocuments()) {
-                    dc.getReference().delete().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                        } else {
-                            Log.d(TAG, "Error deleting document", task.getException());
-                        }
-                    });
-                }
-            }).addOnFailureListener(aVoid -> Log.d(TAG, "No such collection exists"));
+            docRef.get().addOnSuccessListener(value -> {
+                db.collection("UserDetails").document(Objects.requireNonNull(value.getData()).get("admin_id").toString())
+                        .collection("Patients")
+                        .document(user.getEmail()).delete()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            } else {
+                                Log.d(TAG, "Error deleting document", task.getException());
+                            }
+                        });
+            });
         }
 
         docRef.delete().addOnCompleteListener(task -> {

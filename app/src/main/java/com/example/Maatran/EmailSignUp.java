@@ -138,6 +138,7 @@ public class EmailSignUp extends AppCompatActivity implements commonUIFunctions 
             }
             else
             {
+                details.put("admin_id", "null");
                 details.put("isWorker", "false");
                 db.collection("UserDetails")
                         .document(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()))
@@ -146,7 +147,7 @@ public class EmailSignUp extends AppCompatActivity implements commonUIFunctions 
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             }
             Intent intent = new Intent(getApplicationContext(), EditPatient.class);
-            intent.putExtra("isPatient", false);
+            intent.putExtra("isPatient", true);
             intent.putExtra("newDetails", true);
             startActivity(intent);
             super.finish();

@@ -11,6 +11,8 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
     private String name, gender, mobile, address, emergency, locality;
+    private String family_id;
+    private String admin_id="null";
     private long age;
     private String android_id;
 
@@ -139,5 +141,21 @@ public class User implements Parcelable {
 
     public void setAndroid_id(String android_id) {
         this.android_id = android_id;
+    }
+
+    public String getFamily_id() {
+        return family_id;
+    }
+
+    public void setFamily_id(String family_id) {
+        this.family_id = family_id;
+    }
+
+    public String getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(String admin_id) {
+        this.admin_id = admin_id;
     }
 }

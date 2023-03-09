@@ -122,7 +122,7 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
     {
         Intent intent = new Intent(getApplicationContext(),EditPatient.class);
         intent.putExtra("isPatient", true);
-        intent.putExtra("newDetails", true);
+        intent.putExtra("newDetails", false);
         startActivity(intent);
     }
 

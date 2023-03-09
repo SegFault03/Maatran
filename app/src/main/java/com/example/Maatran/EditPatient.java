@@ -95,7 +95,6 @@ public class EditPatient extends AppCompatActivity {
                                     }
                                     else
                                     {
-
                                         if(document.get("hospitalName")!=null)
                                             hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
                                         if(document.get("employeeId")!=null)
@@ -139,17 +138,14 @@ public class EditPatient extends AppCompatActivity {
                     age.setText(Long.toString(user.getAge()));
                     emergency.setText(user.getEmergency());
                     spinner_locality.setSelection(((ArrayAdapter<String>)spinner_locality.getAdapter()).getPosition(user.getLocality()));
-                    id = getIntent().getStringExtra("id");
-                    docRef = FirebaseFirestore.getInstance()
-                            .collection("UserDetails")
-                            .document(mUser.getEmail())
-                            .collection("Patients")
-                            .document(id);
-                } else {
-                    docRef = FirebaseFirestore.getInstance()
-                            .collection("UserDetails")
-                            .document(mUser.getEmail());
+//                    id = getIntent().getStringExtra("id");
+//                    docRef = FirebaseFirestore.getInstance()
+//                            .collection("UserDetails")
+//                            .document(mUser.getEmail())
+//                            .collection("Patients")
+//                            .document(id);
                 }
+
         }
         else
         {
@@ -165,10 +161,10 @@ public class EditPatient extends AppCompatActivity {
                 Toast.makeText(EditPatient.this, "Enter user details.", Toast.LENGTH_SHORT).show();
                 findViewById(R.id.cancel).setVisibility(View.GONE);
             }
-            docRef = FirebaseFirestore.getInstance()
-                        .collection("UserDetails")
-                        .document(mUser.getEmail());
         }
+        docRef = FirebaseFirestore.getInstance()
+                .collection("UserDetails")
+                .document(mUser.getEmail());
 
     }
 
@@ -198,26 +194,17 @@ public class EditPatient extends AppCompatActivity {
 
         if(checkDetails())
         {
-            if(!newDetails || !isPatient)
-            {
-                docRef.set(user, SetOptions.merge())
-                        .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
-                        .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+            docRef.set(user, SetOptions.merge())
+                    .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                    .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
                 if(isWorker)
                     docRef.set(mp, SetOptions.merge())
                             .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                             .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
-            }
-            else
-            {
-                docRef.collection("Patients").add(user)
-                        .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
-                        .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
-            }
             if(newDetails)
             {
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                //intent.putExtra("user",user);
+                intent.putExtra("user",user);
                 startActivity(intent);
                 super.finish();
             }
@@ -260,10 +247,7 @@ public class EditPatient extends AppCompatActivity {
         if(newDetails) {
             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
             startActivity(intent);
-            super.finish();
         }
-        else {
-            super.finish();
-        }
+        super.finish();
     }
 }
