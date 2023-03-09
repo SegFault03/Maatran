@@ -19,7 +19,7 @@
     <string name="email_string">Email</string>
     <string name="password_string">Password</string>
     <string name="password_isto_string">Password:</string>
-    <string name="signup_as_health_worker_string">SIGN UP AS HEALTH WORKER</string>
+    <string name="signup_as_health_worker_string">Sign-up as Health Worker</string>
     <string name="_already_have_an_account__login_string">Already have an account? Login</string>
     <string name="create_string">CREATE</string>
     <string name="forgot_password__string">Forgot password?</string>
@@ -28,7 +28,7 @@
     <string name="confirm_password_string">Confirm Password</string>
     <string name="health_worker_string">HEALTH WORKER</string>
     <string name="patient_string">PATIENT</string>
-    <string name="signup_as_patient_string">SignUp As Patient</string>
+    <string name="signup_as_patient_string">Sign-Up As Patient</string>
     <string name="age_string">Age</string>
     <string name="gender_string">Gender</string>
     <string name="address_string">Address</string>

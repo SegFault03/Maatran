@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="250dp"
-            android:fontFamily="@font/alegreya_sans"
+            android:fontFamily="@font/dm_sans"
             android:gravity="center_horizontal"
             android:text="Please wait..."
             android:textColor="@color/white"
