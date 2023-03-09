@@ -35,11 +35,6 @@ public class ReportsActivity extends AppCompatActivity {
                 .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()));
         df.get().addOnCompleteListener(task->{
             DocumentSnapshot ds = task.getResult();
-            if(ds.get("isWorker").equals("true"))
-            {
-                findViewById(R.id.edit_patient).setVisibility(View.INVISIBLE);
-                findViewById(R.id.delete_patient).setVisibility(View.INVISIBLE);
-            }
         });
 
     }
@@ -74,34 +69,6 @@ public class ReportsActivity extends AppCompatActivity {
                 onResume();
             }
         }
-    }
-    public void editPatient(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(), EditPatient.class);
-        intent.putExtra("user", user);
-        intent.putExtra("id", userId);
-        startActivityForResult(intent, 0);
-    }
-
-    public void deletePatient(View view)
-    {
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert mUser != null;
-        DocumentReference docRef = FirebaseFirestore.getInstance()
-                .collection("UserDetails")
-                .document(Objects.requireNonNull(mUser.getEmail()))
-                .collection("Patients")
-                .document(userId);
-        docRef.delete().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Log.d("ReportsActivity", "DocumentSnapshot successfully deleted!");
-                Toast toast = Toast.makeText(getApplicationContext(),"Patient data has been deleted",Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                Log.d("ReportsActivity", "Error deleting document", task.getException());
-            }
-        });
-        super.finish();
     }
 
     public Drawable setProfilePic(User user, String lgen, int age)

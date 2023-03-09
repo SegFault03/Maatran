@@ -126,6 +126,7 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
                 tv.setText("GET KEY");
                 ConstraintLayout join_family_layout=findViewById(R.id.join_family_layout);
                 join_family_layout.setVisibility(View.GONE);
+                f=0;
                 EventChangeListener();
             }
         });
@@ -151,13 +152,14 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
             {
                 Toast.makeText(this, "You must enter a valid admin email and family key.", Toast.LENGTH_SHORT);
                 popupWindow.dismiss();
+                return;
             }
 
             DocumentReference ref = db.collection("UserDetails").document(Objects.requireNonNull(email));
             HashMap<String, String> mp = new HashMap<>();
             mp.put("email", user.getEmail());
 
-            DocumentReference dr= ref.collection("Patients").document(user.getEmail());
+
             ref.get().addOnSuccessListener(value -> {
                 if(value.getData().get("family_id").toString().equals(family_id))
                 {
@@ -165,18 +167,19 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
                             .set(mp)
                             .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                             .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+
+                    mp.clear();
+                    mp.put("admin_id", email);
+                    mp.put("family_id", family_id);
+
+                    db.collection("UserDetails")
+                            .document(Objects.requireNonNull(user.getEmail()))
+                            .set(mp, SetOptions.merge())
+                            .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                            .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
                 }
             });
-
-            mp.clear();
-            mp.put("admin_id", email);
-            mp.put("family_id", family_id);
-
-            db.collection("UserDetails")
-                    .document(Objects.requireNonNull(user.getEmail()))
-                    .set(mp, SetOptions.merge())
-                    .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
-                    .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+            f=0;
             fetchDetails();
             popupWindow.dismiss();
         });
@@ -238,7 +241,7 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
                 .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                 .addOnFailureListener(e -> Log.e("TAG", "Error writing document", e));
         f=0;
-        EventChangeListener();
+        fetchDetails();
     }
 
     private void EventChangeListener() {

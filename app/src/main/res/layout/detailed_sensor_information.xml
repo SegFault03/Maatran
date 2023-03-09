@@ -318,37 +318,6 @@
 
     </TableLayout>
 
-    <Button
-        android:id="@+id/edit_patient"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#273455"
-        android:onClick="editPatient"
-        android:text="Edit Details"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.189" />
-
-    <Button
-        android:id="@+id/delete_patient"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#CF0A0A"
-        android:onClick="deletePatient"
-        android:text="Delete Patient"
-        android:textSize="25sp"
-        app:iconTint="#120A0A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_patient"
-        app:layout_constraintVertical_bias="0.0" />
-
     <ImageView
         android:id="@+id/patientReportProfilePic"
         android:layout_width="110dp"

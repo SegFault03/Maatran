@@ -139,6 +139,7 @@ public class EmailSignUp extends AppCompatActivity implements commonUIFunctions 
             else
             {
                 details.put("admin_id", "null");
+                details.put("family_id", "");
                 details.put("isWorker", "false");
                 db.collection("UserDetails")
                         .document(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()))

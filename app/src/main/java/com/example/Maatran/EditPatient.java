@@ -30,7 +30,6 @@ public class EditPatient extends AppCompatActivity {
 
     public static final String TAG="EditPatient";
     User user;
-    String id;
     private String locality, gender, and_id;
     boolean newDetails, isPatient, isWorker;
     private EditText name, age, mobile, emergency, address, hospital_name, employee_id;
@@ -63,6 +62,7 @@ public class EditPatient extends AppCompatActivity {
             }
         });
         spinner_gender = findViewById(R.id.spinner_gender);
+        TextView head_text = findViewById(R.id.edit_details);
         ArrayAdapter<CharSequence> gen_adapter=ArrayAdapter.createFromResource(this, R.array.genders, android.R.layout.simple_spinner_item);
         gen_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner_gender.setAdapter(gen_adapter);
@@ -83,29 +83,33 @@ public class EditPatient extends AppCompatActivity {
         FirebaseFirestore.getInstance()
                 .collection("UserDetails")
                 .document(Objects.requireNonNull(mUser.getEmail())).get().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
 
-                                if (document.exists()) {
-                                    if (Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")) {
-                                        findViewById(R.id.hospital_details).setVisibility(View.GONE);
-                                        findViewById(R.id.view_l7).setVisibility(View.GONE);
-                                        findViewById(R.id.employee_details).setVisibility(View.GONE);
-                                        findViewById(R.id.view_l8).setVisibility(View.GONE);
-                                    }
-                                    else
-                                    {
-                                        if(document.get("hospitalName")!=null)
-                                            hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
-                                        if(document.get("employeeId")!=null)
-                                            employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
-                                        isWorker = true;
-                                        findViewById(R.id.location_details).setVisibility(View.GONE);
-                                        findViewById(R.id.view_21).setVisibility(View.GONE);
-                                    }
-                                }
+                        if (document.exists()) {
+                            if (Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("isWorker")).toString().equals("false")) {
+                                findViewById(R.id.hospital_details).setVisibility(View.GONE);
+                                findViewById(R.id.view_l7).setVisibility(View.GONE);
+                                findViewById(R.id.employee_details).setVisibility(View.GONE);
+                                findViewById(R.id.view_l8).setVisibility(View.GONE);
                             }
-                        });
+                            else
+                            {
+                                if(document.get("hospitalName")!=null)
+                                    hospital_name.setText(Objects.requireNonNull(document.getData().get("hospitalName"),TAG+"Null found when setting hospital_name").toString());
+                                if(document.get("employeeId")!=null)
+                                    employee_id.setText(Objects.requireNonNull(document.getData().get("employeeId"),TAG+"Null found when setting employee_id").toString());
+                                isWorker = true;
+                                findViewById(R.id.location_details).setVisibility(View.GONE);
+                                findViewById(R.id.view_21).setVisibility(View.GONE);
+                                findViewById(R.id.age_details).setVisibility(View.GONE);
+                                findViewById(R.id.view_l5).setVisibility(View.GONE);
+                                findViewById(R.id.emergency).setVisibility(View.GONE);
+                                findViewById(R.id.view_20).setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
 
         newDetails = getIntent().getBooleanExtra("newDetails", false);
         isPatient = getIntent().getBooleanExtra("isPatient", true);
@@ -116,45 +120,28 @@ public class EditPatient extends AppCompatActivity {
         emergency = findViewById(R.id.emergency_no);
         address = findViewById(R.id.patient_address);
 
-        if(!isPatient)
-        {
-            findViewById(R.id.age_details).setVisibility(View.GONE);
-            findViewById(R.id.view_l5).setVisibility(View.GONE);
-            findViewById(R.id.emergency).setVisibility(View.GONE);
-            findViewById(R.id.view_20).setVisibility(View.GONE);
-            findViewById(R.id.location_details).setVisibility(View.GONE);
-            findViewById(R.id.view_21).setVisibility(View.GONE);
-        }
-
         if (!newDetails) {
+            head_text.setText("EDIT DETAILS");
             user = getIntent().getParcelableExtra("user");
             name.setText(user.getName());
             spinner_gender.setSelection(((ArrayAdapter<String>)spinner_gender.getAdapter()).getPosition(user.getGender()));
             mobile.setText(user.getMobile());
             address.setText(user.getAddress());
+            if (!isWorker) {
+                age.setText(Long.toString(user.getAge()));
+                emergency.setText(user.getEmergency());
+                spinner_locality.setSelection(((ArrayAdapter<String>)spinner_locality.getAdapter()).getPosition(user.getLocality()));
 
-
-                if (isPatient) {
-                    age.setText(Long.toString(user.getAge()));
-                    emergency.setText(user.getEmergency());
-                    spinner_locality.setSelection(((ArrayAdapter<String>)spinner_locality.getAdapter()).getPosition(user.getLocality()));
-//                    id = getIntent().getStringExtra("id");
-//                    docRef = FirebaseFirestore.getInstance()
-//                            .collection("UserDetails")
-//                            .document(mUser.getEmail())
-//                            .collection("Patients")
-//                            .document(id);
-                }
+            }
 
         }
         else
         {
-            TextView head_text = findViewById(R.id.edit_details);
             head_text.setText("ADD DETAILS");
-            if (isPatient)
+            if (!isWorker)
             {
                 Toast.makeText(EditPatient.this, "Enter new patient details.",
-                            Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -179,14 +166,14 @@ public class EditPatient extends AppCompatActivity {
         user.setGender(gender);
         user.setAddress(address.getText().toString());
         user.setMobile(mobile.getText().toString());
-        if(isPatient) {
+        if(!isWorker) {
             user.setEmergency(emergency.getText().toString());
             user.setAge(Long.parseLong(age.getText().toString()));
             user.setLocality(locality);
             if(newDetails)
                 user.setAndroid_id(and_id);
         }
-        if(isWorker)
+        else
         {
             mp.put("hospitalName", hospital_name.getText().toString());
             mp.put("employeeId", employee_id.getText().toString());
@@ -197,10 +184,10 @@ public class EditPatient extends AppCompatActivity {
             docRef.set(user, SetOptions.merge())
                     .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                     .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
-                if(isWorker)
-                    docRef.set(mp, SetOptions.merge())
-                            .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
-                            .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
+            if(isWorker)
+                docRef.set(mp, SetOptions.merge())
+                        .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                        .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             if(newDetails)
             {
                 Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
@@ -228,12 +215,12 @@ public class EditPatient extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Enter the correct mobile number",Toast.LENGTH_SHORT).show();
             flag=false;
         }
-        if(isPatient && user.getEmergency().length()!=10)
+        if(!isWorker && user.getEmergency().length()!=10)
         {
             Toast.makeText(getApplicationContext(), "Enter the correct emergency mobile number", Toast.LENGTH_SHORT).show();
             flag=false;
         }
-        if(isPatient && user.getAge()<18||user.getAge()>90)
+        if(!isWorker && user.getAge()<18||user.getAge()>90)
         {
             Toast.makeText(getApplicationContext(), "Only users above or 18 and below 90 are allowed to register", Toast.LENGTH_SHORT).show();
             flag=false;
@@ -244,10 +231,9 @@ public class EditPatient extends AppCompatActivity {
 
     public void cancelChanges(View view)
     {
-        if(newDetails) {
-            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-            startActivity(intent);
-        }
-        super.finish();
+        if(!newDetails)
+            super.finish();
+        else
+            Toast.makeText(this, "You must enter your details as a first time user.", Toast.LENGTH_SHORT);
     }
 }

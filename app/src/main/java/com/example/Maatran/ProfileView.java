@@ -191,7 +191,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
                 Toast toast = Toast.makeText(getApplicationContext(), "User account deleted.", Toast.LENGTH_SHORT);
                 toast.show();
                 progressDialog.dismiss();
-                Intent intent = new Intent(getApplicationContext(), RegisterSignUpActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Error deleting user account.", Toast.LENGTH_SHORT);
@@ -209,16 +209,31 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
         DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
         if(!isWorker) {
             docRef.get().addOnSuccessListener(value -> {
-                db.collection("UserDetails").document(Objects.requireNonNull(value.getData()).get("admin_id").toString())
-                        .collection("Patients")
-                        .document(user.getEmail()).delete()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                            } else {
-                                Log.d(TAG, "Error deleting document", task.getException());
-                            }
-                        });
+                if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals("null")){}
+                else if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals(user.getEmail()))
+                {
+                    docRef.collection("Patients").get()
+                            .addOnSuccessListener(task -> {
+                                for(DocumentSnapshot ds: task.getDocuments())
+                                {
+                                    ds.getReference().delete()
+                                            .addOnSuccessListener(aVoid -> Log.d("TAG", "Sub-document deleted!"))
+                                            .addOnFailureListener(e -> Log.w("TAG", "Error deleting sub-document", e));
+                                }
+                            });
+                }
+                else {
+                    db.collection("UserDetails").document(Objects.requireNonNull(value.getData()).get("admin_id").toString())
+                            .collection("Patients")
+                            .document(user.getEmail()).delete()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                } else {
+                                    Log.d(TAG, "Error deleting document", task.getException());
+                                }
+                            });
+                }
             });
         }
 
