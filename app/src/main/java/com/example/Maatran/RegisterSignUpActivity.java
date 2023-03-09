@@ -34,7 +34,7 @@ ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_1);
+        setContentView(R.layout.register_signup);
         ConstraintLayout layout = findViewById(R.id.registrationLogin_bg);
         Drawable backgroundDrawable = layout.getBackground();
         changeStatusBarColor(backgroundDrawable,this);
