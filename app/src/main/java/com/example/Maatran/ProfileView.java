@@ -212,6 +212,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
                 if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals("null")){}
                 else if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals(user.getEmail()))
                 {
+                    /*TODO: implement functionality for relinquishing admin role.*/
 //                    docRef.collection("Patients").get()
 //                            .addOnSuccessListener(task -> {
 //                                for(DocumentSnapshot ds: task.getDocuments())
