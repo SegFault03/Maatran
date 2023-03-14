@@ -212,15 +212,17 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
                 if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals("null")){}
                 else if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals(user.getEmail()))
                 {
-                    docRef.collection("Patients").get()
-                            .addOnSuccessListener(task -> {
-                                for(DocumentSnapshot ds: task.getDocuments())
-                                {
-                                    ds.getReference().delete()
-                                            .addOnSuccessListener(aVoid -> Log.d("TAG", "Sub-document deleted!"))
-                                            .addOnFailureListener(e -> Log.w("TAG", "Error deleting sub-document", e));
-                                }
-                            });
+//                    docRef.collection("Patients").get()
+//                            .addOnSuccessListener(task -> {
+//                                for(DocumentSnapshot ds: task.getDocuments())
+//                                {
+//                                    ds.getReference().delete()
+//                                            .addOnSuccessListener(aVoid -> Log.d("TAG", "Sub-document deleted!"))
+//                                            .addOnFailureListener(e -> Log.w("TAG", "Error deleting sub-document", e));
+//                                }
+//                            });
+                    Toast.makeText(this, "You cannot delete your profile while being the admin of a family.", Toast.LENGTH_SHORT);
+                    return;
                 }
                 else {
                     db.collection("UserDetails").document(Objects.requireNonNull(value.getData()).get("admin_id").toString())
