@@ -10,7 +10,7 @@ import android.os.Parcelable;
 //https://developer.android.com/guide/components/activities/parcelables-and-bundles#java
 
 public class User implements Parcelable {
-    private String name, gender, mobile, address, emergency, locality;
+    private String name, gender, mobile, address, emergency, locality, email;
 //    private String family_id;
 //    private String admin_id="null";
     private long age;
@@ -40,6 +40,7 @@ public class User implements Parcelable {
         address = in.readString();
         emergency = in.readString();
         locality = in.readString();
+        email = in.readString();
         age = in.readLong();
     }
 
@@ -132,6 +133,7 @@ public class User implements Parcelable {
         parcel.writeString(address);
         parcel.writeString(emergency);
         parcel.writeString(locality);
+        parcel.writeString(email);
         parcel.writeLong(age);
     }
 
@@ -142,20 +144,12 @@ public class User implements Parcelable {
     public void setAndroid_id(String android_id) {
         this.android_id = android_id;
     }
-//
-//    public String getFamily_id() {
-//        return family_id;
-//    }
-//
-//    public void setFamily_id(String family_id) {
-//        this.family_id = family_id;
-//    }
-//
-//    public String getAdmin_id() {
-//        return admin_id;
-//    }
-//
-//    public void setAdmin_id(String admin_id) {
-//        this.admin_id = admin_id;
-//    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

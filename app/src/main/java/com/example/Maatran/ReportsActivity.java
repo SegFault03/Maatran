@@ -22,6 +22,7 @@ import java.util.Objects;
 public class ReportsActivity extends AppCompatActivity {
     User user;
     String userId;
+    DocumentReference df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,8 @@ public class ReportsActivity extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         userId = getIntent().getStringExtra("id");
 
-        DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
-                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()));
-        df.get().addOnCompleteListener(task->{
-            DocumentSnapshot ds = task.getResult();
-        });
+        df = FirebaseFirestore.getInstance().collection("UserDetails")
+                .document(Objects.requireNonNull(user.getEmail()));
 
     }
 
@@ -58,6 +56,7 @@ public class ReportsActivity extends AppCompatActivity {
         no.setText("Emergency no: "+user.getEmergency());
         ImageView profilePic = findViewById(R.id.patientReportProfilePic);
         profilePic.setImageDrawable(setProfilePic(user, user.getGender(), (int) user.getAge()));
+        setSensorInfo();
     }
 
     @Override
@@ -69,6 +68,27 @@ public class ReportsActivity extends AppCompatActivity {
                 onResume();
             }
         }
+    }
+
+    public void setSensorInfo()
+    {
+        TextView risk = findViewById(R.id.risk);
+        TextView spo2 = findViewById(R.id.sp02);
+        TextView temp = findViewById(R.id.temp);
+        TextView pulse = findViewById(R.id.pr);
+        TextView sp = findViewById(R.id.sp);
+        TextView dp = findViewById(R.id.dp);
+        TextView meta = findViewById(R.id.meta);
+
+        df.get().addOnSuccessListener(task ->{
+            risk.setText(task.getData().get("risk").toString());
+            spo2.setText(task.getData().get("1").toString());
+            temp.setText(task.getData().get("2").toString());
+            pulse.setText(task.getData().get("3").toString());
+            sp.setText(task.getData().get("4").toString());
+            dp.setText(task.getData().get("5").toString());
+            meta.setText(task.getData().get("6").toString());
+        });
     }
 
     public Drawable setProfilePic(User user, String lgen, int age)

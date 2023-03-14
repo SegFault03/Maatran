@@ -5,8 +5,6 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -18,6 +16,8 @@ public class BluetoothTransmissionService {
     private BluetoothChatService mChatService;
     private static final String TAG = "BTransmissionService";
     sendRequestThread mSendRequestThread;
+    CollectionReference db;
+    FirebaseUser user;
     ArrayList<String> dataPackets;
     ModelApi modelApi;
     private String and_id;
@@ -27,9 +27,15 @@ public class BluetoothTransmissionService {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
-        ModelApi.ModelApiCallback modelApiCallback = result -> Log.v(TAG,result);
-        modelApi = new ModelApi(modelApiCallback);
         this.and_id = and_id;
+        db= FirebaseFirestore.getInstance().collection("UserDetails");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        ModelApi.ModelApiCallback modelApiCallback = result -> {
+            Log.v(TAG, result);
+            dataPackets.add(result);
+            sendToDB();
+        };
+        modelApi = new ModelApi(modelApiCallback);
     }
 
     public void startRequestThread()
@@ -69,33 +75,22 @@ public class BluetoothTransmissionService {
         Log.v(TAG,"Request Thread sent a request...");
     }
 
-    public void sentToDB()
+    public void sendToDB()
     {
         HashMap<String, String> mp = new HashMap<>();
         for(int i=1;i<=6;i++)
         {
             mp.put(Integer.toString(i), dataPackets.get(i-1));
         }
-        CollectionReference db= FirebaseFirestore.getInstance().collection("UserDetails");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mp.put("risk", dataPackets.get(6));
         assert user != null;
         String userId = user.getEmail();
         assert userId != null;
         db.document(userId)
-                .collection("Patients")
-                .whereEqualTo("android_id", and_id)
-                .get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        //Log.v(TAG, "Task Successful"+and_id);
-                        for(DocumentSnapshot ds : task.getResult())
-                        {
-                            DocumentReference dr=ds.getReference();
-                            dr.set(mp, SetOptions.merge())
-                                    .addOnSuccessListener(aVoid -> Log.v(TAG, "DocumentSnapshot successfully written!"))
-                                    .addOnFailureListener(e -> Log.v(TAG, "Error writing document", e));
-                        }
-                    }
-                });
+                .set(mp, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> Log.v(TAG, "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.v(TAG, "Error writing document", e));
+        dataPackets.clear();
     }
 
     public synchronized void responseReceived(String msg)
@@ -105,11 +100,9 @@ public class BluetoothTransmissionService {
         isSent = false;
         if(dataPackets.size() == 6) {
             Log.v(TAG, "Sending to db");
-            sentToDB();
             ArrayList<String> dataPacketsTemp = new ArrayList<>(dataPackets);
             dataPacketsTemp.add("predict");
             modelApi.execute(dataPacketsTemp);
-            dataPackets.clear();
         }
     }
 

@@ -30,7 +30,7 @@ public class EditPatient extends AppCompatActivity {
 
     public static final String TAG="EditPatient";
     User user;
-    private String locality, gender, and_id;
+    private String locality, gender, and_id, email;
     boolean newDetails, isPatient, isWorker;
     private EditText name, age, mobile, emergency, address, hospital_name, employee_id;
     Spinner spinner_locality, spinner_gender;
@@ -41,6 +41,7 @@ public class EditPatient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_details);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        email = mUser.getEmail();
 
         and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
@@ -161,6 +162,7 @@ public class EditPatient extends AppCompatActivity {
         if(newDetails)
         {
             user = new User();
+            user.setEmail(email);
         }
         user.setName(name.getText().toString());
         user.setGender(gender);
