@@ -138,6 +138,8 @@ public class EmailSignUp extends AppCompatActivity implements UIFunctions {
             }
             else
             {
+                details.put("admin_id", "null");
+                details.put("family_id", "");
                 details.put("isWorker", "false");
                 db.collection("UserDetails")
                         .document(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()))
@@ -146,7 +148,7 @@ public class EmailSignUp extends AppCompatActivity implements UIFunctions {
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             }
             Intent intent = new Intent(getApplicationContext(), EditPatient.class);
-            intent.putExtra("isPatient", false);
+            intent.putExtra("isPatient", true);
             intent.putExtra("newDetails", true);
             startActivity(intent);
             super.finish();

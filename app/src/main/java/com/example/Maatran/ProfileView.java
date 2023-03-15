@@ -21,7 +21,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.Maatran.utils.UIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -120,7 +119,7 @@ public class ProfileView extends AppCompatActivity implements UIFunctions {
         db.collection("UserDetails")
                 .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).get().addOnSuccessListener(documentSnapshot -> {
                     Intent intent = new Intent(getApplicationContext(), EditPatient.class);
-                    intent.putExtra("isPatient", false);
+                    intent.putExtra("isPatient", true);
                     intent.putExtra("user", documentSnapshot.toObject(User.class));
                     startActivity(intent);
                 });
@@ -184,10 +183,11 @@ public class ProfileView extends AppCompatActivity implements UIFunctions {
     public void deleteUserProfile(ProgressDialog progressDialog,PopupWindow popupWindow)
     {
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        String email=user.getEmail();
         assert user != null;
         user.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                deleteUserData(user);
+                deleteUserData(email);
                 Log.d(TAG, "User account deleted.");
                 Toast toast = Toast.makeText(getApplicationContext(), "User account deleted.", Toast.LENGTH_SHORT);
                 toast.show();
@@ -204,23 +204,42 @@ public class ProfileView extends AppCompatActivity implements UIFunctions {
         });
     }
 
-    public void deleteUserData(FirebaseUser user)
+    public void deleteUserData(String email)
     {
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
+        DocumentReference docRef = db.collection("UserDetails").document(email);
         if(!isWorker) {
-            CollectionReference colRef = db.collection("UserDetails").document(user.getEmail()).collection("Patients");
-            colRef.get().addOnSuccessListener(value -> {
-                for (DocumentSnapshot dc : value.getDocuments()) {
-                    dc.getReference().delete().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                        } else {
-                            Log.d(TAG, "Error deleting document", task.getException());
-                        }
-                    });
+            docRef.get().addOnSuccessListener(value -> {
+                String admin_id=value.getData().get("admin_id").toString();
+                if(admin_id.equals("null")){}
+                else if(admin_id.equals(user.getEmail()))
+                {
+                    /*TODO: implement functionality for relinquishing admin role.*/
+//                    docRef.collection("Patients").get()
+//                            .addOnSuccessListener(task -> {
+//                                for(DocumentSnapshot ds: task.getDocuments())
+//                                {
+//                                    ds.getReference().delete()
+//                                            .addOnSuccessListener(aVoid -> Log.d("TAG", "Sub-document deleted!"))
+//                                            .addOnFailureListener(e -> Log.w("TAG", "Error deleting sub-document", e));
+//                                }
+//                            });
+                    Toast.makeText(this, "You cannot delete your profile while being the admin of a family.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            }).addOnFailureListener(aVoid -> Log.d(TAG, "No such collection exists"));
+                else {
+                    db.collection("UserDetails").document(admin_id)
+                            .collection("Patients")
+                            .document(user.getEmail()).delete()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                } else {
+                                    Log.d(TAG, "Error deleting document", task.getException());
+                                }
+                            });
+                }
+            });
         }
 
         docRef.delete().addOnCompleteListener(task -> {

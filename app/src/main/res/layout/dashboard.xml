@@ -373,7 +373,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:gravity="center_horizontal|center_vertical"
-                    android:text="ADD PATIENT"
+                    android:text="EDIT PATIENT"
                     android:textAppearance="@style/add_patient"
                     app:fontFamily="@font/dm_sans_bold"
                     app:layout_constraintEnd_toEndOf="@+id/rectangle_6"

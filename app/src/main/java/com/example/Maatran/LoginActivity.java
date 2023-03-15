@@ -64,6 +64,10 @@ public class LoginActivity extends AppCompatActivity implements UIFunctions {
             signIn(email, password);
         });
         // [END initialize_auth]
+        findViewById(R.id.login_signup_option).setOnClickListener(view->{
+            Intent intent = new Intent(this,SignUpActivity.class);
+            startActivity(intent);
+        });
     }
 
     // [START on_start_check_user]
@@ -189,17 +193,4 @@ public class LoginActivity extends AppCompatActivity implements UIFunctions {
         startActivity(intent);
     }
 
-    public void signUpAsPatient(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(), EmailSignUp.class);
-        intent.putExtra("isPatient", true);
-        startActivity(intent);
-    }
-
-    public void signUpAsWorker(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(), EmailSignUp.class);
-        intent.putExtra("isPatient", false);
-        startActivity(intent);
-    }
 }

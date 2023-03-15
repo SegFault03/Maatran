@@ -38,6 +38,7 @@ public class DashboardActivity extends AppCompatActivity implements UIFunctions 
     public static final String TAG = "DashboardActivity";
     ProgressDialog progressDialog;
     FirebaseUser user;
+    User mUser;
     boolean isPatient = true;
     private static final int PERMISSION_SEND_SMS = 123;
     private static final int BLUETOOTH_SCAN = 5;
@@ -121,8 +122,8 @@ public class DashboardActivity extends AppCompatActivity implements UIFunctions 
     public void addPatient(View view)
     {
         Intent intent = new Intent(getApplicationContext(),EditPatient.class);
-        intent.putExtra("isPatient", true);
-        intent.putExtra("newDetails", true);
+        intent.putExtra("user", mUser);
+        intent.putExtra("newDetails", false);
         startActivity(intent);
     }
 
@@ -135,6 +136,7 @@ public class DashboardActivity extends AppCompatActivity implements UIFunctions 
             if(task.isSuccessful())
             {
                 DocumentSnapshot ds = task.getResult();
+                mUser = ds.toObject(User.class);
                 if(ds.exists()) {
                     user_name.setText(Objects.requireNonNull("Hello "+ds.get("name")).toString()+"!");
                     if(Objects.requireNonNull(ds.get("isWorker")).toString().equals("true")) {

@@ -22,6 +22,7 @@ import java.util.Objects;
 public class ReportsActivity extends AppCompatActivity {
     User user;
     String userId;
+    DocumentReference df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +32,8 @@ public class ReportsActivity extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         userId = getIntent().getStringExtra("id");
 
-        DocumentReference df = FirebaseFirestore.getInstance().collection("UserDetails")
-                .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail()));
-        df.get().addOnCompleteListener(task->{
-            DocumentSnapshot ds = task.getResult();
-            if(ds.get("isWorker").equals("true"))
-            {
-                findViewById(R.id.edit_patient).setVisibility(View.INVISIBLE);
-                findViewById(R.id.delete_patient).setVisibility(View.INVISIBLE);
-            }
-        });
+        df = FirebaseFirestore.getInstance().collection("UserDetails")
+                .document(Objects.requireNonNull(user.getEmail()));
 
     }
 
@@ -63,6 +56,7 @@ public class ReportsActivity extends AppCompatActivity {
         no.setText("Emergency no: "+user.getEmergency());
         ImageView profilePic = findViewById(R.id.patientReportProfilePic);
         profilePic.setImageDrawable(setProfilePic(user, user.getGender(), (int) user.getAge()));
+        setSensorInfo();
     }
 
     @Override
@@ -75,33 +69,33 @@ public class ReportsActivity extends AppCompatActivity {
             }
         }
     }
-    public void editPatient(View view)
-    {
-        Intent intent = new Intent(getApplicationContext(), EditPatient.class);
-        intent.putExtra("user", user);
-        intent.putExtra("id", userId);
-        startActivityForResult(intent, 0);
-    }
 
-    public void deletePatient(View view)
+    public void setSensorInfo()
     {
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert mUser != null;
-        DocumentReference docRef = FirebaseFirestore.getInstance()
-                .collection("UserDetails")
-                .document(Objects.requireNonNull(mUser.getEmail()))
-                .collection("Patients")
-                .document(userId);
-        docRef.delete().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Log.d("ReportsActivity", "DocumentSnapshot successfully deleted!");
-                Toast toast = Toast.makeText(getApplicationContext(),"Patient data has been deleted",Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                Log.d("ReportsActivity", "Error deleting document", task.getException());
-            }
+        TextView risk = findViewById(R.id.risk);
+        TextView spo2 = findViewById(R.id.sp02);
+        TextView temp = findViewById(R.id.temp);
+        TextView pulse = findViewById(R.id.pr);
+        TextView sp = findViewById(R.id.sp);
+        TextView dp = findViewById(R.id.dp);
+        TextView meta = findViewById(R.id.meta);
+
+        df.get().addOnSuccessListener(task ->{
+            if(task.contains("risk"))
+                risk.setText(task.getData().get("risk").toString());
+            if(task.contains("1"))
+                spo2.setText(task.getData().get("1").toString());
+            if(task.contains("2"))
+                temp.setText(task.getData().get("2").toString());
+            if(task.contains("3"))
+                pulse.setText(task.getData().get("3").toString());
+            if(task.contains("4"))
+                sp.setText(task.getData().get("4").toString());
+            if(task.contains("5"))
+                dp.setText(task.getData().get("5").toString());
+            if(task.contains("6"))
+                meta.setText(task.getData().get("6").toString());
         });
-        super.finish();
     }
 
     public Drawable setProfilePic(User user, String lgen, int age)
