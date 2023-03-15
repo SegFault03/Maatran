@@ -81,12 +81,19 @@ public class ReportsActivity extends AppCompatActivity {
         TextView meta = findViewById(R.id.meta);
 
         df.get().addOnSuccessListener(task ->{
+            if(task.contains("risk"))
             risk.setText(task.getData().get("risk").toString());
+            if(task.contains("1"))
             spo2.setText(task.getData().get("1").toString());
+            if(task.contains("2"))
             temp.setText(task.getData().get("2").toString());
+            if(task.contains("3"))
             pulse.setText(task.getData().get("3").toString());
+            if(task.contains("4"))
             sp.setText(task.getData().get("4").toString());
+            if(task.contains("5"))
             dp.setText(task.getData().get("5").toString());
+            if(task.contains("6"))
             meta.setText(task.getData().get("6").toString());
         });
     }
