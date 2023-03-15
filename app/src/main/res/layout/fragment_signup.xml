@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUpFragment"
+    tools:showIn="@layout/signup_screen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_email_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Email-id"
+            app:passwordToggleEnabled="false"
+            android:textColorHint="#054A8A"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconDrawable="@drawable/baseline_email_24"
+            app:startIconTint="@color/colorPrimaryDark">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_email_edit"
+                android:layout_width="310dp"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/signin_rectangle"
+                android:fontFamily="@font/dm_sans"
+                android:maxLength="30" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_pwd_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textColorHint="#054A8A"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorPrimaryDark"
+            app:startIconTint="@color/colorPrimaryDark"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/signup_email_box"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_pwd_edit"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/signin_rectangle"
+                android:fontFamily="@font/dm_sans"
+                android:maxLength="30" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_pwd_confirm_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:textColorHint="#054A8A"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/colorPrimaryDark"
+            app:startIconTint="@color/colorPrimaryDark"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/signup_pwd_box"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_pwd_confirm_edit"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/signin_rectangle"
+                android:fontFamily="@font/dm_sans"
+                android:maxLength="30" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_hospital_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Hospital name"
+            android:textColorHint="#054A8A"
+            app:startIconDrawable="@drawable/baseline_local_hospital_24"
+            app:startIconTint="@color/colorPrimaryDark"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/signup_pwd_confirm_box"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_hospital_edit"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/signin_rectangle"
+                android:fontFamily="@font/dm_sans"
+                android:maxLength="30" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_empid_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Employee ID"
+            android:textColorHint="#054A8A"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            app:startIconTint="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/signup_hospital_box"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_empid_edit"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:background="@drawable/signin_rectangle"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/dm_sans"
+                android:maxLength="30" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -1,18 +1,24 @@
 package com.example.Maatran;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 
-import com.example.Maatran.utils.commonUIFunctions;
+import com.example.Maatran.utils.UIFunctions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,33 +29,38 @@ import java.util.Objects;
 
 //login activity, called from main activity
 //corresponding xml file: screen_1
-public class LoginActivity extends AppCompatActivity implements commonUIFunctions {
+public class LoginActivity extends AppCompatActivity implements UIFunctions {
 
     private static final String TAG = "LoginActivity";
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
-
+    LinearLayout loadingAnimation;
+    int lastUpdatedDot = 0;
+    Handler loadingDotHandler;
+    Runnable loadingDotRunnable = this::changeLoadingDot;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.login_signup);
-        ConstraintLayout layout = findViewById(R.id.login_signup_bg);
-        Drawable backgroundDrawable = layout.getBackground();
-        changeStatusBarColor(backgroundDrawable,this);
-        Button login = findViewById(R.id.continue_button);
-        TextView forgotPwdText = findViewById(R.id.forgot_pwd_text);
+        setContentView(R.layout.login_screen);
+        getWindow().setStatusBarColor(Color.parseColor("#FFAFCC"));
+        Button login = findViewById(R.id.login_signinbtn);
+        loadingAnimation = findViewById(R.id.loadingAnimation);
+        loadingAnimation.setVisibility(View.GONE);
+        loadingDotHandler = new Handler();
+        loadingDotHandler.postDelayed(loadingDotRunnable,300);
+        TextView forgotPwdText = findViewById(R.id.login_forgotpwd);
+        findViewById(R.id.backBtn).setOnClickListener(v->super.finish());
         forgotPwdText.setOnClickListener(v->{
             Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
             startActivity(intent);
-            super.finish();
         });
         login.setOnClickListener(view -> {
-            String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString();
-            String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString();
+            String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.login_email_edit)).getText()).toString();
+            String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.login_pwd_edit)).getText()).toString();
             signIn(email, password);
         });
         // [END initialize_auth]
@@ -59,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
     @Override
     public void onStart() {
         super.onStart();
+        loadingAnimation.setVisibility(View.GONE);
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
@@ -67,6 +79,21 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
     }
     // [END on_start_check_user]
 
+    void changeLoadingDot()
+    {
+        String currLoadDotView = "load_dot"+ lastUpdatedDot % 3;
+        String oldLoadDotView = "load_dot"+ (lastUpdatedDot % 3 == 0 ? 2 : lastUpdatedDot % 3 - 1);
+        lastUpdatedDot++;
+        int currResID = getResources().getIdentifier(currLoadDotView,"id",getPackageName());
+        int oldResID = getResources().getIdentifier(oldLoadDotView,"id",getPackageName());
+        AppCompatImageView currResView = findViewById(currResID);
+        AppCompatImageView oldResView = findViewById(oldResID);
+        Drawable drawable = AppCompatResources.getDrawable(this,R.drawable.loading_dot_grey);
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.login_accent), PorterDuff.Mode.SRC_IN);
+        currResView.setImageDrawable(drawable);
+        oldResView.setImageResource(R.drawable.loading_dot_grey);
+        loadingDotHandler.postDelayed(loadingDotRunnable,300);
+    }
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]
@@ -80,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
             flag = false;
         }
         if(flag) {
+            loadingAnimation.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
@@ -114,6 +142,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
 
     private void updateUI(FirebaseUser user)
     {
+        loadingAnimation.setVisibility(View.GONE);
         if(user!=null)
         {
             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
@@ -123,7 +152,6 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
     }
 
     /**Checks if user-details are available
-    @params FirebaseUser user
      */
     private void checkForDetails(FirebaseUser user)
     {
@@ -141,7 +169,6 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
                         intent.putExtra("isPatient",false);
                         intent.putExtra("newDetails", true);
                         startActivity(intent);
-                        super.finish();
                     }
                     else
                     {
@@ -160,7 +187,6 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
     {
         Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
         startActivity(intent);
-        super.finish();
     }
 
     public void signUpAsPatient(View view)
@@ -168,7 +194,6 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
         Intent intent = new Intent(getApplicationContext(), EmailSignUp.class);
         intent.putExtra("isPatient", true);
         startActivity(intent);
-        super.finish();
     }
 
     public void signUpAsWorker(View view)
@@ -176,6 +201,5 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
         Intent intent = new Intent(getApplicationContext(), EmailSignUp.class);
         intent.putExtra("isPatient", false);
         startActivity(intent);
-        super.finish();
     }
 }

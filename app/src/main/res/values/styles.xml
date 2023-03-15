@@ -75,6 +75,12 @@
         </item>
 
     </style>
-
+    <style name="TabLayoutTextStyle">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/lexend_medium</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 
 </resources>

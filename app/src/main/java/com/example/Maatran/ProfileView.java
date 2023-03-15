@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.Maatran.utils.commonUIFunctions;
+import com.example.Maatran.utils.UIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class ProfileView extends AppCompatActivity implements commonUIFunctions {
+public class ProfileView extends AppCompatActivity implements UIFunctions {
     FirebaseFirestore db;
     FirebaseUser user;
     boolean isWorker;
@@ -136,7 +136,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
             FirebaseAuth.getInstance().signOut();
             Toast toast = Toast.makeText(getApplicationContext(),"You have successfully signed out, redirecting you to the log-in page",Toast.LENGTH_SHORT);
             toast.show();
-            Intent intent = new Intent(getApplicationContext(), RegisterSignUpActivity.class);
+            Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK |
                     Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -192,7 +192,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
                 Toast toast = Toast.makeText(getApplicationContext(), "User account deleted.", Toast.LENGTH_SHORT);
                 toast.show();
                 progressDialog.dismiss();
-                Intent intent = new Intent(getApplicationContext(), RegisterSignUpActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(intent);
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Error deleting user account.", Toast.LENGTH_SHORT);

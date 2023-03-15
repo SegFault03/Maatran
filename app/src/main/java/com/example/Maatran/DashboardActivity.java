@@ -22,7 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.Maatran.utils.commonUIFunctions;
+import com.example.Maatran.utils.UIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class DashboardActivity extends AppCompatActivity implements commonUIFunctions {
+public class DashboardActivity extends AppCompatActivity implements UIFunctions {
     public static final String TAG = "DashboardActivity";
     ProgressDialog progressDialog;
     FirebaseUser user;

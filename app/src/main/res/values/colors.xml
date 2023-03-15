@@ -33,6 +33,8 @@
     <color name="background_color_dark">#363668</color>
     <color name="dashboard_primary">#667AFF</color>
     <color name="dashboard_background">#252C4B</color>
+    <color name="transparent">#00000000</color>
     <color name="card_background">#27325F</color>
     <color name="ui_color1">#FFF64497</color>
+    <color name="login_accent">#107ED5</color>
 </resources>

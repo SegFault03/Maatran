@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 /**
- * Instrumented commonUIFunctions, which will execute on an Android device.
+ * Instrumented UIFunctions, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
-        // Context of the app under commonUIFunctions.
+        // Context of the app under UIFunctions.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.mumtran_login", appContext.getPackageName());
     }

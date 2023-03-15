@@ -9,10 +9,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.example.Maatran.utils.commonUIFunctions;
+import com.example.Maatran.utils.UIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ResetPasswordActivity extends AppCompatActivity implements commonUIFunctions {
+public class ResetPasswordActivity extends AppCompatActivity implements UIFunctions {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
