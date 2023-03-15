@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
             super.finish();
         });
         login.setOnClickListener(view -> {
-            String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString();
-            String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString();
+            String email =  Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_edit)).getText()).toString().trim();
+            String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.sign_in_password_edit)).getText()).toString().trim();
             signIn(email, password);
         });
         // [END initialize_auth]

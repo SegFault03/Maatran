@@ -145,12 +145,12 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         Button cancel = popupFamilyDetails.findViewById(R.id.btn_cancel);
         join.setOnClickListener(v -> {
 
-            String email = ((EditText)popupFamilyDetails.findViewById(R.id.admin_id)).getText().toString();
-            String family_id = ((EditText)popupFamilyDetails.findViewById(R.id.family_key)).getText().toString();
+            String email = ((EditText)popupFamilyDetails.findViewById(R.id.admin_id)).getText().toString().trim();
+            String family_id = ((EditText)popupFamilyDetails.findViewById(R.id.family_key)).getText().toString().trim();
 
             if(email=="" || family_id=="")
             {
-                Toast.makeText(this, "You must enter a valid admin email and family key.", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "You must enter a valid admin email and family key.", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
                 return;
             }
@@ -178,11 +178,11 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
                             .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                             .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
                 }
-                else Toast.makeText(getApplicationContext(), "Invalid credentials.", Toast.LENGTH_SHORT);
+                else Toast.makeText(getApplicationContext(), "Invalid credentials.", Toast.LENGTH_SHORT).show();
             });
             f=0;
-            fetchDetails();
             popupWindow.dismiss();
+            fetchDetails();
         });
         cancel.setOnClickListener(v -> popupWindow.dismiss());
 

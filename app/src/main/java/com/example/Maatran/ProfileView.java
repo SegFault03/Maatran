@@ -183,10 +183,11 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
     public void deleteUserProfile(ProgressDialog progressDialog,PopupWindow popupWindow)
     {
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        String email=user.getEmail();
         assert user != null;
         user.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                deleteUserData(user);
+                deleteUserData(email);
                 Log.d(TAG, "User account deleted.");
                 Toast toast = Toast.makeText(getApplicationContext(), "User account deleted.", Toast.LENGTH_SHORT);
                 toast.show();
@@ -203,14 +204,15 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
         });
     }
 
-    public void deleteUserData(FirebaseUser user)
+    public void deleteUserData(String email)
     {
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("UserDetails").document(Objects.requireNonNull(user.getEmail()));
+        DocumentReference docRef = db.collection("UserDetails").document(email);
         if(!isWorker) {
             docRef.get().addOnSuccessListener(value -> {
-                if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals("null")){}
-                else if(Objects.requireNonNull(value.getData()).get("admin_id").toString().equals(user.getEmail()))
+                String admin_id=value.getData().get("admin_id").toString();
+                if(admin_id.equals("null")){}
+                else if(admin_id.equals(user.getEmail()))
                 {
                     /*TODO: implement functionality for relinquishing admin role.*/
 //                    docRef.collection("Patients").get()
@@ -222,11 +224,11 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
 //                                            .addOnFailureListener(e -> Log.w("TAG", "Error deleting sub-document", e));
 //                                }
 //                            });
-                    Toast.makeText(this, "You cannot delete your profile while being the admin of a family.", Toast.LENGTH_SHORT);
+                    Toast.makeText(this, "You cannot delete your profile while being the admin of a family.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
-                    db.collection("UserDetails").document(Objects.requireNonNull(value.getData()).get("admin_id").toString())
+                    db.collection("UserDetails").document(admin_id)
                             .collection("Patients")
                             .document(user.getEmail()).delete()
                             .addOnCompleteListener(task -> {
