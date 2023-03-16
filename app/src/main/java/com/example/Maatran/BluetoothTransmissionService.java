@@ -1,6 +1,7 @@
 package com.example.Maatran;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,12 +23,15 @@ public class BluetoothTransmissionService {
     ModelApi modelApi;
     private String and_id;
 
-    public BluetoothTransmissionService(BluetoothChatService obj, String and_id)
+    public BluetoothTransmissionService(BluetoothChatService obj, String and_id, BluetoothActivity activity)
     {
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
-        ModelApi.ModelApiCallback modelApiCallback = result -> Log.v(TAG,result);
+        ModelApi.ModelApiCallback modelApiCallback = result -> {
+            Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
+            Log.v(TAG,result);
+        };
         modelApi = new ModelApi(modelApiCallback);
         this.and_id = and_id;
     }

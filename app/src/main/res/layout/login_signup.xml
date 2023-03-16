@@ -33,10 +33,11 @@
         android:layout_height="wrap_content"
         android:text="@string/login_string"
         android:textSize="32sp"
-        android:textColor="@color/background_color_dark"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/top_header"
+        android:fontFamily="@font/lexend_medium"
         android:layout_marginLeft="35dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:id="@+id/login"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -62,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="30"
+            android:fontFamily="@font/dm_sans"
             android:id="@+id/sign_in_edit" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -84,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:fontFamily="@font/dm_sans"
             android:id="@+id/sign_in_password_edit" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +98,7 @@
         android:layout_marginHorizontal="30dp"
         android:gravity="center"
         android:text="Continue"
-
+        android:fontFamily="@font/lexend_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
@@ -106,6 +109,7 @@
         android:layout_marginTop="8dp"
         android:onClick="signUpAsPatient"
         android:text="@string/signup_as_patient_string"
+        android:fontFamily="@font/lexend_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,14 +117,15 @@
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="170dp"
+        android:layout_width="175dp"
         android:layout_height="62dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/lexend_medium"
         android:onClick="signUpAsWorker"
         android:text="@string/signup_as_health_worker_string"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toEndOf="@+id/button5"
         app:layout_constraintTop_toBottomOf="@+id/continue_button" />
 
@@ -154,6 +159,8 @@
         android:layout_marginTop="15dp"
         android:text="Forgot Password?"
         android:textSize="20sp"
+        android:fontFamily="@font/lexend_medium"
+        android:textColor="#063459"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fb_logo" />

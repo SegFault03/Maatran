@@ -3,7 +3,7 @@
     android:id="@+id/dashboard_new_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/splash_screen_bg"
+    android:background="@drawable/white_bg_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements commonUIFunctions
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         ConstraintLayout layout = findViewById(R.id.main_activity_bg);
         Drawable backgroundDrawable = layout.getBackground();
         changeStatusBarColor(backgroundDrawable,this);

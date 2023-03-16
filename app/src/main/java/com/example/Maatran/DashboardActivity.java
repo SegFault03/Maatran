@@ -49,7 +49,7 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard_2);
+        setContentView(R.layout.dashboard);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");

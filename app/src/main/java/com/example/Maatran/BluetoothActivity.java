@@ -782,7 +782,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * */
     public void startDeviceTransmissions(View view) {
 
-        mBtService = new BluetoothTransmissionService(mBluetoothChatService, and_id);
+        mBtService = new BluetoothTransmissionService(mBluetoothChatService, and_id,this);
         mBtService.startRequestThread();
     }
 
