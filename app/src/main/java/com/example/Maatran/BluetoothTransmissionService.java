@@ -20,6 +20,7 @@ public class BluetoothTransmissionService {
     CollectionReference db;
     FirebaseUser user;
     ArrayList<String> dataPackets;
+    ArrayList<String> dataPacketsTemp;
     ModelApi modelApi;
     private String and_id;
 
@@ -34,8 +35,7 @@ public class BluetoothTransmissionService {
         ModelApi.ModelApiCallback modelApiCallback = result -> {
             Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
             Log.v(TAG, result);
-            dataPackets.add(result);
-            sendToDB();
+            sendToDB(result);
         };
         modelApi = new ModelApi(modelApiCallback);
     }
@@ -77,14 +77,14 @@ public class BluetoothTransmissionService {
         Log.v(TAG,"Request Thread sent a request...");
     }
 
-    public void sendToDB()
+    public void sendToDB(String risk)
     {
         HashMap<String, String> mp = new HashMap<>();
         for(int i=1;i<=6;i++)
         {
-            mp.put(Integer.toString(i), dataPackets.get(i-1));
+            mp.put(Integer.toString(i), dataPacketsTemp.get(i-1));
         }
-        mp.put("risk", dataPackets.get(6));
+        mp.put("risk", risk);
         assert user != null;
         String userId = user.getEmail();
         assert userId != null;
@@ -92,7 +92,7 @@ public class BluetoothTransmissionService {
                 .set(mp, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> Log.v(TAG, "DocumentSnapshot successfully written!"))
                 .addOnFailureListener(e -> Log.v(TAG, "Error writing document", e));
-        dataPackets.clear();
+        dataPacketsTemp.clear();
     }
 
     public synchronized void responseReceived(String msg)
@@ -102,7 +102,8 @@ public class BluetoothTransmissionService {
         isSent = false;
         if(dataPackets.size() == 6) {
             Log.v(TAG, "Sending to db");
-            ArrayList<String> dataPacketsTemp = new ArrayList<>(dataPackets);
+            dataPacketsTemp = new ArrayList<>(dataPackets);
+            dataPackets.clear();
             dataPacketsTemp.add("predict");
             modelApi.execute(dataPacketsTemp);
         }
