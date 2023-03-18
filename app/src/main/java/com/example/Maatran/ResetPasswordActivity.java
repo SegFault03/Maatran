@@ -17,7 +17,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements commonUI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.forgot_password);
+        setContentView(R.layout.activity_forgot_password);
         Drawable backgroundDrawable = AppCompatResources.getDrawable(this,R.drawable.concept_woman_thinking_laptop_forgot_your_password_account_login_505620_983);
         changeStatusBarColor(backgroundDrawable,this);
     }

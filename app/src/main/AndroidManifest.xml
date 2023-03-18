@@ -37,7 +37,7 @@
             android:name=".ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileView"
+            android:name=".ProfileViewActivity"
             android:exported="false" />
 
         <meta-data
@@ -48,11 +48,10 @@
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EmailSignUp" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".ReportsActivity" />
-        <activity android:name=".PatientsView" />
-        <activity android:name=".EditPatient" />
+        <activity android:name=".PatientsViewActivity" />
+        <activity android:name=".EditPatientActivity" />
         <activity android:name=".BluetoothActivity" />
     </application>
 

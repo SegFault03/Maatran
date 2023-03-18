@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     {
 
                         Toast.makeText(this, "Fill in your details to proceed...", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+                        Intent intent = new Intent(getApplicationContext(), EditPatientActivity.class);
                         intent.putExtra("isPatient",false);
                         intent.putExtra("newDetails", true);
                         startActivity(intent);

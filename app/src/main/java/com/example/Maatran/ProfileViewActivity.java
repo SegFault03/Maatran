@@ -27,18 +27,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class ProfileView extends AppCompatActivity implements commonUIFunctions {
+public class ProfileViewActivity extends AppCompatActivity implements commonUIFunctions {
     FirebaseFirestore db;
     FirebaseUser user;
     boolean isWorker;
-    public static final String TAG="ProfileView";
+    public static final String TAG="ProfileViewActivity";
     ProgressDialog progressDialog;
     ImageView mProfilePic;
     String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
+        setContentView(R.layout.activity_user_profile);
         ConstraintLayout layout = findViewById(R.id.user_profile_bg);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -51,7 +51,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
         mProfilePic = (ImageView)findViewById(R.id.user_profile_pic);
         mProfilePic.setImageResource(R.drawable.profile_ico_white);
         Drawable backgroundDrawable = layout.getBackground();
-        changeStatusBarColor(backgroundDrawable,ProfileView.this);
+        changeStatusBarColor(backgroundDrawable, ProfileViewActivity.this);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
     {
         db.collection("UserDetails")
                 .document(Objects.requireNonNull(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail())).get().addOnSuccessListener(documentSnapshot -> {
-                    Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+                    Intent intent = new Intent(getApplicationContext(), EditPatientActivity.class);
                     intent.putExtra("isPatient", true);
                     intent.putExtra("user", documentSnapshot.toObject(User.class));
                     startActivity(intent);
@@ -158,7 +158,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
         Button yes = popupDeleteProfile.findViewById(R.id.btn_yes);
         Button no = popupDeleteProfile.findViewById(R.id.btn_no);
         yes.setOnClickListener(v -> {
-            ProgressDialog progressDialog = new ProgressDialog(ProfileView.this);
+            ProgressDialog progressDialog = new ProgressDialog(ProfileViewActivity.this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Deleting profile..");
             progressDialog.show();
@@ -252,7 +252,7 @@ public class ProfileView extends AppCompatActivity implements commonUIFunctions 
     }
     /**
      * Sets the user profile pic depending upon the age, gender and type of the user-profile.
-     * Requires a global ImageView element which in this case is called {@link ProfileView#mProfilePic}
+     * Requires a global ImageView element which in this case is called {@link ProfileViewActivity#mProfilePic}
      * @param document: DocumentSnapshot of the document containing the data from which gender, age, etc.
      * from which the profile pic will be inferred.
     */

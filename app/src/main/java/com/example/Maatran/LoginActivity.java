@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.activity_login_screen);
         getWindow().setStatusBarColor(Color.parseColor("#FFAFCC"));
         MaterialButton login = findViewById(R.id.login_signinbtn);
         loadingAnimation = findViewById(R.id.loadingAnimation);
@@ -177,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
                     if(document.get("name")==null)
                     {
                         Toast.makeText(this, "Fill in your details to proceed...", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+                        Intent intent = new Intent(getApplicationContext(), EditPatientActivity.class);
                         intent.putExtra("isPatient",false);
                         intent.putExtra("newDetails", true);
                         startActivity(intent);

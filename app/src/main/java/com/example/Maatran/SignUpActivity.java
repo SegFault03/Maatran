@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_screen);
+        setContentView(R.layout.activity_signup_screen);
         fragmentManager = getSupportFragmentManager();
         tabSelected = 0;
         signUpBtn = findViewById(R.id.signup_btn);
@@ -241,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             }
-            Intent intent = new Intent(getApplicationContext(), EditPatient.class);
+            Intent intent = new Intent(getApplicationContext(), EditPatientActivity.class);
             intent.putExtra("isPatient", false);
             intent.putExtra("newDetails", true);
             startActivity(intent);

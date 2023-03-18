@@ -203,7 +203,7 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bluetooth_activity_screen);
+        setContentView(R.layout.activity_bluetooth);
 
         and_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         //Initializing data members

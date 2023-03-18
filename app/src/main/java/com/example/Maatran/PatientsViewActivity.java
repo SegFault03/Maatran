@@ -39,7 +39,7 @@ import java.util.UUID;
 
 //Activity that initializes the RecyclerView
 //The interface onPatientListener is defined in UserAdapter.class
-public class PatientsView extends AppCompatActivity implements UserAdapter.OnPatientListener {
+public class PatientsViewActivity extends AppCompatActivity implements UserAdapter.OnPatientListener {
     RecyclerView recyclerView;
     LinearLayout options_layout;
     ArrayList<User> userArrayList;
@@ -82,7 +82,7 @@ public class PatientsView extends AppCompatActivity implements UserAdapter.OnPat
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         userArrayList = new ArrayList<>();
-        userAdapter = new UserAdapter(PatientsView.this, userArrayList, this);      //Creates a new Adapter with current Activity as context
+        userAdapter = new UserAdapter(PatientsViewActivity.this, userArrayList, this);      //Creates a new Adapter with current Activity as context
         recyclerView.setAdapter(userAdapter);
         db = FirebaseFirestore.getInstance();
         userId = new ArrayList<>();

@@ -26,9 +26,9 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class EditPatient extends AppCompatActivity {
+public class EditPatientActivity extends AppCompatActivity {
 
-    public static final String TAG="EditPatient";
+    public static final String TAG="EditPatientActivity";
     User user;
     private String locality, gender, and_id, email;
     boolean newDetails, isPatient, isWorker;
@@ -39,7 +39,7 @@ public class EditPatient extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.patient_details);
+        setContentView(R.layout.activity_edit_patient_details);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         email = mUser.getEmail();
 
@@ -141,12 +141,12 @@ public class EditPatient extends AppCompatActivity {
             head_text.setText("ADD DETAILS");
             if (!isWorker)
             {
-                Toast.makeText(EditPatient.this, "Enter new patient details.",
+                Toast.makeText(EditPatientActivity.this, "Enter new patient details.",
                         Toast.LENGTH_SHORT).show();
             }
             else
             {
-                Toast.makeText(EditPatient.this, "Enter user details.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditPatientActivity.this, "Enter user details.", Toast.LENGTH_SHORT).show();
                 findViewById(R.id.cancel).setVisibility(View.GONE);
             }
         }

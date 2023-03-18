@@ -25,7 +25,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements commonU
         super.onCreate(savedInstanceState);
         String user_name = getIntent().getExtras().getString("UserName");
         String url = getIntent().getExtras().getString("ResLoc");
-        setContentView(R.layout.change_password);
+        setContentView(R.layout.activity_change_password);
         ConstraintLayout layout = findViewById(R.id.change_password_bg);
         Drawable backgroundDrawable = layout.getBackground();
         changeStatusBarColor(backgroundDrawable,this);

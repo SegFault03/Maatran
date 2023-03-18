@@ -49,7 +49,7 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.activity_dashboard);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data..");
@@ -108,20 +108,20 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
 
     public void viewPatients(View view)
     {
-        Intent intent = new Intent(getApplicationContext(), PatientsView.class);
+        Intent intent = new Intent(getApplicationContext(), PatientsViewActivity.class);
         intent.putExtra("isPatient", isPatient);
         startActivity(intent);
     }
 
     public void userProfileView(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),ProfileView.class);
+        Intent intent = new Intent(getApplicationContext(), ProfileViewActivity.class);
         startActivity(intent);
     }
 
     public void addPatient(View view)
     {
-        Intent intent = new Intent(getApplicationContext(),EditPatient.class);
+        Intent intent = new Intent(getApplicationContext(), EditPatientActivity.class);
         intent.putExtra("user", mUser);
         intent.putExtra("newDetails", false);
         startActivity(intent);
@@ -216,7 +216,7 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
 
     /**
      * Sets the user profile pic depending upon the age, gender and type of the user-profile.
-     * Requires a global ImageView element which in this case is called {@link ProfileView#mProfilePic}
+     * Requires a global ImageView element which in this case is called {@link ProfileViewActivity#mProfilePic}
      * @param document: DocumentSnapshot of the document containing the data from which gender, age, etc.
      * from which the profile pic will be inferred.
      */

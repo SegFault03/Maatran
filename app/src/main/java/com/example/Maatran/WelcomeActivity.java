@@ -24,7 +24,7 @@ MaterialButton signUpBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_screen);
+        setContentView(R.layout.activity_welcome_screen);
         getWindow().setStatusBarColor(getResources().getColor(R.color.welcome_accent));
         Button test_btn = findViewById(R.id.test_btn);
         test_btn.setVisibility(View.GONE);

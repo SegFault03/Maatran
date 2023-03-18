@@ -51,7 +51,7 @@
                 android:layout_width="127dp"
                 android:layout_height="107dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/img"
+                android:src="@drawable/edit_patient_details_img"
                 app:layout_constraintTop_toBottomOf="@+id/edit_details"
                 app:layout_constraintVertical_bias="0.0" />
 
