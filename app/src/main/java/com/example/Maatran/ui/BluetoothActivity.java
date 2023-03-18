@@ -1,4 +1,4 @@
-package com.example.Maatran;
+package com.example.Maatran.ui;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -27,6 +27,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.Maatran.R;
+import com.example.Maatran.services.BluetoothChatService;
+import com.example.Maatran.services.BluetoothTransmissionService;
 
 import java.io.File;
 import java.io.FileOutputStream;

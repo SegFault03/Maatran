@@ -1,4 +1,4 @@
-package com.example.Maatran;
+package com.example.Maatran.ui;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
+import com.example.Maatran.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;

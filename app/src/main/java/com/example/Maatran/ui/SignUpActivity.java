@@ -1,4 +1,4 @@
-package com.example.Maatran;
+package com.example.Maatran.ui;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -19,6 +19,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.Maatran.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;

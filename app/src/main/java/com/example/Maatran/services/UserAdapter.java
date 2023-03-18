@@ -1,4 +1,4 @@
-package com.example.Maatran;
+package com.example.Maatran.services;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.Maatran.R;
 
 import java.util.ArrayList;
 

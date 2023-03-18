@@ -1,4 +1,4 @@
-package com.example.Maatran;
+package com.example.Maatran.services;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

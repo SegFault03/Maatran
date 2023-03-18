@@ -1,10 +1,11 @@
-package com.example.Maatran;
+package com.example.Maatran.services;
 
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.Maatran.ui.BluetoothActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
