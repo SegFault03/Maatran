@@ -10,7 +10,7 @@ import androidx.palette.graphics.Palette;
 
 import com.example.Maatran.R;
 
-public interface UIFunctions {
+public interface commonUIFunctions {
     default void changeStatusBarColor(Drawable backgroundDrawable, AppCompatActivity activity)
     {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) backgroundDrawable;

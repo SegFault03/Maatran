@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,7 +19,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
-import com.example.Maatran.utils.UIFunctions;
+import com.example.Maatran.utils.commonUIFunctions;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +31,7 @@ import java.util.Objects;
 
 //login activity, called from main activity
 //corresponding xml file: screen_1
-public class LoginActivity extends AppCompatActivity implements UIFunctions {
+public class LoginActivity extends AppCompatActivity implements commonUIFunctions {
 
     private static final String TAG = "LoginActivity";
     // [START declare_auth]
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements UIFunctions {
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.login_screen);
         getWindow().setStatusBarColor(Color.parseColor("#FFAFCC"));
-        Button login = findViewById(R.id.login_signinbtn);
+        MaterialButton login = findViewById(R.id.login_signinbtn);
         loadingAnimation = findViewById(R.id.loadingAnimation);
         loadingAnimation.setVisibility(View.GONE);
         loadingDotHandler = new Handler();
@@ -82,7 +84,13 @@ public class LoginActivity extends AppCompatActivity implements UIFunctions {
         }
     }
     // [END on_start_check_user]
-
+    public void changeTextColor(int type, MaterialButton button)
+    {
+        if(type==1)
+            button.setTextColor(getResources().getColor(R.color.colorPrimary));
+        else
+            button.setTextColor(getResources().getColor(R.color.white));
+    }
     void changeLoadingDot()
     {
         String currLoadDotView = "load_dot"+ lastUpdatedDot % 3;

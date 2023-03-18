@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/registrationLogin_bg"
+    android:id="@+id/welcome_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="65dp"
         />
+
     <TextView
         android:id="@+id/welcome_header"
         android:layout_width="275dp"
@@ -45,79 +46,50 @@
         app:layout_constraintHorizontal_bias="0.5"
         android:layout_marginTop="-15dp"/>
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/welcome_signin_btn"
         android:layout_width="250dp"
         android:layout_height="54dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-95dp"
-        android:background="@drawable/welcome_imagebutton_bg"
-        android:onClick="signInOptions"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_img" />
-
-    <TextView
-        android:id="@+id/sign_in"
-        android:layout_width="150dp"
-        android:layout_height="46.5dp"
-        android:layout_alignTop="@+id/welcome_register_btn"
-        android:layout_alignBottom="@+id/welcome_signin_btn"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_horizontal|center"
-        android:layout_marginTop="4dp"
+        android:textAlignment="center"
         android:fontFamily="@font/lexend"
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="#4FB1D4"
         android:text="@string/sign_in_string"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="@+id/welcome_signin_btn"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/welcome_signin_btn"
-        app:layout_constraintTop_toTopOf="@+id/welcome_signin_btn" />
+        style="@style/CustomMaterialButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-95dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_img" />
 
-    <ImageButton
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/welcome_register_btn"
         android:layout_width="250dp"
         android:layout_height="54dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/welcome_imagebutton_bg"
-        android:onClick="registerOptions"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/welcome_signin_btn"
-        android:layout_marginTop="4dp"
-        app:layout_constraintVertical_bias="0.04" />
-
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/welcome_register_btn"
-        android:layout_alignBottom="@+id/welcome_register_btn"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_horizontal|center"
+        style="@style/CustomMaterialButton"
         android:fontFamily="@font/lexend"
         android:textStyle="bold"
         android:gravity="center"
         android:text="REGISTER"
         android:textColor="#4FB1D4"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/welcome_register_btn"
-        app:layout_constraintEnd_toEndOf="@+id/welcome_register_btn"
-        app:layout_constraintStart_toStartOf="@+id/welcome_register_btn"
-        app:layout_constraintTop_toTopOf="@+id/welcome_register_btn"
-        app:layout_constraintVertical_bias="0.48000002" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome_signin_btn"
+        android:layout_marginTop="2dp"
+        app:layout_constraintVertical_bias="0.04" />
+
 
     <Button
         android:id="@+id/test_btn"

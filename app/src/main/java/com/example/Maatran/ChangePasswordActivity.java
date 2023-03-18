@@ -14,10 +14,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.Maatran.utils.UIFunctions;
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ChangePasswordActivity extends AppCompatActivity implements UIFunctions {
+public class ChangePasswordActivity extends AppCompatActivity implements commonUIFunctions {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

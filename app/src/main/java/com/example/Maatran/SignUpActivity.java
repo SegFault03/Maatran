@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         tabSelected = 0;
         signUpBtn = findViewById(R.id.signup_btn);
         signInOption = findViewById(R.id.signup_signin_options);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         findViewById(R.id.backBtn).setOnClickListener(v->super.finish());
         loadingAnimation = findViewById(R.id.loadingAnimation);
         loadingAnimation.setVisibility(View.GONE);
@@ -112,27 +112,24 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        signUpBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()==MotionEvent.ACTION_DOWN)
-                {
-                    v.setBackgroundColor(getResources().getColor(R.color.white));
-                    changeTextColor(1);
-                    signIn();
-                    return true;
-                }
-                if(event.getAction()==MotionEvent.ACTION_UP)
-                {
-                    v.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    changeTextColor(0);
-                    return true;
-                }
-                return false;
+        signUpBtn.setOnTouchListener((v, event) -> {
+            if(event.getAction()==MotionEvent.ACTION_DOWN)
+            {
+                v.setBackgroundColor(getResources().getColor(R.color.white));
+                changeTextColor(1);
+                return true;
             }
+            if(event.getAction()==MotionEvent.ACTION_UP)
+            {
+                v.performClick();
+                v.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                changeTextColor(0);
+                return true;
+            }
+            return false;
         });
+        signUpBtn.setOnClickListener(v->signIn());
         signInOption.setOnClickListener(view->signInOptions());
-
     }
 
     public void changeTextColor(int type)

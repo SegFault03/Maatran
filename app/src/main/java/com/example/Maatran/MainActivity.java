@@ -1,11 +1,5 @@
 package com.example.Maatran;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -14,7 +8,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.Maatran.utils.UIFunctions;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements UIFunctions {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     int lastUpdatedDot = 0;
@@ -32,9 +30,6 @@ public class MainActivity extends AppCompatActivity implements UIFunctions {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ConstraintLayout layout = findViewById(R.id.main_activity_bg);
-        Drawable backgroundDrawable = layout.getBackground();
-        changeStatusBarColor(backgroundDrawable,this);
         loadingDotHandler = new Handler();
         loadingDotHandler.postDelayed(loadingDotRunnable,300);
         signInOptions();
@@ -50,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements UIFunctions {
         AppCompatImageView currResView = findViewById(currResID);
         AppCompatImageView oldResView = findViewById(oldResID);
         Drawable drawable = AppCompatResources.getDrawable(this,R.drawable.loading_dot_grey);
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.white), PorterDuff.Mode.SRC_IN);
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         currResView.setImageDrawable(drawable);
         oldResView.setImageResource(R.drawable.loading_dot_grey);
         loadingDotHandler.postDelayed(loadingDotRunnable,300);

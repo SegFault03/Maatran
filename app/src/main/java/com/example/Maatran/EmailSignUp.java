@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.Maatran.utils.UIFunctions;
+import com.example.Maatran.utils.commonUIFunctions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,7 +26,7 @@ import java.util.Objects;
 //Called from RegistrationActivity
 //email based sign-up
 //xml file: screen-3
-public class EmailSignUp extends AppCompatActivity implements UIFunctions {
+public class EmailSignUp extends AppCompatActivity implements commonUIFunctions {
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;

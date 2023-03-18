@@ -82,5 +82,8 @@
         <item name="fontFamily">@font/lexend_medium</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
-
+    <style name="CustomMaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/welcome_button_nonclickedstate</item>
+        <item name="backgroundTint">@color/welcome_accent</item>
+    </style>
 </resources>

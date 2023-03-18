@@ -28,18 +28,21 @@ android {
             versionCode gitVersionCodeTime
             versionName gitVersionName
             versionNameSuffix "-alpha"
+            dimension gitVersionName
         }
 
         beta {
             versionCode gitVersionCode
             versionName gitVersionName
             versionNameSuffix "-beta"
+            dimension gitVersionName
         }
 
         prod {
             versionCode gitVersionCode
             versionName gitVersionName
             versionNameSuffix "-release"
+            dimension gitVersionName
         }
     }
     compileOptions {
@@ -49,20 +52,21 @@ android {
     lint {
         checkReleaseBuilds false
     }
+    namespace 'com.example.Maatran'
 
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
-    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    implementation platform('com.google.firebase:firebase-bom:31.2.3')
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     implementation 'com.google.firebase:firebase-firestore:24.4.4'

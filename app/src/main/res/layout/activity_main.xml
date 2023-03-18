@@ -4,7 +4,7 @@
     android:id="@+id/main_activity_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sample_bg2">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/maatran_logo_main"
