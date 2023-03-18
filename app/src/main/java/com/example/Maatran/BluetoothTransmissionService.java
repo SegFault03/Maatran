@@ -3,6 +3,8 @@ package com.example.Maatran;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -19,6 +21,7 @@ public class BluetoothTransmissionService {
     sendRequestThread mSendRequestThread;
     CollectionReference db;
     FirebaseUser user;
+    AppCompatActivity activity;
     ArrayList<String> dataPackets;
     ArrayList<String> dataPacketsTemp;
     ModelApi modelApi;
@@ -26,6 +29,7 @@ public class BluetoothTransmissionService {
 
     public BluetoothTransmissionService(BluetoothChatService obj, String and_id, BluetoothActivity activity)
     {
+        this.activity = activity;
         isSent = false;
         mChatService = obj;
         dataPackets = new ArrayList<>();
@@ -98,15 +102,23 @@ public class BluetoothTransmissionService {
     public synchronized void responseReceived(String msg)
     {
         Log.v(TAG,"Response received...");
-        dataPackets.add(msg);
+        Toast.makeText(activity, getValidData(msg), Toast.LENGTH_SHORT).show();
+        dataPackets.add(getValidData(msg));
         isSent = false;
-        if(dataPackets.size() == 6) {
+        if(dataPackets.size() == 8) {
             Log.v(TAG, "Sending to db");
             dataPacketsTemp = new ArrayList<>(dataPackets);
             dataPackets.clear();
             dataPacketsTemp.add("predict");
             modelApi.execute(dataPacketsTemp);
         }
+    }
+    public synchronized String getValidData(String msg)
+    {
+        StringBuilder ns= new StringBuilder();
+        for(int i=0;i<msg.length();i++)
+            ns.append(((msg.charAt(i) >= 48 && msg.charAt(i) <= 57) || msg.charAt(i)=='.') ? msg.charAt(i) : "");
+        return ns.toString();
     }
 
     private class sendRequestThread extends Thread{
@@ -120,7 +132,7 @@ public class BluetoothTransmissionService {
         public void run()
         {
             int i = 1;
-            while (i <= 6 && !stop) {
+            while (i <= 8 && !stop) {
                 sendRequest(i);
                 i++;
             }
