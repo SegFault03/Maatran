@@ -42,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     int tabSelected;
     private final static String TAG = "SignUpActivity";
     String email, password, confirmPass, hospitalName, employeeId;
+    private boolean isPatient;
     FirebaseAuth mAuth;
     int lastUpdatedDot = 0;
     Handler loadingDotHandler;
@@ -52,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_screen);
+        isPatient = true;
         fragmentManager = getSupportFragmentManager();
         tabSelected = 0;
         signUpBtn = findViewById(R.id.signup_btn);
@@ -164,6 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
         password = (((TextInputEditText) fragmentView.findViewById(R.id.signup_pwd_edit)).getText()).toString();
         confirmPass = (((TextInputEditText) fragmentView.findViewById(R.id.signup_pwd_confirm_edit)).getText()).toString();
         if (tabSelected == 1) {
+            isPatient=false;
             hospitalName = ((EditText) fragmentView.findViewById(R.id.signup_hospital_edit)).getText().toString();
             employeeId = ((EditText) fragmentView.findViewById(R.id.signup_empid_edit)).getText().toString();
             if(hospitalName.length()==0)
@@ -221,11 +224,12 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void updateUI(FirebaseUser user) {
-        loadingAnimation.setVisibility(View.GONE);
-        if (user != null) {
+        if(user != null)
+        {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             Map<String, String> details = new HashMap<>();
-            if (tabSelected==1) {
+            if(!isPatient)
+            {
                 details.put("hospitalName", hospitalName);
                 details.put("employeeId", employeeId);
                 details.put("isWorker", "true");
@@ -234,7 +238,11 @@ public class SignUpActivity extends AppCompatActivity {
                         .set(details, SetOptions.merge())
                         .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
-            } else {
+            }
+            else
+            {
+                details.put("admin_id", "null");
+                details.put("family_id", "");
                 details.put("isWorker", "false");
                 db.collection("UserDetails")
                         .document(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()))
@@ -243,7 +251,7 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             }
             Intent intent = new Intent(getApplicationContext(), EditPatientActivity.class);
-            intent.putExtra("isPatient", false);
+            intent.putExtra("isPatient", true);
             intent.putExtra("newDetails", true);
             startActivity(intent);
             super.finish();
