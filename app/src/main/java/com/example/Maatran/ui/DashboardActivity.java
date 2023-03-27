@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.Maatran.R;
+import com.example.Maatran.services.LocationService;
 import com.example.Maatran.services.ModelApi;
 import com.example.Maatran.services.User;
 import com.example.Maatran.utils.commonUIFunctions;
@@ -140,6 +141,9 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
             {
                 DocumentSnapshot ds = task.getResult();
                 mUser = ds.toObject(User.class);
+                Intent intent = new Intent(this, LocationService.class);
+                intent.putExtra("user", mUser);
+                startService(intent);
                 if(ds.exists()) {
                     user_name.setText(Objects.requireNonNull("Hello "+ds.get("name")).toString()+"!");
                     if(Objects.requireNonNull(ds.get("isWorker")).toString().equals("true")) {

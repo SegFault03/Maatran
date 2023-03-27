@@ -53,6 +53,10 @@
         <activity android:name=".ui.PatientsViewActivity" />
         <activity android:name=".ui.EditPatientActivity" />
         <activity android:name=".ui.BluetoothActivity" />
+        <service android:name=".services.LocationService" />
+<!--        <service-->
+<!--            android:name=".services.BackgroundDataService"-->
+<!--            android:exported="false"/>-->
     </application>
 
 </manifest>
