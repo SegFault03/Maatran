@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply from: "$project.rootDir/tools/script-git-version.gradle"
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdk 33
@@ -67,16 +68,16 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation platform('com.google.firebase:firebase-bom:31.2.3')
-    implementation 'com.google.firebase:firebase-analytics:21.2.0'
-    implementation 'com.google.firebase:firebase-auth:21.1.0'
-    implementation 'com.google.firebase:firebase-firestore:24.4.4'
+    implementation 'com.google.firebase:firebase-analytics:21.2.1'
+    implementation 'com.google.firebase:firebase-auth:21.2.0'
+    implementation 'com.google.firebase:firebase-firestore:24.4.5'
     implementation 'com.eightbitlab:blurview:1.6.6'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.apache.httpcomponents:fluent-hc:4.5.10'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     implementation 'androidx.palette:palette:1.0.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation "androidx.fragment:fragment:1.5.5"
+    implementation "androidx.fragment:fragment:1.5.6"
 }
 
 configurations {
