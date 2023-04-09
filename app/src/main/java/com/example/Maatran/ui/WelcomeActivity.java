@@ -2,18 +2,16 @@ package com.example.Maatran.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.Maatran.R;
+import com.example.Maatran.tests.AppNavigationActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
 
 //main Activity
 //XML file: home_1
@@ -28,7 +26,7 @@ MaterialButton signUpBtn;
         setContentView(R.layout.activity_welcome_screen);
         getWindow().setStatusBarColor(getResources().getColor(R.color.welcome_accent));
         Button test_btn = findViewById(R.id.test_btn);
-        test_btn.setVisibility(View.GONE);
+        test_btn.setVisibility(View.VISIBLE);
         test_btn.setOnClickListener(v-> signInWithTestAccount());
         signInBtn = findViewById(R.id.welcome_signin_btn);
         signUpBtn = findViewById(R.id.welcome_register_btn);
@@ -95,25 +93,26 @@ MaterialButton signUpBtn;
 
     private void signInWithTestAccount()
     {
-
-        String email = "test1@gmail.com";
-        String password = "123456";
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success");
-                        Toast.makeText(this,"WARNING: USE THIS FEATURE FOR DEBUG/TEST PURPOSES ONLY",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                        startActivity(intent);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+          Intent intent = new Intent(this, AppNavigationActivity.class);
+          startActivity(intent);
+//        String email = "test1@gmail.com";
+//        String password = "123456";
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        auth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, task -> {
+//                    if (task.isSuccessful()) {
+//                        // Sign in success, update UI with the signed-in user's information
+//                        Log.d(TAG, "signInWithEmail:success");
+//                        Toast.makeText(this,"WARNING: USE THIS FEATURE FOR DEBUG/TEST PURPOSES ONLY",Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+//                        startActivity(intent);
+//                    } else {
+//                        // If sign in fails, display a message to the user.
+//                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                        Toast.makeText(this, "Authentication failed.",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 
 }

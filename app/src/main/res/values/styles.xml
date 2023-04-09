@@ -86,4 +86,13 @@
         <item name="android:background">@drawable/welcome_button_nonclickedstate</item>
         <item name="backgroundTint">@color/welcome_accent</item>
     </style>
+
+    <style name="CustomBottomNavBarStyle" >
+    <item name="enforceTextAppearance">true</item>
+    <item name="enforceMaterialTheme">true</item>
+    <item name="android:background">@color/white</item>
+    <item name="itemIconPadding">5dp</item>
+    <item name="itemIconTint">@color/navbar_icon_tint</item>
+    <item name="itemRippleColor">#87CEEB</item>
+</style>
 </resources>

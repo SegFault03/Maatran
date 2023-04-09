@@ -19,6 +19,9 @@
         android:roundIcon="@mipmap/maatran_launcher_icon_round"
         android:theme="@style/Theme.maatranlogin">
         <activity
+            android:name=".tests.AppNavigationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SignUpActivity"
             android:exported="false" />
         <activity
