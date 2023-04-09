@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.Maatran">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -16,30 +14,33 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@mipmap/maatran_launcher_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/app_logo"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Mumtranlogin">
+        android:roundIcon="@mipmap/maatran_launcher_icon_round"
+        android:theme="@style/Theme.maatranlogin">
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            android:name=".tests.AppNavigationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".ui.ResetPasswordActivity"
             android:exported="false" />
-
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name=".ui.ChangePasswordActivity"
             android:exported="false" />
-
         <activity
-            android:name=".ProfileView"
+            android:name=".ui.ProfileViewActivity"
             android:exported="false" />
 
         <meta-data
@@ -47,16 +48,14 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".RegisterSignUpActivity"
-            android:exported="false">
-        </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".EmailSignUp" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".ReportsActivity" />
-        <activity android:name=".PatientsView" />
-        <activity android:name=".EditPatient" />
-        <activity android:name=".BluetoothActivity" />
+            android:name=".ui.WelcomeActivity"
+            android:exported="false" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.DashboardActivity" />
+        <activity android:name=".ui.ReportsActivity" />
+        <activity android:name=".ui.PatientsViewActivity" />
+        <activity android:name=".ui.EditPatientActivity" />
+        <activity android:name=".ui.BluetoothActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".tests.BluetoothFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingVertical="5dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/back_to_dashboard_btn_BL"
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:layout_weight="0.33"
+                android:layout_marginLeft="15dp"
+                android:clickable="true"
+                android:rotation="180"
+                android:rotationY="4"
+                app:srcCompat="@drawable/arrow_right"
+                android:focusable="true"
+                android:contentDescription="back" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.33"
+                android:padding="0dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="15dp"
+                android:text="BluetoothService"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.047" />
+
+            <ImageView
+                android:id="@+id/bluetooth_settings"
+                android:layout_width="49dp"
+                android:layout_height="47dp"
+                android:layout_gravity="end"
+                android:layout_weight="0.33"
+                android:background="@drawable/settings_ico"
+                android:contentDescription="settings" />
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/bluetooth_service_state_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Bluetooth_state"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <Button
+            android:id="@+id/bluetooth_service_connect_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="CONNECT_DISCONNECT"
+            android:focusable="true"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bluetooth_service_state_text" />
+
+
+        <TextView
+            android:id="@+id/select_device_text"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Please select a device to connect to..."
+            android:layout_gravity="center_horizontal"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/find_devices_btn" />
+
+        <Button
+            android:id="@+id/find_devices_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="FIND DEVICES"
+            android:focusable="true"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bluetooth_service_connect_btn" />
+
+        <Button
+            android:id="@+id/start_transmission_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="START"
+            android:focusable="true"
+            android:backgroundTint="@color/red"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bluetooth_service_connect_btn" />
+
+
+        <ListView
+            android:id="@+id/device_list_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="429dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="35dp"
+            android:layout_marginVertical="5dp" />
+
+        <TextView
+            android:id="@+id/status_bar_text"
+            android:text=""
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp" />
+    </LinearLayout>
+
+</FrameLayout>
