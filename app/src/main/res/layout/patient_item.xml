@@ -8,23 +8,26 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:clickable="true"
-    app:cardBackgroundColor="#7BCAED"
-    app:cardCornerRadius="15dp">
+    android:background="@drawable/rectangle_2_"
+    app:cardBackgroundColor="#7BCAED">
 
     <ImageView
         android:id="@+id/profilePicListItem"
         android:layout_width="90dp"
         android:layout_height="100dp"
         android:layout_margin="10dp"
+        android:background="@drawable/rectangle_3_"
         android:src="@drawable/avatar" />
 
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:padding="10dp"
         android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_marginStart="100dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:cornerRadius="10dp"
+        >
 
         <TextView
             android:id="@+id/patient_name_1"
@@ -33,7 +36,8 @@
             android:text="NAME: "
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/lexend" />
 
         <TextView
             android:id="@+id/patient_age_1"
@@ -42,7 +46,8 @@
             android:text="AGE: "
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/lexend" />
 
         <TextView
             android:id="@+id/patient_gender_1"
@@ -51,7 +56,9 @@
             android:text="GENDER: "
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/lexend" />
+
         <TextView
             android:id="@+id/patient_address_1"
             android:layout_width="match_parent"
@@ -59,7 +66,8 @@
             android:text="LOCALITY: "
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontFamily="@font/lexend" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

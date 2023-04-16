@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="60dp"
+            android:layout_height="55dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="@color/colorPrimaryDark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            />
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:fontFamily="@font/lexend_medium"
+            android:text="Sign Up"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="45sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/focusImage" />
+
+        <TextView
+            android:id="@+id/subHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/lexend"
+            android:text="Join the Maatran family"
+            android:textColor="#107ED5"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subHeader"
+            android:layout_marginTop="6dp"
+            app:layout_constraintHorizontal_bias="0.5">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:padding="0dp"
+                android:background="@drawable/straight_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend"
+                android:text="Sign up as a"
+                android:padding="6dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:padding="0dp"
+                android:background="@drawable/straight_line" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/focusImage"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/signin_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="2dp"
+            style="@style/Widget.Design.TabLayout"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            android:background="@drawable/transparent_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:tabRippleColor="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabPadding="0dp"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="@color/colorPrimaryDark">
+                            <com.google.android.material.tabs.TabItem
+                                android:id="@+id/tabItem1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Patient" />
+                            <com.google.android.material.tabs.TabItem
+                                android:id="@+id/tabItem2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Health worker" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/signupFragmentContainer"
+            android:name="com.example.Maatran.ui.SignUpFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            tools:layout="@layout/fragment_signup" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_btn"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            app:cornerRadius="20dp"
+            android:textSize="19sp"
+            android:padding="10dp"
+            android:text="SIGN UP"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:flow_horizontalBias="0.5"
+            app:layout_constraintTop_toBottomOf="@id/signupFragmentContainer"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/signup_signin_options_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/signup_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Have an account?"
+                android:fontFamily="@font/dm_sans"
+                android:textSize="16sp"
+                android:textColor="#D0000000"/>
+            <TextView
+                android:id="@+id/signup_signin_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Sign In"
+                android:textSize="16sp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:textColor="@color/colorPrimaryDark"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/loadingAnimation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/signup_signin_options_box">
+
+            <ImageView
+                android:id="@+id/load_dot0"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/loading_dot_grey" />
+
+            <ImageView
+                android:id="@+id/load_dot1"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/loading_dot_grey" />
+
+            <ImageView
+                android:id="@+id/load_dot2"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/loading_dot_grey" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

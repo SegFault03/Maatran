@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
-        <item>@font/</item>
         <item>@font/alegreya_sans</item>
         <item>@font/amarante</item>
         <item>@font/amaranth_bold</item>
         <item>@font/armata</item>
+        <item>@font/dm_sans</item>
+        <item>@font/dm_sans_bold</item>
         <item>@font/dm_serif_display</item>
+        <item>@font/lexend</item>
+        <item>@font/lexend_medium</item>
     </array>
 </resources>

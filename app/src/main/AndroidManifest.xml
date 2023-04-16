@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.Maatran">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@mipmap/maatran_launcher_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_foreground"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Mumtranlogin">
+        android:roundIcon="@mipmap/maatran_launcher_icon_round"
+        android:theme="@style/Theme.maatranlogin"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".ui.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ChangePasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileView"
-            android:exported="false" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-        <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,13 +35,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".EmailSignUp" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".ReportsActivity" />
-        <activity android:name=".PatientsView" />
-        <activity android:name=".EditPatient" />
-        <activity android:name=".BluetoothActivity"/>
+        <activity
+            android:name=".ui.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ProfileViewActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:exported="false" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.DashboardActivity" />
+        <activity android:name=".ui.ReportsActivity" />
+        <activity android:name=".ui.PatientsViewActivity" />
+        <activity android:name=".ui.EditPatientActivity" />
+        <activity android:name=".ui.BluetoothActivity" />
     </application>
 
 </manifest>
