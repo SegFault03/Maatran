@@ -3,13 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - beta
       - release
-<<<<<<< HEAD
-    tags:
-      - "v*"
-=======
->>>>>>> alpha
 
 jobs:
   apk:
@@ -26,20 +20,12 @@ jobs:
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
       - name: Build APK
-<<<<<<< HEAD
-        run: bash ./gradlew assembleDebug --stacktrace
-=======
         run: bash ./gradlew assembleRelease --stacktrace
->>>>>>> alpha
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: apk
-<<<<<<< HEAD
-          path: app/build/outputs/apk/alpha/debug/app-alpha-debug.apk
-=======
           path: app/build/outputs/apk/prod/release/app-prod-release.apk
->>>>>>> alpha
 
   release:
     name: Release APK
@@ -56,13 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-<<<<<<< HEAD
-          tag_name: v3.0.0-beta
-          release_name: ${{ github.event.repository.name }} v3.0.0-beta
-=======
           tag_name: v3.8.4
           release_name: ${{ github.event.repository.name }} v3.8.4
->>>>>>> alpha
       - name: Upload Release APK
         id: upload_release_asset
         uses: actions/upload-release-asset@v1.0.1
@@ -70,12 +51,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-<<<<<<< HEAD
-          asset_path: apk/app-alpha-debug.apk
-          asset_name: ${{ github.event.repository.name }}.apk
-          asset_content_type: application/zip
-=======
           asset_path: apk/app-prod-release.apk
           asset_name: ${{ github.event.repository.name }}.apk
           asset_content_type: application/zip
->>>>>>> alpha
