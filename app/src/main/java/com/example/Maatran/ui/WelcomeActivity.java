@@ -26,7 +26,7 @@ MaterialButton signUpBtn;
         setContentView(R.layout.activity_welcome_screen);
         getWindow().setStatusBarColor(getResources().getColor(R.color.welcome_accent));
         Button test_btn = findViewById(R.id.test_btn);
-        test_btn.setVisibility(View.VISIBLE);
+        test_btn.setVisibility(View.INVISIBLE);
         test_btn.setOnClickListener(v-> signInWithTestAccount());
         signInBtn = findViewById(R.id.welcome_signin_btn);
         signUpBtn = findViewById(R.id.welcome_register_btn);
