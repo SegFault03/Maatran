@@ -63,7 +63,7 @@ public class ModelApi extends AsyncTask<ArrayList<String>, String, String> {
         StringBuilder response = new StringBuilder();
         try{
             // The URL of the API endpoint
-            URL url = new URL("https://maatranapi-1-c9699936.deta.app/predict?sample=" + data);
+            URL url = new URL("http://35.238.230.12:8080/predict/" + data);
 
             // Open an HttpURLConnection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -98,7 +98,7 @@ public class ModelApi extends AsyncTask<ArrayList<String>, String, String> {
         try {
 
             // The URL of the API endpoint
-            URL url = new URL("https://maatranapi-1-c9699936.deta.app/sayhi");
+            URL url = new URL("http://35.238.230.12:8080");
 
             // Open an HttpURLConnection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
