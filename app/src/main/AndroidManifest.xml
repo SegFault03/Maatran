@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/maatran_launcher_icon_round"
         android:theme="@style/Theme.maatranlogin">
         <activity
-            android:name=".tests.MainActivityv2"
+            android:name=".tests.MainActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
