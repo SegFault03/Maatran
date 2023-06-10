@@ -105,6 +105,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
+                        android:id="@+id/view_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -172,6 +173,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sign_out"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
