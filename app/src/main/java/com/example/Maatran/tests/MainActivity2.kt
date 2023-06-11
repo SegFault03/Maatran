@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import com.example.Maatran.R
 import com.example.Maatran.databinding.ActivityMainBinding
 import com.example.Maatran.ui.EditPatientActivity
-import com.example.Maatran.ui.WelcomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,7 +21,7 @@ import com.google.firebase.ktx.Firebase
 class MainActivity2 : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
 
-    private val _tag = "MainActivityv2"
+    private val _tag = "MainActivity2"
 
     private var _lastUpdatedDot: Int = 0
 
@@ -32,7 +31,7 @@ class MainActivity2 : AppCompatActivity() {
 
     private var _signInRunnable: Runnable = Runnable {
         Toast.makeText(this,"Its taking too long, please log-in/sign-up manually",Toast.LENGTH_SHORT).show()
-        val intent = Intent(applicationContext, WelcomeActivity::class.java)
+        val intent = Intent(applicationContext, WelcomeActivityNew::class.java)
         startActivity(intent)
         super.finish()
     }
@@ -72,7 +71,7 @@ class MainActivity2 : AppCompatActivity() {
     private fun signInOptions() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            val intent = Intent(applicationContext, WelcomeActivity::class.java)
+            val intent = Intent(applicationContext, WelcomeActivityNew::class.java)
             startActivity(intent)
             super.finish()
         } else {
@@ -112,7 +111,7 @@ class MainActivity2 : AppCompatActivity() {
                 } else {
                     Log.d(_tag, "Document does not exist")
                     Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(applicationContext, WelcomeActivity::class.java)
+                    val intent = Intent(applicationContext, WelcomeActivityNew::class.java)
                     startActivity(intent)
                     super.finish()
                 }
@@ -120,7 +119,7 @@ class MainActivity2 : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d(_tag, "get failed with ", exception)
                 Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, WelcomeActivity::class.java)
+                val intent = Intent(applicationContext, WelcomeActivityNew::class.java)
                 startActivity(intent)
                 super.finish()
             }

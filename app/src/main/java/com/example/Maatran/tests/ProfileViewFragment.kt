@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import com.example.Maatran.R
 import com.example.Maatran.databinding.FragmentProfileViewBinding
 import com.example.Maatran.ui.ProfileViewActivity
-import com.example.Maatran.ui.WelcomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -80,7 +79,7 @@ class ProfileViewFragment : Fragment() {
                 Toast.LENGTH_SHORT
             )
             toast.show()
-            val intent = Intent(requireContext(), WelcomeActivity::class.java)
+            val intent = Intent(requireContext(), WelcomeActivityNew::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                     Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)

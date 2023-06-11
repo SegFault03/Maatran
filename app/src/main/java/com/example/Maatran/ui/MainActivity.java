@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
 import com.example.Maatran.R;
+import com.example.Maatran.tests.WelcomeActivityNew;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public void signInOptions() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null) {
-            Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
             startActivity(intent);
             super.finish();
         }
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     Log.d(TAG, "Document does not exist");
                     Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
                     startActivity(intent);
                     super.finish();
                 }
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             else {
                 Log.d(TAG, "Task failed to complete");
                 Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
                 startActivity(intent);
                 super.finish();
             }
