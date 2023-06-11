@@ -1,4 +1,4 @@
-package com.example.Maatran.ui;
+package com.example.Maatran.ui.legacy;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat;
 
 import com.example.Maatran.R;
 import com.example.Maatran.tests.WelcomeActivityNew;
+import com.example.Maatran.ui.DashboardActivity;
+import com.example.Maatran.ui.EditPatientActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;

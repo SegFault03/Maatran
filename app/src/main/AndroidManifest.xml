@@ -41,17 +41,6 @@
             android:name=".ui.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MainActivity"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
             android:name=".ui.ResetPasswordActivity"
             android:exported="false" />
         <activity
@@ -65,9 +54,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-<!--        <activity-->
-<!--            android:name=".ui.WelcomeActivity"-->
-<!--            android:exported="false" />-->
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.DashboardActivity" />
         <activity android:name=".ui.ReportsActivity" />

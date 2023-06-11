@@ -1,4 +1,4 @@
-package com.example.Maatran.ui;
+package com.example.Maatran.ui.legacy;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.Maatran.R;
 import com.example.Maatran.tests.AppNavigationActivity;
+import com.example.Maatran.ui.LoginActivity;
+import com.example.Maatran.ui.SignUpActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 
