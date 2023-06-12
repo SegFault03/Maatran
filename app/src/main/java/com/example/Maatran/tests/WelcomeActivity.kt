@@ -18,9 +18,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
-class WelcomeActivityNew : AppCompatActivity() {
+class WelcomeActivity : AppCompatActivity() {
 
-    private val _tag:String = "WelcomeActivityNew"
+    private val _tag:String = "WelcomeActivity"
     private lateinit var _binding: ActivityWelcomeScreenBinding
     private lateinit var _signInBtn: MaterialButton
     private lateinit var _signUpBtn: MaterialButton

@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
     LinearLayout loadingAnimation;
     int lastUpdatedDot = 0;
     Handler loadingDotHandler;
-    Runnable loadingDotRunnable = this::changeLoadingDot;
+    Runnable loadingDotRunnable = this::callLoadingDotAnim;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,21 +90,27 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
         else
             button.setTextColor(getResources().getColor(R.color.white));
     }
-    void changeLoadingDot()
+
+    void callLoadingDotAnim()
     {
-        String currLoadDotView = "load_dot"+ lastUpdatedDot % 3;
-        String oldLoadDotView = "load_dot"+ (lastUpdatedDot % 3 == 0 ? 2 : lastUpdatedDot % 3 - 1);
-        lastUpdatedDot++;
-        int currResID = getResources().getIdentifier(currLoadDotView,"id",getPackageName());
-        int oldResID = getResources().getIdentifier(oldLoadDotView,"id",getPackageName());
-        AppCompatImageView currResView = findViewById(currResID);
-        AppCompatImageView oldResView = findViewById(oldResID);
-        Drawable drawable = AppCompatResources.getDrawable(this,R.drawable.loading_dot_grey);
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.login_accent), PorterDuff.Mode.SRC_IN);
-        currResView.setImageDrawable(drawable);
-        oldResView.setImageResource(R.drawable.loading_dot_grey);
+        lastUpdatedDot = changeLoadingDotAnimation(lastUpdatedDot, this);
         loadingDotHandler.postDelayed(loadingDotRunnable,300);
     }
+//    void changeLoadingDot()
+//    {
+//        String currLoadDotView = "load_dot"+ lastUpdatedDot % 3;
+//        String oldLoadDotView = "load_dot"+ (lastUpdatedDot % 3 == 0 ? 2 : lastUpdatedDot % 3 - 1);
+//        lastUpdatedDot++;
+//        int currResID = getResources().getIdentifier(currLoadDotView,"id",getPackageName());
+//        int oldResID = getResources().getIdentifier(oldLoadDotView,"id",getPackageName());
+//        AppCompatImageView currResView = findViewById(currResID);
+//        AppCompatImageView oldResView = findViewById(oldResID);
+//        Drawable drawable = AppCompatResources.getDrawable(this,R.drawable.loading_dot_grey);
+//        drawable.setColorFilter(ContextCompat.getColor(this,R.color.login_accent), PorterDuff.Mode.SRC_IN);
+//        currResView.setImageDrawable(drawable);
+//        oldResView.setImageResource(R.drawable.loading_dot_grey);
+//        loadingDotHandler.postDelayed(loadingDotRunnable,300);
+//    }
 
     private void signIn(String email, String password) {
         // [START sign_in_with_email]

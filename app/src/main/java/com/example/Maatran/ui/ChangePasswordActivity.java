@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.Maatran.R;
-import com.example.Maatran.tests.WelcomeActivityNew;
+import com.example.Maatran.tests.WelcomeActivity;
 import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -59,7 +59,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements commonU
                         Toast toast = Toast.makeText(getApplicationContext(), "Password updated, logging out now", Toast.LENGTH_SHORT);
                         toast.show();
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
+                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                         startActivity(intent);
                     }
                     else

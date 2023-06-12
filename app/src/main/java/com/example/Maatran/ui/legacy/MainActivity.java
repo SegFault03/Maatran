@@ -14,7 +14,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
 import com.example.Maatran.R;
-import com.example.Maatran.tests.WelcomeActivityNew;
+import com.example.Maatran.tests.WelcomeActivity;
 import com.example.Maatran.ui.DashboardActivity;
 import com.example.Maatran.ui.EditPatientActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public void signInOptions() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null) {
-            Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
+            Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(intent);
             super.finish();
         }
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     Log.d(TAG, "Document does not exist");
                     Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
+                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                     startActivity(intent);
                     super.finish();
                 }
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             else {
                 Log.d(TAG, "Task failed to complete");
                 Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
+                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(intent);
                 super.finish();
             }

@@ -20,7 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.Maatran.R;
 import com.example.Maatran.services.User;
-import com.example.Maatran.tests.WelcomeActivityNew;
+import com.example.Maatran.tests.WelcomeActivity;
 import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -138,7 +138,7 @@ public class ProfileViewActivity extends AppCompatActivity implements commonUIFu
             FirebaseAuth.getInstance().signOut();
             Toast toast = Toast.makeText(getApplicationContext(),"You have successfully signed out, redirecting you to the log-in page",Toast.LENGTH_SHORT);
             toast.show();
-            Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
+            Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK |
                     Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -195,7 +195,7 @@ public class ProfileViewActivity extends AppCompatActivity implements commonUIFu
                 Toast toast = Toast.makeText(getApplicationContext(), "User account deleted.", Toast.LENGTH_SHORT);
                 toast.show();
                 progressDialog.dismiss();
-                Intent intent = new Intent(getApplicationContext(), WelcomeActivityNew.class);
+                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(intent);
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Error deleting user account.", Toast.LENGTH_SHORT);
