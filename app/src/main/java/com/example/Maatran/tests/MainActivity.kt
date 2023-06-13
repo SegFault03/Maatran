@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.Maatran.databinding.ActivityMainBinding
 import com.example.Maatran.ui.EditPatientActivity
 import com.example.Maatran.utils.commonUIFunctions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.Maatran.services.FirebaseServices
 
 class MainActivity : AppCompatActivity(), commonUIFunctions {
     private lateinit var _binding: ActivityMainBinding
@@ -40,7 +38,8 @@ class MainActivity : AppCompatActivity(), commonUIFunctions {
         setContentView(rootView)
         _loadingDotHandler = Handler(Looper.getMainLooper())
         _loadingDotHandler.postDelayed(_loadingDotRunnable,500)
-        signInOptions()
+//        signInOptions()
+        checkForSignedInUser()
         _signInHandler = Handler(Looper.getMainLooper())
         _signInHandler.postDelayed(_signInRunnable,8000)
     }
@@ -69,62 +68,96 @@ class MainActivity : AppCompatActivity(), commonUIFunctions {
 //        _loadingDotHandler.postDelayed(_loadingDotRunnable, 500)
 //    }
 
-    private fun signInOptions() {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
-            val intent = Intent(applicationContext, WelcomeActivity::class.java)
-            startActivity(intent)
-            super.finish()
-        } else {
-            val userMailId = user.email
-            if (userMailId != null) {
-                checkForUserDetails(userMailId)
-            }
-        }
-    }
+//    private fun signInOptions() {
+//        val user = FirebaseAuth.getInstance().currentUser
+//        if (user == null) {
+//            val intent = Intent(applicationContext, WelcomeActivity::class.java)
+//            startActivity(intent)
+//            super.finish()
+//        } else {
+//            val userMailId = user.email
+//            if (userMailId != null) {
+//                checkForUserDetails(userMailId)
+//            }
+//        }
+//    }
+//
+//    private fun checkForUserDetails(userMailId: String) {
+//        val db = Firebase.firestore
+//        val docRef = db.collection("UserDetails").document(userMailId)
+//        docRef.get()
+//            .addOnSuccessListener { document ->
+//                if (document != null) {
+//                    Log.d(_tag, "DocumentSnapshot data: ${document.data}")
+//                    if(document["name"]!=null)
+//                    {
+//                        val intent = Intent(applicationContext,AppNavigationActivity::class.java)
+//                        startActivity(intent)
+//                        super.finish()
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(
+//                            this,
+//                            "Fill in your details to proceed...",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                        val intent = Intent(applicationContext, EditPatientActivity::class.java)
+//                        intent.putExtra("isPatient", false)
+//                        intent.putExtra("newDetails", true)
+//                        startActivity(intent)
+//                        super.finish()
+//                    }
+//                } else {
+//                    Log.d(_tag, "Document does not exist")
+//                    Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show()
+//                    val intent = Intent(applicationContext, WelcomeActivity::class.java)
+//                    startActivity(intent)
+//                    super.finish()
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.d(_tag, "get failed with ", exception)
+//                Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show()
+//                val intent = Intent(applicationContext, WelcomeActivity::class.java)
+//                startActivity(intent)
+//                super.finish()
+//            }
+//
+//    }
 
-    private fun checkForUserDetails(userMailId: String) {
-        val db = Firebase.firestore
-        val docRef = db.collection("UserDetails").document(userMailId)
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    Log.d(_tag, "DocumentSnapshot data: ${document.data}")
-                    if(document["name"]!=null)
-                    {
-                        val intent = Intent(applicationContext,AppNavigationActivity::class.java)
-                        startActivity(intent)
-                        super.finish()
-                    }
-                    else
-                    {
-                        Toast.makeText(
-                            this,
-                            "Fill in your details to proceed...",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(applicationContext, EditPatientActivity::class.java)
-                        intent.putExtra("isPatient", false)
-                        intent.putExtra("newDetails", true)
-                        startActivity(intent)
-                        super.finish()
-                    }
-                } else {
-                    Log.d(_tag, "Document does not exist")
-                    Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show()
+    private fun checkForSignedInUser()
+    {
+        val firebaseServiceAuth: FirebaseServices.Auth = FirebaseServices.Auth{
+            Log.v(_tag, it.toString())
+            when(it)
+            {
+                1 -> {
+                    val intent = Intent(applicationContext,AppNavigationActivity::class.java)
+                    startActivity(intent)
+                    super.finish()
+                }
+                0 -> {
+                    Toast.makeText(
+                        this,
+                        "Fill in your details to proceed...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val intent = Intent(applicationContext, EditPatientActivity::class.java)
+                    intent.putExtra("isPatient", false)
+                    intent.putExtra("newDetails", true)
+                    startActivity(intent)
+                    super.finish()
+                }
+                -1 -> {
                     val intent = Intent(applicationContext, WelcomeActivity::class.java)
                     startActivity(intent)
                     super.finish()
                 }
+                else -> {}
             }
-            .addOnFailureListener { exception ->
-                Log.d(_tag, "get failed with ", exception)
-                Toast.makeText(this, "Please log in manually", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, WelcomeActivity::class.java)
-                startActivity(intent)
-                super.finish()
-            }
-
+        }
+        firebaseServiceAuth.checkForExistingUser()
     }
 
     override fun onDestroy() {
