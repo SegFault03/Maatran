@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/maatran_launcher_icon_round"
         android:theme="@style/Theme.maatranlogin">
         <activity
-            android:name=".tests.LoginActivityNew"
+            android:name=".tests.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".tests.WelcomeActivity"
@@ -57,7 +57,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.DashboardActivity" />
         <activity android:name=".ui.ReportsActivity" />
         <activity android:name=".ui.PatientsViewActivity" />

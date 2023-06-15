@@ -95,7 +95,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun signInOptions() {
-        val intent = Intent(applicationContext, LoginActivityNew::class.java)
+        val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
     }
 

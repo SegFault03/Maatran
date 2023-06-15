@@ -17,7 +17,7 @@ import com.example.Maatran.ui.SignUpActivity
 import com.example.Maatran.utils.commonUIFunctions
 import com.google.android.material.button.MaterialButton
 
-class LoginActivityNew : AppCompatActivity(), commonUIFunctions {
+class LoginActivity : AppCompatActivity(), commonUIFunctions {
     private lateinit var _binding:ActivityLoginScreenBinding
     private lateinit var loadingAnimContainerLayout: LinearLayout
     private var lastUpdatedDot: Int = 0
@@ -88,6 +88,7 @@ class LoginActivityNew : AppCompatActivity(), commonUIFunctions {
 
                 else -> {
                     Toast.makeText(applicationContext,"Authentication failed",Toast.LENGTH_SHORT).show()
+                    loadingAnimContainerLayout.visibility = View.GONE
                 }
             }
         }

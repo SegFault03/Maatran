@@ -1,9 +1,7 @@
-package com.example.Maatran.ui;
+package com.example.Maatran.ui.legacy;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,11 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
 
 import com.example.Maatran.R;
+import com.example.Maatran.ui.DashboardActivity;
+import com.example.Maatran.ui.EditPatientActivity;
+import com.example.Maatran.ui.ResetPasswordActivity;
+import com.example.Maatran.ui.SignUpActivity;
 import com.example.Maatran.utils.commonUIFunctions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -56,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
         TextView forgotPwdText = findViewById(R.id.login_forgotpwd);
         findViewById(R.id.backBtn).setOnClickListener(v->super.finish());
         forgotPwdText.setOnClickListener(v->{
-            Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
             startActivity(intent);
         });
         login.setOnClickListener(view -> {
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements commonUIFunction
         });
         // [END initialize_auth]
         findViewById(R.id.login_signup_option).setOnClickListener(view->{
-            Intent intent = new Intent(this,SignUpActivity.class);
+            Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
     }
