@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.Maatran.R;
+import com.example.Maatran.tests.LoginActivityNew;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
@@ -218,7 +219,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     public void signInOptions() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LoginActivityNew.class);
         startActivity(intent);
     }
 

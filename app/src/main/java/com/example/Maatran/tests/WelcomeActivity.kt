@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.Maatran.R
 import com.example.Maatran.databinding.ActivityWelcomeScreenBinding
-import com.example.Maatran.ui.LoginActivity
 import com.example.Maatran.ui.SignUpActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
@@ -96,7 +95,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun signInOptions() {
-        val intent = Intent(applicationContext, LoginActivity::class.java)
+        val intent = Intent(applicationContext, LoginActivityNew::class.java)
         startActivity(intent)
     }
 

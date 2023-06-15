@@ -1,6 +1,7 @@
 package com.example.Maatran.services
 
 import android.util.Log
+import com.example.Maatran.services.FirebaseServices.Auth
 import com.example.Maatran.tests.AppNavigationActivity
 import com.example.Maatran.tests.WelcomeActivity
 import com.example.Maatran.ui.EditPatientActivity
@@ -13,7 +14,7 @@ import com.google.firebase.ktx.Firebase
  * checking if the user has completed his/her details or not, fetching the user details from the database, etc.
  * Contains a nested class [Auth] which is used for checking if the user is already signed in or not.
  * */
-class  FirebaseServices {
+class FirebaseServices {
 
     /**
      * This class is used for checking if the user is already signed in or not, and for
@@ -25,7 +26,7 @@ class  FirebaseServices {
      * */
     class Auth(val handleResponse: (Int) -> Unit){
         private val _tag = "FirebaseServices.Auth"
-
+        private val _mAuth = FirebaseAuth.getInstance()
         /**
          * Used to check if the user is already signed in or not.
          * If the user is signed in, then check if the user has completed his/her details or not.
@@ -37,7 +38,7 @@ class  FirebaseServices {
          */
         fun checkForExistingUser()
         {
-            val user = FirebaseAuth.getInstance().currentUser
+            val user = _mAuth.currentUser
             if (user == null) {
                 handleResponse(-1)
             } else {
@@ -47,6 +48,36 @@ class  FirebaseServices {
                 }
             }
         }
+
+        /**
+         * Attempts to sign in the user with the given email id and password.
+         * Ultimately calls [checkForExistingUser] to check if the user has completed his/her details or not.
+         * Response is handled by [handleResponse].
+         * Please check the validity of the email id and password before calling this function.
+         * @param email The email id of the user
+         * @param pwd The password of the user
+         * */
+        fun signInWithEmailAndPassword(email: String, pwd: String)
+        {
+            _mAuth.signInWithEmailAndPassword(email, pwd)
+                .addOnCompleteListener {
+                    if(it.isSuccessful)
+                    {
+                        Log.d(_tag, "signInWithEmail:success")
+                        val user = _mAuth.currentUser
+                        val userMailId = user?.email
+                        if (userMailId != null) {
+                            checkForUserDetails(userMailId)
+                        }
+                    }
+                    else
+                    {
+                        Log.w(_tag, "signInWithEmail:failure", it.exception)
+                        handleResponse(-1)
+                    }
+                }
+        }
+
 
         /**
          * Used to check if the user has completed his/her details or not.
@@ -76,6 +107,7 @@ class  FirebaseServices {
                 }
         }
     }
+
 
 
 }
