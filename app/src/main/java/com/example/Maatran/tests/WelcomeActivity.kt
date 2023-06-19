@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.Maatran.R
 import com.example.Maatran.databinding.ActivityWelcomeScreenBinding
-import com.example.Maatran.ui.SignUpActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.AuthResult

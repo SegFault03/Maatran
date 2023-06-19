@@ -1,4 +1,4 @@
-package com.example.Maatran.ui;
+package com.example.Maatran.ui.legacy;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.Maatran.R;
 import com.example.Maatran.tests.LoginActivity;
+import com.example.Maatran.ui.EditPatientActivity;
+import com.example.Maatran.ui.SignUpFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;

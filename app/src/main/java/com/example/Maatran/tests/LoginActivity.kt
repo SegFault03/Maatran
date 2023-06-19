@@ -13,7 +13,6 @@ import com.example.Maatran.databinding.ActivityLoginScreenBinding
 import com.example.Maatran.services.FirebaseServices
 import com.example.Maatran.ui.EditPatientActivity
 import com.example.Maatran.ui.ResetPasswordActivity
-import com.example.Maatran.ui.SignUpActivity
 import com.example.Maatran.utils.commonUIFunctions
 import com.google.android.material.button.MaterialButton
 

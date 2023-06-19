@@ -16,7 +16,6 @@ import com.example.Maatran.R;
 import com.example.Maatran.ui.DashboardActivity;
 import com.example.Maatran.ui.EditPatientActivity;
 import com.example.Maatran.ui.ResetPasswordActivity;
-import com.example.Maatran.ui.SignUpActivity;
 import com.example.Maatran.utils.commonUIFunctions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;

@@ -23,6 +23,9 @@
         android:roundIcon="@mipmap/maatran_launcher_icon_round"
         android:theme="@style/Theme.maatranlogin">
         <activity
+            android:name=".tests.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".tests.LoginActivity"
             android:exported="false" />
         <activity
@@ -39,9 +42,6 @@
         </activity>
         <activity
             android:name=".tests.AppNavigationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ResetPasswordActivity"
