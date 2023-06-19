@@ -1,20 +1,24 @@
 package com.example.Maatran.tests
 
+import android.app.usage.UsageEvents.Event
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.Maatran.R
 import com.example.Maatran.databinding.ActivityLoginScreenBinding
 import com.example.Maatran.services.FirebaseServices
 import com.example.Maatran.ui.EditPatientActivity
 import com.example.Maatran.ui.ResetPasswordActivity
 import com.example.Maatran.utils.commonUIFunctions
 import com.google.android.material.button.MaterialButton
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity(), commonUIFunctions {
     private lateinit var _binding:ActivityLoginScreenBinding
@@ -31,6 +35,24 @@ class LoginActivity : AppCompatActivity(), commonUIFunctions {
         loadingAnimContainerLayout = _binding.loadingAnimation
         loadingAnimContainerLayout.visibility = View.GONE
         val loginBtn: MaterialButton = _binding.loginSigninbtn
+
+        loginBtn.setOnTouchListener { v, event ->
+            if(event.action == MotionEvent.ACTION_DOWN)
+            {
+                v.setBackgroundColor(resources.getColor(R.color.white))
+                changeTextColor(1)
+                return@setOnTouchListener true
+            }
+            if(event.action==MotionEvent.ACTION_UP)
+            {
+                v.performClick()
+                v.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                changeTextColor(0)
+                return@setOnTouchListener true
+            }
+            false
+        }
+
         loginBtn.setOnClickListener {
             val email: String = _binding.loginEmailEdit.text.toString()
             val pwd: String = _binding.loginPwdEdit.text.toString()
@@ -60,6 +82,12 @@ class LoginActivity : AppCompatActivity(), commonUIFunctions {
         loadingAnimHandler.postDelayed(loadingAnimRunnable, 300)
     }
 
+    private fun changeTextColor(type: Int) {
+        val btn = _binding.loginSigninbtn
+        if (type == 1) btn.setTextColor(resources.getColor(R.color.colorPrimary)) else btn.setTextColor(
+            resources.getColor(R.color.white)
+        )
+    }
     private fun attemptSigningIn(email: String, pwd: String)
     {
         loadingAnimContainerLayout.visibility = View.VISIBLE
