@@ -6,6 +6,9 @@ import com.example.Maatran.tests.AppNavigationActivity
 import com.example.Maatran.tests.WelcomeActivity
 import com.example.Maatran.ui.EditPatientActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -24,9 +27,10 @@ class FirebaseServices {
      * The integer returned by handleResponse is the status code.
      * Please define inside the lambda function what to do with the status code.
      * */
-    class Auth(val handleResponse: (Int) -> Unit){
+    class Auth(val handleResponse: (Int) -> Unit) {
         private val _tag = "FirebaseServices.Auth"
         private val _mAuth = FirebaseAuth.getInstance()
+
         /**
          * Used to check if the user is already signed in or not.
          * If the user is signed in, then check if the user has completed his/her details or not.
@@ -36,8 +40,7 @@ class FirebaseServices {
          * 0 if user exists but has incomplete user details (go to [EditPatientActivity]),
          * -1 if user does not exist/not signed in (go to [WelcomeActivity])
          */
-        fun checkForExistingUser()
-        {
+        fun checkForExistingUser() {
             val user = _mAuth.currentUser
             if (user == null) {
                 handleResponse(-1)
@@ -57,21 +60,17 @@ class FirebaseServices {
          * @param email The email id of the user
          * @param pwd The password of the user
          * */
-        fun signInWithEmailAndPassword(email: String, pwd: String)
-        {
+        fun signInWithEmailAndPassword(email: String, pwd: String) {
             _mAuth.signInWithEmailAndPassword(email, pwd)
                 .addOnCompleteListener {
-                    if(it.isSuccessful)
-                    {
+                    if (it.isSuccessful) {
                         Log.d(_tag, "signInWithEmail:success")
                         val user = _mAuth.currentUser
                         val userMailId = user?.email
                         if (userMailId != null) {
                             checkForUserDetails(userMailId)
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Log.w(_tag, "signInWithEmail:failure", it.exception)
                         handleResponse(-1)
                     }
@@ -83,10 +82,8 @@ class FirebaseServices {
          * Used to check if the user has completed his/her details or not.
          * @param userMailId The email id of the user
          * @return 1, if the user has completed his/her details, 0 if the user has not completed his/her details, -1 if the user does not exist.
-         * [checkForExistingUser] calls this function, and is therefore private
-         * Use [checkForExistingUser] to call this function
          */
-        private fun checkForUserDetails(userMailId: String) {
+        fun checkForUserDetails(userMailId: String) {
             val db = Firebase.firestore
             var statusCode: Int
             val docRef = db.collection("UserDetails").document(userMailId)
@@ -94,7 +91,7 @@ class FirebaseServices {
                 .addOnSuccessListener { document ->
                     statusCode = if (document != null) {
                         Log.d(_tag, "DocumentSnapshot data: ${document.data}")
-                        if(document["name"]==null) 0 else 1
+                        if (document["name"] == null) 0 else 1
                     } else {
                         Log.d(_tag, "Document does not exist")
                         -1
@@ -106,8 +103,92 @@ class FirebaseServices {
                     handleResponse(-1)
                 }
         }
+
+        fun createAccountWithEmailAndPassword(email: String, pwd: String) {
+            _mAuth.createUserWithEmailAndPassword(email, pwd)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Log.d(_tag, "Account Creation Successful")
+                        handleResponse(1)
+                    } else {
+                        Log.w(_tag, "Account Creation Unsuccessful")
+                        handleResponse(-1)
+                    }
+                }
+        }
+
+        fun deleteUserAccount(user: FirebaseUser?)
+        {
+            if(user==null) {
+                Log.d(_tag, "deleteUserAccount: user=null found")
+                handleResponse(-1)
+                return
+            }
+            user.delete().addOnSuccessListener {
+                Log.d(_tag, "deleteUserAccount: account deleted")
+                handleResponse(1)
+            }.addOnFailureListener {
+                Log.e(_tag, "deleteUserAccount: account deletion failed", it)
+                handleResponse(-1)
+            }
+        }
+
     }
 
+    class FireStore(val handleResponse: (Int) -> Unit)
+    {
+        private val _tag = "Firebase.FireStore"
+        private var _db = FirebaseFirestore.getInstance()
+        fun putInitPatientDetails(user: FirebaseUser?)
+        {
+            if(user==null) {
+                Log.d(_tag, "putInitPatientDetails: user=null found")
+                handleResponse(-1)
+                return
+            }
+            val email = user.email
+            val details =  HashMap<String, String>()
+            details["admin_id"] = "null"
+            details["family_id"] = ""
+            details["isWorker"] = "false"
+            if (email != null) {
+                _db.collection("UserDetails")
+                    .document(email)
+                    .set(details, SetOptions.merge())
+                    .addOnSuccessListener {
+                        Log.d(_tag, "DocumentSnapshot successfully written!")
+                        handleResponse(1)
+                    }
+                    .addOnFailureListener {
+                        Log.w(_tag, "Error writing document", it)
+                        handleResponse(-1) }
+            }
+        }
 
-
+        fun putInitWorkerDetails(user: FirebaseUser?, hospitalName: String, empId: String)
+        {
+            if(user==null) {
+                Log.d(_tag, "putInitWorkerDetails: user=null found")
+                handleResponse(-1)
+                return
+            }
+            val email = user.email
+            val details =  HashMap<String, String>()
+            details["hospitalName"] = hospitalName
+            details["employeeId"] = empId
+            details["isWorker"] = "true"
+            if (email != null) {
+                _db.collection("UserDetails")
+                    .document(email)
+                    .set(details, SetOptions.merge())
+                    .addOnSuccessListener {
+                        Log.d(_tag, "DocumentSnapshot successfully written!")
+                        handleResponse(1)
+                    }
+                    .addOnFailureListener {
+                        Log.w(_tag, "Error writing document", it)
+                        handleResponse(-1) }
+            }
+        }
+    }
 }
