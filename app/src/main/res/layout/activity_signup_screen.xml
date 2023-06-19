@@ -120,12 +120,10 @@
             app:tabTextAppearance="@style/TabLayoutTextStyle"
             app:tabTextColor="@color/colorPrimaryDark">
                             <com.google.android.material.tabs.TabItem
-                                android:id="@+id/tabItem1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Patient" />
                             <com.google.android.material.tabs.TabItem
-                                android:id="@+id/tabItem2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Health worker" />
