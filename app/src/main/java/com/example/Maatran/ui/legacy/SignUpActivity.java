@@ -67,56 +67,56 @@ public class SignUpActivity extends AppCompatActivity {
         loadingAnimation.setVisibility(View.GONE);
         loadingDotHandler = new Handler();
         loadingDotHandler.postDelayed(loadingDotRunnable,300);
-        if (savedInstanceState == null) {
-            signUpFragment = SignUpFragment.newInstance(false);
-            fragmentManager.beginTransaction().add(R.id.signupFragmentContainer, signUpFragment)
-                    .setReorderingAllowed(true)
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//            signUpFragment = SignUpFragment.newInstance(false);
+//            fragmentManager.beginTransaction().add(R.id.signupFragmentContainer, signUpFragment)
+//                    .setReorderingAllowed(true)
+//                    .commit();
+//        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        tabSelected = 0;
-                        signUpFragment = SignUpFragment.newInstance(false);
-                        fragmentManager.beginTransaction()
-                                .setCustomAnimations(
-                                        R.anim.slide_in,  // enter
-                                        R.anim.fade_out  // exit
-                                )
-                                .replace(R.id.signupFragmentContainer, signUpFragment)
-                                .setReorderingAllowed(true)
-                                .commit();
-                        break;
-
-                    case 1:
-                        tabSelected = 1;
-                        signUpFragment = SignUpFragment.newInstance(true);
-                        fragmentManager.beginTransaction()
-                                .setCustomAnimations(
-                                        R.anim.slide_in,  // enter
-                                        R.anim.fade_out  // exit
-                                )
-                                .replace(R.id.signupFragmentContainer, signUpFragment)
-                                .setReorderingAllowed(true)
-                                .commit();
-                        break;
-                }
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                switch (tab.getPosition()) {
+//                    case 0:
+//                        tabSelected = 0;
+//                        signUpFragment = SignUpFragment.newInstance(false);
+//                        fragmentManager.beginTransaction()
+//                                .setCustomAnimations(
+//                                        R.anim.slide_in,  // enter
+//                                        R.anim.fade_out  // exit
+//                                )
+//                                .replace(R.id.signupFragmentContainer, signUpFragment)
+//                                .setReorderingAllowed(true)
+//                                .commit();
+//                        break;
+//
+//                    case 1:
+//                        tabSelected = 1;
+//                        signUpFragment = SignUpFragment.newInstance(true);
+//                        fragmentManager.beginTransaction()
+//                                .setCustomAnimations(
+//                                        R.anim.slide_in,  // enter
+//                                        R.anim.fade_out  // exit
+//                                )
+//                                .replace(R.id.signupFragmentContainer, signUpFragment)
+//                                .setReorderingAllowed(true)
+//                                .commit();
+//                        break;
+//                }
+//            }
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//            }
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//            }
+//        });
 
         signUpBtn.setOnTouchListener((v, event) -> {
             if(event.getAction()==MotionEvent.ACTION_DOWN)

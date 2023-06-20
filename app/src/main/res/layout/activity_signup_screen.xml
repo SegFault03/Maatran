@@ -129,9 +129,21 @@
                                 android:text="Health worker" />
         </com.google.android.material.tabs.TabLayout>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/signupFragmentContainer"
-            android:name="com.example.Maatran.ui.SignUpFragment"
+<!--        <androidx.fragment.app.FragmentContainerView-->
+<!--            android:id="@+id/signupFragmentContainer"-->
+<!--            android:name="com.example.Maatran.ui.SignUpFragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginEnd="14dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tabLayout"-->
+<!--            tools:layout="@layout/fragment_signup" />-->
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -139,29 +151,28 @@
             android:layout_marginEnd="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout"
-            tools:layout="@layout/fragment_signup" />
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/signup_btn"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            app:cornerRadius="20dp"
-            android:textSize="19sp"
-            android:padding="10dp"
-            android:text="SIGN UP"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:flow_horizontalBias="0.5"
-            app:layout_constraintTop_toBottomOf="@id/signupFragmentContainer"
-            android:layout_marginTop="10dp"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/signup_btn"-->
+<!--            android:layout_width="180dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cornerRadius="20dp"-->
+<!--            android:textSize="19sp"-->
+<!--            android:padding="10dp"-->
+<!--            android:text="SIGN UP"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:flow_horizontalBias="0.5"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/viewPager2"-->
+<!--            android:layout_marginTop="10dp"/>-->
 
         <LinearLayout
             android:id="@+id/signup_signin_options_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/signup_btn"
+            app:layout_constraintTop_toBottomOf="@id/viewPager2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

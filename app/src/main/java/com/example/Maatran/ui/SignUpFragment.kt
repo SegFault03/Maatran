@@ -3,6 +3,7 @@ package com.example.Maatran.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -46,6 +47,36 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
             _binding.signupHospitalBox.visibility = View.GONE
         }
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val signUpBtn = _binding.signupBtn
+                signUpBtn.setOnTouchListener { v, event ->
+            if (event.action== MotionEvent.ACTION_DOWN)
+            {
+                v.setBackgroundColor(resources.getColor(R.color.white))
+                changeTextColor(1)
+                return@setOnTouchListener true
+            }
+            if(event.action==MotionEvent.ACTION_UP)
+            {
+                v.performClick()
+                v.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                changeTextColor(0)
+                return@setOnTouchListener true
+            }
+            false
+        }
+        signUpBtn.setOnClickListener { createNewUserAccount() }
+
+    }
+
+        private fun changeTextColor(type: Int) {
+        val btn = _binding.signupBtn
+        if (type == 1) btn.setTextColor(resources.getColor(R.color.colorPrimary)) else btn.setTextColor(
+            resources.getColor(R.color.white)
+        )
     }
 
     fun createNewUserAccount()

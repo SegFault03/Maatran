@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SignUpFragment"
-    tools:showIn="@layout/activity_signup_screen">
+    tools:context=".ui.SignUpFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -145,6 +144,21 @@
                 android:fontFamily="@font/dm_sans"
                 android:maxLength="30" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_btn"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            app:cornerRadius="20dp"
+            android:textSize="19sp"
+            android:padding="10dp"
+            android:text="SIGN UP"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:flow_horizontalBias="0.5"
+            app:layout_constraintTop_toBottomOf="@id/signup_empid_box"
+            android:layout_marginTop="10dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

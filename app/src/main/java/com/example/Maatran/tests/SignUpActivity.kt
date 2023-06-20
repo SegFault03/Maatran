@@ -10,12 +10,15 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.Maatran.R
 import com.example.Maatran.databinding.ActivitySignupScreenBinding
 import com.example.Maatran.ui.EditPatientActivity
 import com.example.Maatran.ui.SignUpFragment
 import com.example.Maatran.utils.commonUIFunctions
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class SignUpActivity : AppCompatActivity(), commonUIFunctions {
     private lateinit var _binding: ActivitySignupScreenBinding
@@ -36,7 +39,6 @@ class SignUpActivity : AppCompatActivity(), commonUIFunctions {
         setContentView(rootView)
 
         window.statusBarColor = resources.getColor(R.color.colorPrimary)
-        val signUpBtn = _binding.signupBtn
         _binding.backBtn.setOnClickListener {super.finish()}
         val signInOption = _binding.signupSigninOptions
         loadingAnimContainer = _binding.loadingAnimation
@@ -74,60 +76,72 @@ class SignUpActivity : AppCompatActivity(), commonUIFunctions {
                     Toast.makeText(applicationContext, "Account Creation Unsuccessful! Please try again", Toast.LENGTH_SHORT).show()
             }
 
-        if(savedInstanceState == null)
-        {
-            signUpFragment = SignUpFragment.newInstance(false)
-            _fragmentManager.beginTransaction().add(R.id.signupFragmentContainer, signUpFragment)
-                .setReorderingAllowed(true)
-                .commit()
-        }
+        val viewPager = _binding.viewPager2
+        val viewPagerAdapter = ViewPagerAdapter(_fragmentManager, lifecycle)
+        viewPager.adapter = viewPagerAdapter
+
+
+//        if(savedInstanceState == null)
+//        {
+//            signUpFragment = SignUpFragment.newInstance(false)
+//            _fragmentManager.beginTransaction().add(R.id.signupFragmentContainer, signUpFragment)
+//                .setReorderingAllowed(true)
+//                .commit()
+//        }
 
         val tabLayout = _binding.tabLayout
-        tabLayout.addOnTabSelectedListener( object: TabLayout.OnTabSelectedListener
-        {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                signUpFragment= SignUpFragment.newInstance(tab.position==1)
-                _fragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in,  // enter
-                        R.anim.fade_out // exit
-                    )
-                    .replace(R.id.signupFragmentContainer, signUpFragment)
-                    .setReorderingAllowed(true)
-                    .commit()
+        TabLayoutMediator(tabLayout,viewPager){ tab, position ->
+            when(position)
+            {
+                0 -> tab.text = "Patient"
+                1 -> tab.text = "Health Worker"
             }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+        }.attach()
+//        tabLayout.addOnTabSelectedListener( object: TabLayout.OnTabSelectedListener
+//        {
+//            override fun onTabSelected(tab: TabLayout.Tab) {
+//                signUpFragment= SignUpFragment.newInstance(tab.position==1)
+//                _fragmentManager.beginTransaction()
+//                    .setCustomAnimations(
+//                        R.anim.slide_in,  // enter
+//                        R.anim.fade_out // exit
+//                    )
+//                    .replace(R.id.signupFragmentContainer, signUpFragment)
+//                    .setReorderingAllowed(true)
+//                    .commit()
+//            }
+//            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+//            override fun onTabReselected(tab: TabLayout.Tab?) {}
+//        })
 
-        signUpBtn.setOnTouchListener { v, event ->
-            if (event.action==MotionEvent.ACTION_DOWN)
-            {
-                v.setBackgroundColor(resources.getColor(R.color.white))
-                changeTextColor(1)
-                return@setOnTouchListener true
-            }
-            if(event.action==MotionEvent.ACTION_UP)
-            {
-                v.performClick()
-                v.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-                changeTextColor(0)
-                return@setOnTouchListener true
-            }
-            false
-        }
-        signUpBtn.setOnClickListener { signUpFragment.createNewUserAccount() }
+//        signUpBtn.setOnTouchListener { v, event ->
+//            if (event.action==MotionEvent.ACTION_DOWN)
+//            {
+//                v.setBackgroundColor(resources.getColor(R.color.white))
+//                changeTextColor(1)
+//                return@setOnTouchListener true
+//            }
+//            if(event.action==MotionEvent.ACTION_UP)
+//            {
+//                v.performClick()
+//                v.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+//                changeTextColor(0)
+//                return@setOnTouchListener true
+//            }
+//            false
+//        }
+//        signUpBtn.setOnClickListener { signUpFragment.createNewUserAccount() }
         signInOption.setOnClickListener {
             startActivity(Intent(applicationContext, LoginActivity::class.java))
         }
     }
 
-    private fun changeTextColor(type: Int) {
-        val btn = _binding.signupBtn
-        if (type == 1) btn.setTextColor(resources.getColor(R.color.colorPrimary)) else btn.setTextColor(
-            resources.getColor(R.color.white)
-        )
-    }
+//    private fun changeTextColor(type: Int) {
+//        val btn = _binding.signupBtn
+//        if (type == 1) btn.setTextColor(resources.getColor(R.color.colorPrimary)) else btn.setTextColor(
+//            resources.getColor(R.color.white)
+//        )
+//    }
 
     private fun callLoadingDotAnim()
     {
@@ -135,5 +149,19 @@ class SignUpActivity : AppCompatActivity(), commonUIFunctions {
         loadingDotHandler.postDelayed(loadingDotRunnable, 300)
     }
 
-
 }
+
+class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
+
+    override fun getItemCount(): Int = 2 // Number of tabs/fragments
+
+    override fun createFragment(position: Int): SignUpFragment {
+        // Return the corresponding fragment based on the position
+        return when (position) {
+            0 -> SignUpFragment.newInstance(false)
+            1 -> SignUpFragment.newInstance(true)
+            else -> throw IllegalArgumentException("Invalid position: $position")
+        }
+    }
+}
+
