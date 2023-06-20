@@ -223,7 +223,6 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
 
     /**
      * Sets the user profile pic depending upon the age, gender and type of the user-profile.
-     * Requires a global ImageView element which in this case is called {@link ProfileViewActivity#mProfilePic}
      * @param document: DocumentSnapshot of the document containing the data from which gender, age, etc.
      * from which the profile pic will be inferred.
      */

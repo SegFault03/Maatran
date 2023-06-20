@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -33,6 +34,10 @@ class LoginActivity : AppCompatActivity(), commonUIFunctions {
         loadingAnimContainerLayout = _binding.loadingAnimation
         loadingAnimContainerLayout.visibility = View.GONE
         val loginBtn: MaterialButton = _binding.loginSigninbtn
+        val backBtn: ImageView = _binding.backBtn
+        backBtn.setOnClickListener {
+            super.finish()
+        }
 
         loginBtn.setOnTouchListener { v, event ->
             if(event.action == MotionEvent.ACTION_DOWN)
