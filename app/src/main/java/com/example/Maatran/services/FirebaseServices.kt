@@ -104,6 +104,13 @@ class FirebaseServices {
                 }
         }
 
+        /**
+         * Used for creating a new account with the given email id and password.
+         * Sends the response back to the class which called [createAccountWithEmailAndPassword] using [handleResponse].
+         * Validity of email and password must be checked before calling this function.
+         * @param email The email id of the user
+         * @param pwd The password of the user
+         * */
         fun createAccountWithEmailAndPassword(email: String, pwd: String) {
             _mAuth.createUserWithEmailAndPassword(email, pwd)
                 .addOnCompleteListener {
@@ -117,6 +124,11 @@ class FirebaseServices {
                 }
         }
 
+        /**
+         * Used for deleting the user account.
+         * Sends the response back to the class which called [deleteUserAccount] using [handleResponse].
+         * @param user The FirebaseUser object of the user
+         * */
         fun deleteUserAccount(user: FirebaseUser?)
         {
             if(user==null) {
@@ -135,10 +147,23 @@ class FirebaseServices {
 
     }
 
+    /**
+     * This class is used for fetching the user details from the database.
+     * Contains functions for putting the initial patient and worker details in the database.
+     * Override the [handleResponse] function to handle the response.
+     * [handleResponse] is called with the status code as an argument, 1 indicates success, -1 indicates failure.
+     * @param handleResponse a lambda function which takes an integer as an argument.
+     * */
     class FireStore(val handleResponse: (Int) -> Unit)
     {
         private val _tag = "Firebase.FireStore"
         private var _db = FirebaseFirestore.getInstance()
+
+        /**
+         * Puts the initial patient details in the database.
+         * Sends the response back to the class which called [putInitPatientDetails] using [handleResponse].
+         * @param user The FirebaseUser object of the user
+         * */
         fun putInitPatientDetails(user: FirebaseUser?)
         {
             if(user==null) {
@@ -165,6 +190,13 @@ class FirebaseServices {
             }
         }
 
+        /**
+         * Puts the initial worker details in the database.
+         * Sends the response back to the class which called [putInitWorkerDetails] using [handleResponse].
+         * @param user The FirebaseUser object of the user
+         * @param hospitalName The name of the hospital
+         * @param empId The employee id of the worker
+         * */
         fun putInitWorkerDetails(user: FirebaseUser?, hospitalName: String, empId: String)
         {
             if(user==null) {

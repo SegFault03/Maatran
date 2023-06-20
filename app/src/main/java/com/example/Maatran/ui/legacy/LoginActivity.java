@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.Maatran.R;
-import com.example.Maatran.ui.DashboardActivity;
 import com.example.Maatran.ui.EditPatientActivity;
 import com.example.Maatran.ui.ResetPasswordActivity;
 import com.example.Maatran.utils.commonUIFunctions;

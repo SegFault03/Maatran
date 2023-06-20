@@ -1,6 +1,5 @@
 package com.example.Maatran.tests
 
-import android.app.usage.UsageEvents.Event
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +17,6 @@ import com.example.Maatran.ui.EditPatientActivity
 import com.example.Maatran.ui.ResetPasswordActivity
 import com.example.Maatran.utils.commonUIFunctions
 import com.google.android.material.button.MaterialButton
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity(), commonUIFunctions {
     private lateinit var _binding:ActivityLoginScreenBinding

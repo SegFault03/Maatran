@@ -1,4 +1,4 @@
-package com.example.Maatran.ui;
+package com.example.Maatran.ui.legacy;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -25,6 +25,10 @@ import androidx.core.content.ContextCompat;
 import com.example.Maatran.R;
 import com.example.Maatran.services.ModelApi;
 import com.example.Maatran.services.User;
+import com.example.Maatran.ui.BluetoothActivity;
+import com.example.Maatran.ui.EditPatientActivity;
+import com.example.Maatran.ui.PatientsViewActivity;
+import com.example.Maatran.ui.ProfileViewActivity;
 import com.example.Maatran.utils.commonUIFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

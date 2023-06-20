@@ -17,7 +17,7 @@ import java.util.*
 
 class AppNavigationActivity : AppCompatActivity(R.layout.dashboard_redesigned) {
     private var fragmentManager:FragmentManager = supportFragmentManager;
-    private lateinit var bottomNavView: BottomNavigationView;
+    private lateinit var bottomNavView: BottomNavigationView
     private var user: UserData? = null;
     private val viewModel: DashboardViewModel  by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {

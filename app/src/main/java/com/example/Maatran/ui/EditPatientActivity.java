@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.Maatran.R;
 import com.example.Maatran.services.User;
+import com.example.Maatran.tests.AppNavigationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -194,7 +195,7 @@ public class EditPatientActivity extends AppCompatActivity {
                         .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
             if(newDetails)
             {
-                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AppNavigationActivity.class);
                 intent.putExtra("user",user);
                 startActivity(intent);
                 super.finish();

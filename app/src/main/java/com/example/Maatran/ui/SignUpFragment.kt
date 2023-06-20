@@ -11,16 +11,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.example.Maatran.R
-import com.example.Maatran.services.FirebaseServices
 import com.example.Maatran.databinding.FragmentSignupBinding
+import com.example.Maatran.services.FirebaseServices
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class SignUpFragment : Fragment(R.layout.fragment_signup) {
     // TODO: Rename and change types of parameters
     private var isWorker = false
@@ -39,7 +34,6 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
         savedInstanceState: Bundle?
     ): View {
 
-        // Inflate the layout for this fragment
         _binding = FragmentSignupBinding.inflate(inflater,container,false)
         val rootView = _binding.root
         if (!isWorker) {
@@ -52,7 +46,7 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val signUpBtn = _binding.signupBtn
-                signUpBtn.setOnTouchListener { v, event ->
+        signUpBtn.setOnTouchListener { v, event ->
             if (event.action== MotionEvent.ACTION_DOWN)
             {
                 v.setBackgroundColor(resources.getColor(R.color.white))
@@ -79,7 +73,7 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
         )
     }
 
-    fun createNewUserAccount()
+    private fun createNewUserAccount()
     {
         val email: String = _binding.signupEmailEdit.text.toString()
         val pwd: String = _binding.signupPwdEdit.text.toString()
@@ -121,6 +115,7 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
             firebaseServices.createAccountWithEmailAndPassword(email,pwd)
         }
     }
+
     private fun checkValidity(email: String, pwd: String, confirmpwd: String, hospitalName: String? = "", empId:String? = ""): Boolean
     {
         if(email.isBlank() || pwd.isBlank())
@@ -152,18 +147,7 @@ class SignUpFragment : Fragment(R.layout.fragment_signup) {
     }
 
     companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
         private const val IS_WORKER = "isWorker"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param isWorker Parameter 1.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(isWorker: Boolean): SignUpFragment {
             val fragment = SignUpFragment()

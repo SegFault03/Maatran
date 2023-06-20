@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -17,21 +16,15 @@ import com.example.Maatran.databinding.ActivitySignupScreenBinding
 import com.example.Maatran.ui.EditPatientActivity
 import com.example.Maatran.ui.SignUpFragment
 import com.example.Maatran.utils.commonUIFunctions
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class SignUpActivity : AppCompatActivity(), commonUIFunctions {
     private lateinit var _binding: ActivitySignupScreenBinding
     private lateinit var _fragmentManager: FragmentManager
-//    private lateinit var signUpBtn: MaterialButton
-//    private lateinit var signInOption: TextView
     private lateinit var loadingAnimContainer: LinearLayout
-    private var tabSelected: Int = 0
     private var lastUpdatedDot: Int = 0
-    private var isPatient = true
     private lateinit var loadingDotHandler: Handler
     private var loadingDotRunnable = Runnable {callLoadingDotAnim()}
-    private lateinit var signUpFragment: SignUpFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivitySignupScreenBinding.inflate(layoutInflater)
@@ -76,19 +69,12 @@ class SignUpActivity : AppCompatActivity(), commonUIFunctions {
                     Toast.makeText(applicationContext, "Account Creation Unsuccessful! Please try again", Toast.LENGTH_SHORT).show()
             }
 
+        //binding the viewPager with its adapter for displaying fragments
         val viewPager = _binding.viewPager2
         val viewPagerAdapter = ViewPagerAdapter(_fragmentManager, lifecycle)
         viewPager.adapter = viewPagerAdapter
 
-
-//        if(savedInstanceState == null)
-//        {
-//            signUpFragment = SignUpFragment.newInstance(false)
-//            _fragmentManager.beginTransaction().add(R.id.signupFragmentContainer, signUpFragment)
-//                .setReorderingAllowed(true)
-//                .commit()
-//        }
-
+        //binding the same viewPAger to implement swipe views across the tabLayout
         val tabLayout = _binding.tabLayout
         TabLayoutMediator(tabLayout,viewPager){ tab, position ->
             when(position)
@@ -97,51 +83,12 @@ class SignUpActivity : AppCompatActivity(), commonUIFunctions {
                 1 -> tab.text = "Health Worker"
             }
         }.attach()
-//        tabLayout.addOnTabSelectedListener( object: TabLayout.OnTabSelectedListener
-//        {
-//            override fun onTabSelected(tab: TabLayout.Tab) {
-//                signUpFragment= SignUpFragment.newInstance(tab.position==1)
-//                _fragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.slide_in,  // enter
-//                        R.anim.fade_out // exit
-//                    )
-//                    .replace(R.id.signupFragmentContainer, signUpFragment)
-//                    .setReorderingAllowed(true)
-//                    .commit()
-//            }
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-//            override fun onTabReselected(tab: TabLayout.Tab?) {}
-//        })
 
-//        signUpBtn.setOnTouchListener { v, event ->
-//            if (event.action==MotionEvent.ACTION_DOWN)
-//            {
-//                v.setBackgroundColor(resources.getColor(R.color.white))
-//                changeTextColor(1)
-//                return@setOnTouchListener true
-//            }
-//            if(event.action==MotionEvent.ACTION_UP)
-//            {
-//                v.performClick()
-//                v.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-//                changeTextColor(0)
-//                return@setOnTouchListener true
-//            }
-//            false
-//        }
-//        signUpBtn.setOnClickListener { signUpFragment.createNewUserAccount() }
         signInOption.setOnClickListener {
             startActivity(Intent(applicationContext, LoginActivity::class.java))
         }
     }
 
-//    private fun changeTextColor(type: Int) {
-//        val btn = _binding.signupBtn
-//        if (type == 1) btn.setTextColor(resources.getColor(R.color.colorPrimary)) else btn.setTextColor(
-//            resources.getColor(R.color.white)
-//        )
-//    }
 
     private fun callLoadingDotAnim()
     {
@@ -151,6 +98,9 @@ class SignUpActivity : AppCompatActivity(), commonUIFunctions {
 
 }
 
+/**
+ * Adapter class for ViewPager2. Constructs a fragment to be rendered by the ViewPager
+ * */
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int = 2 // Number of tabs/fragments

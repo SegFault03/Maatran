@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.Maatran.R;
 import com.example.Maatran.tests.WelcomeActivity;
-import com.example.Maatran.ui.DashboardActivity;
 import com.example.Maatran.ui.EditPatientActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
