@@ -242,6 +242,7 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="44dp"
                     android:src="@drawable/arrow_right"
+                    android:onClick="showAlerts"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/AlertsWidget" />
 
@@ -251,6 +252,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="24dp"
+                    android:onClick="showRisks"
                     android:src="@drawable/arrow_right"
                     app:layout_constraintEnd_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toTopOf="@+id/imageView5" />

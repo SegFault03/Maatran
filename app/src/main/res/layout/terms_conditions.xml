@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp">
+
+<TextView
+    android:id="@+id/titleTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Terms and Conditions"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/termsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/terms_and_conditions_text"/>
+
+
+</LinearLayout>
+</ScrollView>
