@@ -9,6 +9,7 @@ import com.example.Maatran.ui.BluetoothActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -90,6 +91,22 @@ public class BluetoothTransmissionService {
             mp.put(Integer.toString(i), dataPacketsTemp.get(i-1));
         }
         mp.put("risk", risk);
+        if(risk=="High")
+        {
+            FirebaseFirestore.getInstance().collection("HighRisks").get().addOnSuccessListener(v->{
+                boolean f=true;
+                for(DocumentSnapshot ds:v.getDocuments())
+                {
+                    if(ds.getId().equals(user.getEmail()))
+                        f=false;
+                }
+                if(f)
+                {
+                    HashMap<String, Object> mp1=new HashMap<>();
+                    FirebaseFirestore.getInstance().collection("HighRisks").document(user.getEmail()).set(mp1);
+                }
+            });
+        }
         assert user != null;
         String userId = user.getEmail();
         assert userId != null;

@@ -35,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity implements commonUIFunctions {
@@ -77,6 +79,8 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
         getPermissions();
         fetchUserDetails();
         new ModelApi(result -> Log.v(TAG,result)).execute(new ArrayList<>(Collections.singletonList("wakeup")));
+        updateAlerts();
+        updateRisks();
     }
 
     @Override
@@ -109,11 +113,95 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
         }
     }
 
+    public void showAlerts(View view)
+    {
+        AlertsFragment dialogFragment = AlertsFragment.newInstance(isPatient, true);
+        dialogFragment.show(getSupportFragmentManager(), "AlertsFragment");
+    }
+
+    public void showRisks(View view)
+    {
+        AlertsFragment dialogFragment = AlertsFragment.newInstance(isPatient, false);
+        dialogFragment.show(getSupportFragmentManager(), "AlertsFragment");
+    }
+
     public void viewPatients(View view)
     {
         Intent intent = new Intent(getApplicationContext(), PatientsViewActivity.class);
         intent.putExtra("isPatient", isPatient);
         startActivity(intent);
+    }
+
+    public void updateAlerts()
+    {
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        if(!isPatient)
+        {
+            db.collection("SosAlerts").get().addOnSuccessListener(value -> {
+                TextView tv=findViewById(R.id.alerts_num);
+                tv.setText(Integer.toString(value.size()));
+            });
+        }
+        else
+        {
+            db.collection("SosAlerts").get().addOnSuccessListener(value -> {
+                db.collection("UserDetails").document(user.getEmail()).get().addOnSuccessListener(val -> {
+                    if(val.get("admin_id") != null)
+                    {
+                        db.collection("UserDetails").document(val.get("admin_id").toString()).collection("Patients").get().addOnSuccessListener(docs ->{
+                            int count=0;
+                            for(DocumentSnapshot ds:docs.getDocuments())
+                            {
+                                boolean f=false;
+                                for(DocumentSnapshot dr:value.getDocuments())
+                                {
+                                    if(dr.getId().equals(ds.getId()))
+                                        count+=1;
+                                }
+                            }
+                            TextView tv=findViewById(R.id.alerts_num);
+                            tv.setText(Integer.toString(count));
+                        });
+                    }
+                });
+            });
+        }
+    }
+
+    public void updateRisks()
+    {
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        if(!isPatient)
+        {
+            db.collection("HighRisks").get().addOnSuccessListener(value -> {
+                TextView tv=findViewById(R.id.risks_num);
+                tv.setText(Integer.toString(value.size()));
+            });
+        }
+        else
+        {
+            db.collection("HighRisks").get().addOnSuccessListener(value -> {
+                db.collection("UserDetails").document(user.getEmail()).get().addOnSuccessListener(val -> {
+                    if(val.get("admin_id") != null)
+                    {
+                        db.collection("UserDetails").document(val.get("admin_id").toString()).collection("Patients").get().addOnSuccessListener(docs ->{
+                            int count=0;
+                            for(DocumentSnapshot ds:docs.getDocuments())
+                            {
+                                for(DocumentSnapshot dr:value.getDocuments())
+                                {
+                                    if(dr.getId().equals(ds.getId()))
+                                        count+=1;
+                                }
+                            }
+                            Log.v(TAG, Integer.toString(count));
+                            TextView tv=findViewById(R.id.risks_num);
+                            tv.setText(Integer.toString(count));
+                        });
+                    }
+                });
+            });
+        }
     }
 
     public void userProfileView(View view)
@@ -214,7 +302,14 @@ public class DashboardActivity extends AppCompatActivity implements commonUIFunc
                 sms.sendTextMessage(number, null, "I need help!\n-Message sent from"+number+" from app: Maatran", null,null);
             }
         });
-        Toast.makeText(this,"sms sent successfully",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"SOS sent successfully",Toast.LENGTH_SHORT).show();
+        Map<String, String> mp = new HashMap<>();
+        mp.put("lat", "12435");
+        mp.put("long", "12435");
+        df.collection("SosAlerts").document(Objects.requireNonNull(user.getEmail()))
+                .set(mp)
+                .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully written!"))
+                .addOnFailureListener(e -> Log.w("TAG", "Error writing document", e));
     }
 
     /**

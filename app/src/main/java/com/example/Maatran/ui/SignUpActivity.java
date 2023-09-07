@@ -1,11 +1,14 @@
 package com.example.Maatran.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -70,6 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .setReorderingAllowed(true)
                     .commit();
         }
+        showTermsAndConditionsDialog();
     }
 
     @Override
@@ -141,6 +145,31 @@ public class SignUpActivity extends AppCompatActivity {
             signUpBtn.setTextColor(getResources().getColor(R.color.colorPrimary));
         else
             signUpBtn.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    private void showTermsAndConditionsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.terms_conditions, null);
+
+        builder.setView(dialogView)
+                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Handle the user's acceptance of terms
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Handle the user's rejection of terms
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        getParent().finish();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     void changeLoadingDot()
